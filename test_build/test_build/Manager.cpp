@@ -2,7 +2,7 @@
 
 Manager::Manager()
 {
-
+    
 }
 Manager::~Manager()
 {
@@ -21,14 +21,15 @@ void Manager::run(const char* command)
     }
 
     // Run command
+    MemberQueue* q = new MemberQueue;
     string line;
     while (1) {
         getline(fcmd, line);
 
         if (line == "LOAD")
-            LOAD();
-        else if (line == "ADD")
-            break;
+            LOAD(q);
+        else if (line.substr(0, line.find(' ')) == "ADD")
+            ADD(q, line);
     }
 
     fcmd.close();
@@ -50,11 +51,10 @@ void Manager::PrintErrorCode(int num)
 }
 
 // LOAD
-void Manager::LOAD() {
+void Manager::LOAD(MemberQueue* q) {
     ifstream fin;
     fin.open("data.txt");
 
-    MemberQueue q;
     string data = " ", name, date;
     int age;
     char term;
@@ -68,11 +68,21 @@ void Manager::LOAD() {
         ss >> name >> age >> date >> term;
 
         MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
-        q.push(newNode);
+        q->push(newNode);
     }
 }
 
 // ADD
+void Manager::ADD(MemberQueue* q, string line) {
+    stringstream ss(line);
+    string temp, name, date;
+    int age;
+    char term;
+    ss >> temp >> name >> age >> date >> term;
+    MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
+    q->push(newNode);
+
+}
 
 // QPOP
 

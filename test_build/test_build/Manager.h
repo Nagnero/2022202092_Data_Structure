@@ -12,10 +12,8 @@ using namespace std;
 class Manager
 {
 private:
-
 	ifstream	fcmd;
 	ofstream	flog;
-
 
 public:
 	Manager();
@@ -27,8 +25,9 @@ public:
 	void PrintErrorCode(int num);
 
 	// LOAD
-	void LOAD();
+	void LOAD(MemberQueue* q);
 	// ADD
+	void ADD(MemberQueue* q, string line);
 	// QPOP
 	// SEARCH
 	// PRINT
