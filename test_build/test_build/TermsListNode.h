@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "TermsBST.h"
 using namespace std;
 // TermsList에 들어갈 노드; 
 // Term, 다음 Node, Terms BST의 root 저장
@@ -9,12 +10,14 @@ private:
 	TermsListNode*	next;
 	char term;
 	int mem_cnt;
+	TermsBST* TermsRoot;
 
 public:
 	TermsListNode(char term) {
 		this->next = NULL;
 		this->term = term;
 		this->mem_cnt = 1;
+		this->TermsRoot = NULL;
 	}
 	~TermsListNode() {}
 
@@ -25,4 +28,6 @@ public:
 	int getMem_cnt() { return this->mem_cnt; }
 	void increaseMem_cnt() { this->mem_cnt++; }
 	void decreaseMem_cnt() { this->mem_cnt--; }
+	TermsBST* getRoot() { return this->TermsRoot; }
+	void setRoot(TermsBST* root) { this->TermsRoot = root; }
 };

@@ -130,12 +130,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="MemberQueue.cpp" />
+    <ClCompile Include="TermsBST.cpp" />
     <ClCompile Include="TermsList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Manager.h" />
     <ClInclude Include="MemberQueue.h" />
     <ClInclude Include="MemberQueueNode.h" />
+    <ClInclude Include="TermsBST.h" />
+    <ClInclude Include="TermsBSTNode.h" />
     <ClInclude Include="TermsList.h" />
     <ClInclude Include="TermsListNode.h" />
   </ItemGroup>

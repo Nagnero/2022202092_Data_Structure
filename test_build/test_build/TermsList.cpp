@@ -16,7 +16,11 @@ TermsListNode* TermsLIST::getHead() {
 
 // insert
 void TermsLIST::insert(MemberQueueNode* MQNode) {
+	string inputName = MQNode->getName();
+	int inputAge = MQNode->getAge();
+	string inputDate = MQNode->getDate();
 	char inputTerm = MQNode->getTerm();
+	
 	TermsListNode* curTLNode = this->getHead();
 	bool addNew = false; // TermsListNode를 새롭게 추가하는지 확인하는 플래그
 
@@ -38,6 +42,13 @@ void TermsLIST::insert(MemberQueueNode* MQNode) {
 	// TermsListNode 새롭게 만들어서 추가
 	if (addNew) {
 		TermsListNode* newTLNode = new TermsListNode(inputTerm);
+
+		// TermsBSTNode 및 TermsBST 생성 및 TermsListNode와 연결
+		TermsBSTNode* newTBNode = new TermsBSTNode(inputName, inputAge, inputDate);
+		newTBNode->setTermDate(inputTerm);
+		TermsBST* TB = new TermsBST(newTBNode);
+		newTLNode->setRoot(TB);
+
 		// 리스트가 비어있는 경우
 		if (!this->size) {
 			this->setHead(newTLNode);
