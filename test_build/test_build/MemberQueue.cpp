@@ -13,7 +13,10 @@ MemberQueue::~MemberQueue()
 
 bool MemberQueue::empty()
 {
-	return 0;
+	if (this->size == 0)
+		return 1;
+	else
+		return 0;
 }
 bool MemberQueue::full()
 {
@@ -33,9 +36,21 @@ void MemberQueue::push(MemberQueueNode* newNode) {
 	}
 	this->size++;
 }
-MemberQueueNode* MemberQueue::pop()
-{
-	return this->first;
+void MemberQueue::pop() {
+	MemberQueueNode* delMQNode = this->first;
+
+	if (this->size > 1) {
+		this->first = this->first->getNext();
+		delete delMQNode;
+		this->size--;
+	}
+	else if (this->size == 1) {
+		this->first = NULL;
+		this->last = NULL;
+		delete delMQNode;
+		this->size--;
+	}
+	
 }
 MemberQueueNode* MemberQueue::front()
 {

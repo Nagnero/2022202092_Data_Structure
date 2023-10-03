@@ -1,6 +1,6 @@
 #pragma once
 #include "MemberQueue.h"
-//#include "TermsList.h"
+#include "TermsList.h"
 //#include "TermsBST.h"
 //#include "NameBST.h"
 #include <fstream>
@@ -29,6 +29,7 @@ public:
 	// ADD
 	void ADD(MemberQueue* q, string line);
 	// QPOP
+	void QPOP(TermsLIST* tl, MemberQueue* q);
 	// SEARCH
 	// PRINT
 	// DELETE

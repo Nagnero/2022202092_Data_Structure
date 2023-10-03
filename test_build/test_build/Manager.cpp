@@ -22,6 +22,7 @@ void Manager::run(const char* command)
 
     // Run command
     MemberQueue* q = new MemberQueue;
+    TermsLIST* tl = new TermsLIST;
     string line;
     while (1) {
         getline(fcmd, line);
@@ -30,6 +31,8 @@ void Manager::run(const char* command)
             LOAD(q);
         else if (line.substr(0, line.find(' ')) == "ADD")
             ADD(q, line);
+        else if (line == "QPOP")
+            QPOP(tl, q);
     }
 
     fcmd.close();
@@ -85,6 +88,13 @@ void Manager::ADD(MemberQueue* q, string line) {
 }
 
 // QPOP
+void Manager::QPOP(TermsLIST* tl, MemberQueue* q) {
+    while (!q->empty()) {
+        MemberQueueNode* curMQNode = q->front();
+        tl->insert(curMQNode);
+        q->pop();
+    }
+}
 
 // SEARCH
 

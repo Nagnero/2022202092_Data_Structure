@@ -24,6 +24,9 @@
     <ClCompile Include="MemberQueue.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="TermsList.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Manager.h">
@@ -33,6 +36,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="MemberQueueNode.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TermsList.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TermsListNode.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

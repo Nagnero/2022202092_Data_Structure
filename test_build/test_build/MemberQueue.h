@@ -15,7 +15,7 @@ public:
 	bool empty();
 	bool full();
 	void push(MemberQueueNode* newNode);
-	MemberQueueNode* pop();
+	void pop();
 	MemberQueueNode* front();
 };
 
