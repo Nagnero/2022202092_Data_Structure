@@ -7,6 +7,7 @@ private:
 	MemberQueueNode* first;
 	MemberQueueNode* last;
 	int size;
+	int max;
 
 public:
 	MemberQueue();
