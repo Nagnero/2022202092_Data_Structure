@@ -38,14 +38,14 @@ void TermsLIST::insert(MemberQueueNode* MQNode) {
 		}
 	}
 
-
+	// TermsBSTNode 생성
+	TermsBSTNode* newTBNode = new TermsBSTNode(inputName, inputAge, inputDate);
+	newTBNode->setTermDate(inputTerm);
 	// TermsListNode 새롭게 만들어서 추가
 	if (addNew) {
 		TermsListNode* newTLNode = new TermsListNode(inputTerm);
 
 		// TermsBSTNode 및 TermsBST 생성 및 TermsListNode와 연결
-		TermsBSTNode* newTBNode = new TermsBSTNode(inputName, inputAge, inputDate);
-		newTBNode->setTermDate(inputTerm);
 		TermsBST* TB = new TermsBST(newTBNode);
 		newTLNode->setRoot(TB);
 
@@ -59,13 +59,14 @@ void TermsLIST::insert(MemberQueueNode* MQNode) {
 				curTLNode = curTLNode->getNext();
 			curTLNode->setNext(newTLNode);
 		}
-		this->size++;
 	}
 	// 기존 TermsListNode에 추가
 	else {
 		// curTLNode에 추가
 		curTLNode->increaseMem_cnt();
+		curTLNode->getRoot()->insert(newTBNode);
 	}
+	this->size++;
 }
 // search
 

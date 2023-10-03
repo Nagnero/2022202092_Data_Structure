@@ -12,7 +12,7 @@ private:
 	int age;
 	string date;
 	string termDate;
-
+	int key;
 
 public:
 	TermsBSTNode(string name, int age, string date) {
@@ -23,9 +23,12 @@ public:
 		this->age = age;
 		this->date = date;
 		this->termDate = "";
+		this->key = 0;
 	}
 	~TermsBSTNode() {}
 
+	TermsBSTNode* getParent() { return this->parent; }
+	void setParent(TermsBSTNode* parent) { this->parent = parent; }
 	TermsBSTNode* getLeft()	{ return left; }
 	void setLeft(TermsBSTNode* left) { this->left = left; }
 	TermsBSTNode* getRight() { return right; }
@@ -67,5 +70,8 @@ public:
 		string temp = to_string(year) + '-' + (month < 10 ? "0" : "") + 
 			to_string(month) + '-'  + day;
 		this->termDate = temp;
+		this->key = year * 10000 + month * 100 + stoi(day);
 	}
+
+	int getKey() { return this->key; }
 };

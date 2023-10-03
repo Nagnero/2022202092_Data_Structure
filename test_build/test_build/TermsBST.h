@@ -14,7 +14,7 @@ public:
 	TermsBSTNode* getRoot();
 
 	// insert
-	void insert(MemberQueue* q);
+	void insert(TermsBSTNode* newTBNode);
 	// print
 	// delete
 };
