@@ -1,5 +1,6 @@
 #include "TermsList.h"
 
+
 TermsLIST::TermsLIST(): head(nullptr) {
 	this->size = 0;
 }
@@ -15,7 +16,7 @@ TermsListNode* TermsLIST::getHead() {
 }
 
 // insert
-void TermsLIST::insert(MemberQueueNode* MQNode) {
+void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 	string inputName = MQNode->getName();
 	int inputAge = MQNode->getAge();
 	string inputDate = MQNode->getDate();
@@ -41,6 +42,9 @@ void TermsLIST::insert(MemberQueueNode* MQNode) {
 	// TermsBSTNode 생성
 	TermsBSTNode* newTBNode = new TermsBSTNode(inputName, inputAge, inputDate);
 	newTBNode->setTermDate(inputTerm);
+	// NameBSTNode 생성
+	NameBSTNode* newNBNode = new NameBSTNode(inputName, inputAge, inputDate, newTBNode->getTermDate(), inputTerm);
+	nb->insert(newNBNode);
 	// TermsListNode 새롭게 만들어서 추가
 	if (addNew) {
 		TermsListNode* newTLNode = new TermsListNode(inputTerm);

@@ -1,8 +1,8 @@
 #pragma once
 #include "MemberQueue.h"
 #include "TermsList.h"
-//#include "TermsBST.h"
-//#include "NameBST.h"
+#include "TermsBST.h"
+#include "NameBST.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -12,8 +12,8 @@ using namespace std;
 class Manager
 {
 private:
-	ifstream	fcmd;
-	ofstream	flog;
+	ifstream fcmd;
+	ofstream flog;
 
 public:
 	Manager();
@@ -29,7 +29,7 @@ public:
 	// ADD
 	void ADD(MemberQueue* q, string line);
 	// QPOP
-	void QPOP(TermsLIST* tl, MemberQueue* q);
+	void QPOP(TermsLIST* tl, MemberQueue* q, NameBST* nb);
 	// SEARCH
 	// PRINT
 	// DELETE

@@ -1,6 +1,7 @@
 #pragma once
 #include "TermsListNode.h"
 #include "MemberQueue.h"
+#include "NameBST.h"
 
 class TermsLIST
 {
@@ -16,7 +17,7 @@ public:
 	TermsListNode* getHead();
 
 	// insert
-	void insert(MemberQueueNode* MQNode);
+	void insert(MemberQueueNode* MQNode, NameBST* nb);
 	// search
 	// delete
 };

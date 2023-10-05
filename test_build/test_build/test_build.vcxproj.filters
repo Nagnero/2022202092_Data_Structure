@@ -30,6 +30,9 @@
     <ClCompile Include="TermsBST.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="NameBST.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Manager.h">
@@ -51,6 +54,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="TermsBSTNode.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NameBST.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NameBSTNode.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
