@@ -30,8 +30,10 @@ void Manager::run(const char* command)
             LOAD(q);
         else if (line.substr(0, line.find(' ')) == "ADD")
             ADD(q, line);
-        else if (line == "QPOP")
+        else if (line == "QPOP") {
+            exit(1);
             QPOP(tl, q, nb);
+        }
     }
 
     fcmd.close();
@@ -91,7 +93,17 @@ void Manager::ADD(MemberQueue* q, string line) {
     int age;
     char term;
     ss >> temp >> name >> age >> date >> term;
+    if (!(term >= 'A' && term <= 'D') || age > 100) {
+        flog << "===== ERROR =====\n";
+        flog << "200\n";
+        flog << "===============\n";
+        exit(0);
+    }
+
     MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
+    flog << "===== ADD =====\n";
+    flog << name << '/' << age << '/' << date << '/' << term << '\n';
+    flog << "===============\n";
     q->push(newNode);
 
 }
