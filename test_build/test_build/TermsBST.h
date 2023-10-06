@@ -15,6 +15,5 @@ public:
 
 	// insert
 	void insert(TermsBSTNode* newTBNode);
-	// print
 	// delete
 };

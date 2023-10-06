@@ -30,13 +30,14 @@ void Manager::run(const char* command)
             LOAD(q);
         else if (line.substr(0, line.find(' ')) == "ADD")
             ADD(q, line);
-        else if (line == "QPOP") {
+        else if (line == "QPOP")
             QPOP(tl, q, nb);
-        }
-        else if (line.substr(0, line.find(' ')) == "SEARCH") {
+        else if (line.substr(0, line.find(' ')) == "SEARCH")
             SEARCH(nb, line);
-        }
-        else exit(1);
+        else if (line.substr(0, line.find(' ')) == "PRINT")
+            PRINT(tl, nb, line);
+        else
+            exit(1);
     }
 
     fcmd.close();
@@ -134,6 +135,39 @@ void Manager::SEARCH(NameBST* nb, string line) {
     }
 }
 
+template<typename T>
+void Manager::inorderPrint(T* curNode) {
+    if (curNode == nullptr) return;
+
+    inorderPrint(curNode->getLeft());
+    flog << curNode->getName() << '/' << curNode->getAge() << '/' << curNode->getDate() << '/' << curNode->getTermDate() << '\n';
+    inorderPrint(curNode->getRight());
+}
+
 // PRINT
+void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
+    stringstream ss(line);
+    string temp, input;
+    ss >> temp >> input;
+
+    // 입력이 NAME이 아니면 TermsBST PRINT함수 호출
+    if (input != "NAME") {
+        char c = input[0];
+        TermsBST* curNode = tl->PRINT(c);
+
+        // 반환된 노드가 없으면 에러 출력
+        if (!curNode) PrintErrorCode(500);
+        else {
+            flog << "===== PRINT =====\n";
+            flog << "Terms_BST " << c << '\n';
+            inorderPrint(curNode->getRoot());
+            flog << "===============\n\n";
+        }
+    }
+    // 입력이 이름이면 NameBST 
+    else {
+        
+    }
+}
 
 // DELETE

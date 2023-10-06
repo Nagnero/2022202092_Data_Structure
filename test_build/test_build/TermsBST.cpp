@@ -15,7 +15,7 @@ TermsBSTNode* TermsBST::getRoot() {
 // insert
 void TermsBST::insert(TermsBSTNode* newTBNode) {
 	TermsBSTNode* curTBNode = this->getRoot();
-
+	
 	while (1) {
 		// 삽입노드가 기준보다 작은경우
 		if (curTBNode->getKey() > newTBNode->getKey()) {
@@ -45,6 +45,5 @@ void TermsBST::insert(TermsBSTNode* newTBNode) {
 		}
 	}
 }
-// print
 
 // delete

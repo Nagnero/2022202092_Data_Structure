@@ -18,6 +18,7 @@ public:
 
 	// insert
 	void insert(MemberQueueNode* MQNode, NameBST* nb);
-	// search
+	// print
+	TermsBST* PRINT(char c);
 	// delete
 };

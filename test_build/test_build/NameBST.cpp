@@ -72,6 +72,4 @@ NameBSTNode* NameBST::search(string name) {
 	}
 }
 
-// print
-
 // delete

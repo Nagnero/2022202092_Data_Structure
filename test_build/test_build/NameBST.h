@@ -16,6 +16,5 @@ public:
 	void insert(NameBSTNode* newNode);
 	// search
 	NameBSTNode* search(string name);
-	// print
 	// delete
 };

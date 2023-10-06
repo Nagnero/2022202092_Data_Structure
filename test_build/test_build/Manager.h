@@ -23,6 +23,8 @@ public:
 
 	void PrintSuccess(const char* cmd);
 	void PrintErrorCode(int num);
+	template<typename T>
+	void inorderPrint(T* curNode);
 
 	// LOAD
 	void LOAD(MemberQueue* q);
@@ -33,5 +35,6 @@ public:
 	// SEARCH
 	void SEARCH(NameBST* nb, string line);
 	// PRINT
+	void PRINT(TermsLIST* tl, NameBST* nb, string line);
 	// DELETE
 };

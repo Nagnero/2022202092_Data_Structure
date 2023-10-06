@@ -72,6 +72,19 @@ void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 	}
 	this->size++;
 }
-// search
+
+// print
+TermsBST* TermsLIST::PRINT(char c) {
+	TermsListNode* curNode = getHead();
+
+	while (curNode) {
+		if (curNode->getTerm() == c)
+			return curNode->getRoot();
+		else
+			curNode = curNode->getNext();
+	}
+
+	return NULL;
+}
 
 // delete
