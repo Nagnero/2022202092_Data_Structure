@@ -36,4 +36,7 @@ public:
 	void setRight(NameBSTNode* right) { this->right = right; }
 
 	string getName() { return this->name; }
+	int getAge() { return this->age; }
+	string getDate() { return this->date; }
+	string getTermDate() { return this->termDate; }
 };

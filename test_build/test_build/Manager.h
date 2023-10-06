@@ -31,6 +31,7 @@ public:
 	// QPOP
 	void QPOP(TermsLIST* tl, MemberQueue* q, NameBST* nb);
 	// SEARCH
+	void SEARCH(NameBST* nb, string line);
 	// PRINT
 	// DELETE
 };

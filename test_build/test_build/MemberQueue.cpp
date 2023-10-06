@@ -12,8 +12,7 @@ MemberQueue::~MemberQueue()
 
 }
 
-bool MemberQueue::empty()
-{
+bool MemberQueue::empty() {
 	if (this->size == 0)
 		return 1;
 	else
