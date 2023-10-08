@@ -37,4 +37,5 @@ public:
 	// PRINT
 	void PRINT(TermsLIST* tl, NameBST* nb, string line);
 	// DELETE
+	void DELETE(TermsLIST* tl, NameBST* nb, string line);
 };

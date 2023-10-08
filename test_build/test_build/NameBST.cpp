@@ -72,3 +72,63 @@ NameBSTNode* NameBST::search(string name) {
 }
 
 // delete
+char NameBST::_delete(string name) {
+	NameBSTNode* destNode = search(name);
+
+	// return 0 if target doesn't exist
+	if (!destNode) return 0;
+	else {
+		char term = destNode->getTerm();
+		NameBSTNode* parentNode = destNode->getParent();
+		// destNode is leafNode
+		if (destNode->getLeft() == NULL && destNode->getRight() == NULL) {
+			// no parentNode
+			if (!parentNode) this->root = NULL;
+		}		
+		// destNode has two child
+		else if (destNode->getLeft() && destNode->getRight()) {
+			NameBSTNode* left = destNode->getLeft();
+			NameBSTNode* right = destNode->getRight();
+			NameBSTNode* replaceNode = right;
+			// get replaceNode
+			while (replaceNode->getLeft()) 
+				replaceNode = replaceNode->getLeft();
+			
+			// replaceNode has right child
+			if (replaceNode->getRight()) {
+				replaceNode->getParent()->setLeft(replaceNode->getRight());
+				replaceNode->getRight()->setParent(replaceNode->getParent());
+			}
+
+			if (parentNode->getLeft() == destNode)
+				parentNode->setLeft(replaceNode);
+			else 
+				parentNode->setRight(replaceNode);
+
+			replaceNode->setParent(parentNode);
+			if (replaceNode != left) {
+				replaceNode->setLeft(left);
+				left->setParent(replaceNode);
+			}
+			if (replaceNode != right) {
+				replaceNode->setRight(right);
+				right->setParent(replaceNode);
+			}
+		}
+		// destNode has one child
+		else {
+			NameBSTNode* childNode = destNode->getLeft();
+			if (!childNode) childNode = destNode->getRight();
+
+			if (parentNode->getLeft() == destNode)
+				parentNode->setLeft(childNode);
+			else
+				parentNode->setRight(childNode);
+		}
+
+		delete destNode;
+		this->size--;
+
+		return term;
+	}
+}

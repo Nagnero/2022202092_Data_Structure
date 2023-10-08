@@ -39,4 +39,5 @@ public:
 	int getAge() { return this->age; }
 	string getDate() { return this->date; }
 	string getTermDate() { return this->termDate; }
+	char getTerm() { return this->term; }
 };

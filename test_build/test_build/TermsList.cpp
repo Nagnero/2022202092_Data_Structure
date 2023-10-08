@@ -91,3 +91,29 @@ TermsBST* TermsLIST::PRINT(char c) {
 }
 
 // delete
+void TermsLIST::name_delete(string name, char term) {
+	TermsListNode* curTLNode = this->getHead();
+	TermsBST* curBST = NULL;
+
+	// get target TermsBST
+	while (1) {
+		if (curTLNode->getTerm() == term) {
+			curBST = curTLNode->getRoot();
+			break;
+		}
+		else
+			curTLNode = curTLNode->getNext();
+	}
+
+	bool check_empty = curBST->_delete(name);
+	// delete TermsList if TermsBST is empty
+	if (check_empty) {
+		TermsListNode* prevNode = this->getHead();
+		while (!(prevNode->getNext() == curTLNode))
+			prevNode = prevNode->getNext();
+		prevNode->setNext(NULL);
+		delete curTLNode;
+	}
+	this->size--;
+		
+}

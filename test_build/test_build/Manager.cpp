@@ -38,6 +38,8 @@ void Manager::run(const char* command) {
             SEARCH(nb, line);
         else if (line.substr(0, line.find(' ')) == "PRINT")
             PRINT(tl, nb, line);
+        else if (line.substr(0, line.find(' ')) == "DELETE")
+            DELETE(tl, nb, line);
         else
             exit(1);
     }
@@ -187,8 +189,39 @@ void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
     }
     // call print function with NameBST when input is "NAME"
     else {
-        
+        // print error code when NameBST is empty
+        if(!nb->getRoot()) PrintErrorCode(500);
+        // else print inorder
+        else {
+            flog << "===== PRINT =====\n";
+            flog << "Name_BST " << '\n';
+            inorderPrint(nb->getRoot());
+            flog << "===============\n\n";
+        }
     }
 }
 
 // DELETE
+void Manager::DELETE(TermsLIST* tl, NameBST* nb, string line) {
+    // print error code if there is no data
+    if (!nb->getRoot()) PrintErrorCode(600);
+
+    stringstream ss(line);
+    string temp, input, data;
+    ss >> temp >> input >> data;
+
+    // deleting data is about date
+    if (input == "DATE") {
+
+    }
+    // deleting data is about name
+    else {        
+        char term = nb->_delete(data);
+        // print error code when destinate name doesn't exist
+        if(!term) PrintErrorCode(600);
+        else {
+            tl->name_delete(data, term);
+        }
+
+    }
+}

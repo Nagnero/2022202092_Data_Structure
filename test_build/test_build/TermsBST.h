@@ -14,5 +14,8 @@ public:
 
 	// insert
 	void insert(TermsBSTNode* newTBNode);
+	// search
+	TermsBSTNode* search(string name);
 	// delete
+	bool _delete(string name);
 };

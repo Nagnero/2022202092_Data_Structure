@@ -17,4 +17,5 @@ public:
 	// search
 	NameBSTNode* search(string name);
 	// delete
+	char _delete(string name);
 };
