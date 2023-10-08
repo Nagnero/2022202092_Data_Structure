@@ -2,8 +2,7 @@
 #include <string>
 using namespace std;
 
-class MemberQueueNode
-{
+class MemberQueueNode {
 private:
 	MemberQueueNode* next;
 	MemberQueueNode* prev;

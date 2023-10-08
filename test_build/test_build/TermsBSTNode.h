@@ -2,8 +2,7 @@
 #include <string>
 using namespace std;
 
-class TermsBSTNode
-{
+class TermsBSTNode {
 private:
 	TermsBSTNode* parent;
 	TermsBSTNode* left;
@@ -37,20 +36,23 @@ public:
 	int getAge() { return this->age; }
 	string getDate() { return this->date; }
 	string getTermDate() { return this->termDate; }
+	int getKey() { return this->key; }
 
-	// 만료 기한을 계산하여 대입하는 함수
+	// calculate expire date
 	void setTermDate(char term) { 
 		size_t yearPos = this->date.find_first_of("-");
 		size_t monthPos = this->date.find_last_of("-");
 
+        // get year, month and day as seperate values
 		int year = stoi(this->date.substr(0, yearPos));
 		int month = stoi(date.substr(yearPos + 1, monthPos - yearPos - 1));
 		string day = date.substr(monthPos + 1);
 
-		switch (term)
-		{
+        // add period due to each term
+		switch (term) {
 		case 'A':
 			month += 6;
+            // adding month need additional calculation which can over 12
 			if (month > 12) {
 				year++;
 				month -= 12;
@@ -67,11 +69,11 @@ public:
 			break;
 		}
 
+        // make termDate string after calculation
 		string temp = to_string(year) + '-' + (month < 10 ? "0" : "") + 
 			to_string(month) + '-'  + day;
 		this->termDate = temp;
 		this->key = year * 10000 + month * 100 + stoi(day);
 	}
 
-	int getKey() { return this->key; }
 };

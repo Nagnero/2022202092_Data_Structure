@@ -1,7 +1,6 @@
 #include "Manager.h"
 
-int main()
-{
+int main() {
 	Manager manager;
 	manager.run("command.txt");
 

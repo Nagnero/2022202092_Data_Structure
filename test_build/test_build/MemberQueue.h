@@ -1,8 +1,7 @@
 #pragma once
 #include "MemberQueueNode.h"
 
-class MemberQueue
-{
+class MemberQueue {
 private:
 	MemberQueueNode* first;
 	MemberQueueNode* last;

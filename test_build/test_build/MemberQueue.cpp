@@ -1,70 +1,76 @@
 #include "MemberQueue.h"
 
-MemberQueue::MemberQueue()
-{
+MemberQueue::MemberQueue() {
 	this->first = NULL;
 	this->last = NULL;
 	this->size = 0;
 	this->max = 100;
 }
-MemberQueue::~MemberQueue()
-{
+
+MemberQueue::~MemberQueue() {
 
 }
 
+// return 1 when Queue is empty, or return 0
 bool MemberQueue::empty() {
 	if (this->size == 0)
 		return 1;
 	else
 		return 0;
 }
-// 가득 차있으면 1 반환
-bool MemberQueue::full()
-{
+
+// return 1 when Queue is full, or return 0
+bool MemberQueue::full() {
 	if (this->size == this->max)
 		return 1;
 	else
 		return 0;
 }
-void MemberQueue::push(MemberQueueNode* newNode) {
-	// 큐가 가득 차있는데 push 하는 경우 종료
-	if (this->full())
-		exit(1);
 
-	// 큐에 저장된 요소가 있는 경우
+// MemberQueue push method
+void MemberQueue::push(MemberQueueNode* newNode) {
+	// end program when Queue is already full
+	if (this->full()) exit(1);
+
+	// push when Queue already have Node
 	if (first != NULL) {
 		this->last->setNext(newNode);
 		newNode->setPrev(this->last);
 		this->last = newNode;
 	} 
-	// 큐에 저장된 요소가 없는 경우
+	// push when Queue is empty
 	else {
 		this->first = newNode;
 		this->last = newNode;
 	}
+    // increase number of Nodes
 	this->size++;
 }
+
+// MemberQueue pop method
 void MemberQueue::pop() {
+    // end program when Queue is already empty
+    if (this->empty()) exit(1);
+    // set delete Node
 	MemberQueueNode* delMQNode = this->first;
 
+    // pop when Queue has more then 1 node
 	if (this->size > 1) {
 		this->first = this->first->getNext();
 		delete delMQNode;
 		this->size--;
 	}
-	else if (this->size == 1) {
+    // pop when Queue has only 1 node
+	else {
 		this->first = NULL;
 		this->last = NULL;
 		delete delMQNode;
 		this->size--;
 	}
-	// 큐가 비어있는데 pop 하는 경우 종료
-	else {
-		exit(1);
-	}
 	
 }
-MemberQueueNode* MemberQueue::front()
-{
+
+// return first Node
+MemberQueueNode* MemberQueue::front() {
 	return this->first;
 }

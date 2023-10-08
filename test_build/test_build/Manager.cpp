@@ -7,25 +7,27 @@ Manager::~Manager() {
 
 }
 
-void Manager::run(const char* command)
-{
+void Manager::run(const char* command) {
     // Open command & log file
     fcmd.open(command);
     flog.open("log.txt");
-    if (!fcmd)
-    {
+    if (!fcmd) {
         flog << "Fail to open command file" << endl;
         exit(-1);
     }
 
     // Run command
+    // make MemeberQueue, TermsList, NameBST prior to run commands
     MemberQueue* q = new MemberQueue;
     TermsLIST* tl = new TermsLIST;
     NameBST* nb = new NameBST;
+    // temporary string variable that gets inputs
     string line;
     while (1) {
+        // get one line from command file and save to 'line'
         getline(fcmd, line);
 
+        // check the command and run each process
         if (line == "LOAD")
             LOAD(q);
         else if (line.substr(0, line.find(' ')) == "ADD")
@@ -40,19 +42,20 @@ void Manager::run(const char* command)
             exit(1);
     }
 
+    // close input file stream and output file stream
     fcmd.close();
     flog.close();
     return;
 }
 
-void Manager::PrintSuccess(const char* cmd)
-{
+// function that prints success message
+void Manager::PrintSuccess(const char* cmd) {
     flog << "===== " << cmd << " =====" << endl;
     flog << "Success" << endl;
     flog << "===============" << endl << endl;
 }
-void Manager::PrintErrorCode(int num)
-{
+// function that prints error code
+void Manager::PrintErrorCode(int num) {
     flog << "===== ERROR =====" << endl;
     flog << num << endl;
     flog << "===============" << endl << endl;
@@ -63,26 +66,40 @@ void Manager::LOAD(MemberQueue* q) {
     ifstream fin;
     fin.open("data.txt");
 
-    // 텍스트 파일이 존재하지 않거나 큐에 데이터가 들어가 있으면 에러코드 출력
+    // error occur when data file doesn't exist
+    // or MemeberQueue is empty
     if (!fin.is_open() || !q->empty()) PrintErrorCode(100);
     else {
         string data = "", name, date;
         int age;
         char term;
-        flog << "===== LOAD =====\n";
-        while (1) {
-            getline(fin, data);
-            // 입력이 없으면 반복문 out
-            if (data == "")
-                break;
-            // 입력값 공백으로 나누어 저장
+        // check if data file is opened but, there is no data
+        getline(fin, data);
+        if (data == "") PrintErrorCode(100);
+        else {
+            flog << "===== LOAD =====\n";
+            // first data input
             stringstream ss(data);
             ss >> name >> age >> date >> term;
             flog << name << '/' << age << '/' << date << '/' << term << '\n';
             MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
             q->push(newNode);
+
+            // next data input
+            while (1) {
+                getline(fin, data);
+                // when there's no data, break repeat
+                if (data == "")
+                    break;
+                // store data which is seperated with white space
+                stringstream ss(data);
+                ss >> name >> age >> date >> term;
+                flog << name << '/' << age << '/' << date << '/' << term << '\n';
+                MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
+                q->push(newNode);
+            }
+            flog << "===============\n\n";
         }
-        flog << "===============\n\n";
     }
 }
 
@@ -106,8 +123,9 @@ void Manager::ADD(MemberQueue* q, string line) {
 
 // QPOP
 void Manager::QPOP(TermsLIST* tl, MemberQueue* q, NameBST* nb) {
-    // 큐에 노드가 없을 시 에러 코드 출력
+    // print error code when queue is empty
     if (q->empty()) PrintErrorCode(300);
+    // else pop node and insert to Terms List
     else {
         while (!q->empty()) {
             MemberQueueNode* curMQNode = q->front();
@@ -135,6 +153,8 @@ void Manager::SEARCH(NameBST* nb, string line) {
     }
 }
 
+// inorder print function with template
+// work on both TermsBST and NameBST
 template<typename T>
 void Manager::inorderPrint(T* curNode) {
     if (curNode == nullptr) return;
@@ -150,13 +170,14 @@ void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
     string temp, input;
     ss >> temp >> input;
 
-    // 입력이 NAME이 아니면 TermsBST PRINT함수 호출
+    // call print function with TermsBST when input is not "NAME"
     if (input != "NAME") {
         char c = input[0];
         TermsBST* curNode = tl->PRINT(c);
 
-        // 반환된 노드가 없으면 에러 출력
+        // print error code when there's no return Node
         if (!curNode) PrintErrorCode(500);
+        // else print inorder
         else {
             flog << "===== PRINT =====\n";
             flog << "Terms_BST " << c << '\n';
@@ -164,7 +185,7 @@ void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
             flog << "===============\n\n";
         }
     }
-    // 입력이 이름이면 NameBST 
+    // call print function with NameBST when input is "NAME"
     else {
         
     }

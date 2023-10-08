@@ -3,8 +3,7 @@
 #include "MemberQueue.h"
 #include "NameBST.h"
 
-class TermsLIST
-{
+class TermsLIST {
 private:
 	TermsListNode* head;
 	int size;

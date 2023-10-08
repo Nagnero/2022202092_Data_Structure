@@ -2,10 +2,10 @@
 #include <string>
 #include "TermsBST.h"
 using namespace std;
-// TermsList에 들어갈 노드; 
-// Term, 다음 Node, Terms BST의 root 저장
-class TermsListNode
-{
+
+// Node that will go into TermsList
+// Term, next Node, Terms BST's root 
+class TermsListNode {
 private:
 	TermsListNode*	next;
 	char term;

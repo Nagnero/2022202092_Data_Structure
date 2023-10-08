@@ -7,6 +7,7 @@ NameBST::~NameBST() {
 
 }
 
+// return root Node
 NameBSTNode* NameBST::getRoot() {
 	return root;
 }
@@ -14,16 +15,15 @@ NameBSTNode* NameBST::getRoot() {
 // insert
 void NameBST::insert(NameBSTNode* newNode) {
 	NameBSTNode* curNode = this->getRoot();
-	// root가 있으면
+    
+	// when BST root already exist
 	if (curNode) {
 		while (1) {
-			// curNode가 newNode보다 뒤일때
+			// newNode < curNode
 			if (curNode->getName().compare(newNode->getName()) > 0) {
-				// curNode 왼쪽이 있으면 이동
-				if (curNode->getLeft()) {
-					curNode = curNode->getLeft();
-				}
-				// curNode 왼쪽이 없으면 삽입
+				// move left when curNode has left Node
+				if (curNode->getLeft()) curNode = curNode->getLeft();
+				// insert Node when left of curNode is empty
 				else {
 					newNode->setParent(curNode);
 					curNode->setLeft(newNode);
@@ -31,13 +31,11 @@ void NameBST::insert(NameBSTNode* newNode) {
 					break;
 				}
 			}
-			// curNode가 newNode보다 앞일때
+			// curNode < newNode
 			else {
-				// curNode 오른쪽이 있으면 이동
-				if (curNode->getRight()) {
-					curNode = curNode->getRight();
-				}
-				// curNode 오른쪽이 없으면 삽입
+				// move right when curNode has right Node
+				if (curNode->getRight()) curNode = curNode->getRight();
+				// insert Node when right of curNode is empty
 				else {
 					newNode->setParent(curNode);
 					curNode->setRight(newNode);
@@ -47,8 +45,9 @@ void NameBST::insert(NameBSTNode* newNode) {
 			}
 		}
 	}
-	// root가 없으면
+	// when BST root doesn't exist
 	else {
+        // make newNode as root Node
 		root = newNode;
 		this->size++;
 	}
@@ -59,15 +58,15 @@ NameBSTNode* NameBST::search(string name) {
 	NameBSTNode* curNode = getRoot();
 
 	while (1) {
-		// 찾는 노드가 없는 경우 NULL 반환
+		// return NULL when Searching Node is missing
 		if (!curNode) return curNode;
 
 		int res = name.compare(curNode->getName());
-		// 이름이 같은 노드를 찾으면 반환
+		// return curNode when it has same name
 		if (res == 0) return curNode;
-		// 찾는 이름이 curNode의 이름보다 작을 경우
+		// move left when finding name is smaller then curNode name
 		else if (res < 0) curNode = curNode->getLeft();
-		// 찾는 이름이 curNode의 이름보다 클 경우
+		// move right when finding name is larger then curNode name
 		else curNode = curNode->getRight();
 	}
 }

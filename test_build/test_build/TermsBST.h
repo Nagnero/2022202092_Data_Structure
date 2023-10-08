@@ -2,8 +2,7 @@
 #include "TermsBSTNode.h"
 #include "MemberQueue.h"
 
-class TermsBST
-{
+class TermsBST {
 private:
 	TermsBSTNode* root;
 

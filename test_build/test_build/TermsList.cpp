@@ -11,6 +11,7 @@ TermsLIST::~TermsLIST() {
 void TermsLIST::setHead(TermsListNode* newTLNode) {
 	this->head = newTLNode;
 }
+
 TermsListNode* TermsLIST::getHead() {
 	return head;
 }
@@ -23,14 +24,15 @@ void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 	char inputTerm = MQNode->getTerm();
 	
 	TermsListNode* curTLNode = this->getHead();
-	bool addNew = false; // TermsListNode를 새롭게 추가하는지 확인하는 플래그
+	bool addNew = false; // flag that checks for new TermsListNode
 
-	// 요소가 없으면 추가 flag on
-	if (!curTLNode)
-		addNew = true;
+	// on the flag when curNode is NULL
+	if (!curTLNode) addNew = true;
+    // check if same term exist;
 	else {
 		addNew = true;
 		while (curTLNode) {
+            // if same term exist, off the flag and break
 			if (curTLNode->getTerm() == inputTerm) {
 				addNew = false;
 				break;
@@ -39,24 +41,24 @@ void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 		}
 	}
 
-	// TermsBSTNode 생성
+	// new TermsBSTNode and set termDate
 	TermsBSTNode* newTBNode = new TermsBSTNode(inputName, inputAge, inputDate);
 	newTBNode->setTermDate(inputTerm);
-	// NameBSTNode 생성
+	// new NameBSTNode and insert to NameBST
 	NameBSTNode* newNBNode = new NameBSTNode(inputName, inputAge, inputDate, newTBNode->getTermDate(), inputTerm);
 	nb->insert(newNBNode);
-	// TermsListNode 새롭게 만들어서 추가
+    
+	// check flag and add new TermsListNode
 	if (addNew) {
 		TermsListNode* newTLNode = new TermsListNode(inputTerm);
 
-		// TermsBSTNode 및 TermsBST 생성 및 TermsListNode와 연결
+		// new TermsBSTNode and TermsBST, connect to TermsListNode
 		TermsBST* TB = new TermsBST(newTBNode);
 		newTLNode->setRoot(TB);
 
-		// 리스트가 비어있는 경우
-		if (!this->size) {
-			this->setHead(newTLNode);
-		}
+		// newNode as head when List is empty
+		if (!this->size) this->setHead(newTLNode);
+        // push newNode at last
 		else {
 			curTLNode = this->getHead();
 			for (int i = 1; i < size; i++)
@@ -64,9 +66,8 @@ void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 			curTLNode->setNext(newTLNode);
 		}
 	}
-	// 기존 TermsListNode에 추가
+	// add TermsListNode to existing TermsList
 	else {
-		// curTLNode에 추가
 		curTLNode->increaseMem_cnt();
 		curTLNode->getRoot()->insert(newTBNode);
 	}
@@ -77,6 +78,7 @@ void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 TermsBST* TermsLIST::PRINT(char c) {
 	TermsListNode* curNode = getHead();
 
+    // return Node pointer which have same term
 	while (curNode) {
 		if (curNode->getTerm() == c)
 			return curNode->getRoot();
@@ -84,6 +86,7 @@ TermsBST* TermsLIST::PRINT(char c) {
 			curNode = curNode->getNext();
 	}
 
+    // if there's no same term, return NULL
 	return NULL;
 }
 
