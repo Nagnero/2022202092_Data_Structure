@@ -7,12 +7,15 @@ class TermsBST {
 private:
 	TermsBSTNode* root;
 	int cnt;
+	int size;
 
 public:
 	TermsBST(TermsBSTNode* root);
 	~TermsBST();
 
 	TermsBSTNode* getRoot();
+	int getSize() { return this->size; }
+	int increaseSize() { return this->size++; }
 
 	// insert
 	void insert(TermsBSTNode* newTBNode);

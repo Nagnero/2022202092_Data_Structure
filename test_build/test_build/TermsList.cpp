@@ -70,6 +70,7 @@ void TermsLIST::insert(MemberQueueNode* MQNode, NameBST* nb) {
 	else {
 		curTLNode->increaseMem_cnt();
 		curTLNode->getRoot()->insert(newTBNode);
+		curTLNode->getRoot()->increaseSize();
 	}
 	this->size++;
 }
@@ -104,8 +105,10 @@ void TermsLIST::name_delete(string name, char term) {
 		else
 			curTLNode = curTLNode->getNext();
 	}
+	curTLNode->decreaseMem_cnt();
 
-	bool check_empty = curBST->_delete(name);
+	// return 1 when empty
+	int check_empty = curBST->_delete(name);
 	// delete TermsList if TermsBST is empty
 	if (check_empty) {
 		TermsListNode* prevNode = this->getHead();
@@ -114,7 +117,6 @@ void TermsLIST::name_delete(string name, char term) {
 		prevNode->setNext(NULL);
 		delete curTLNode;
 	}
-	this->size--;		
 }
 
 void TermsLIST::date_delete(NameBST* nb, string termDate) {
@@ -122,11 +124,19 @@ void TermsLIST::date_delete(NameBST* nb, string termDate) {
 
 	while (curTLNode) {
 		TermsBST* curBST = curTLNode->getRoot();
+		// return delete node 
 		int check_empty = curBST->date_delete(nb, termDate);
+		int temp = curBST->getSize();
 		TermsListNode* delNode = curTLNode;
+
+		for (int i = 0; i < check_empty; i++) {
+			curTLNode->decreaseMem_cnt();
+			this->size--;
+		}
 		curTLNode = curTLNode->getNext();
 
-		if (!check_empty) {
+		// TermsBST delete
+		if (!curBST->getRoot()) {
 			delete curBST;
 			TermsListNode* prevNode = this->getHead();
 			while (!(prevNode->getNext() == delNode))
@@ -134,9 +144,5 @@ void TermsLIST::date_delete(NameBST* nb, string termDate) {
 			prevNode->setNext(delNode->getNext());
 			delete delNode;
 		}
-
-		if (check_empty != 101)
-			for (int i = 0; i < check_empty; i++) curTLNode->decreaseMem_cnt();
-
 	}
 }

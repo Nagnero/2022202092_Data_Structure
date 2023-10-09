@@ -98,27 +98,26 @@ char NameBST::_delete(string name) {
 			// get replaceNode
 			while (replaceNode->getLeft()) 
 				replaceNode = replaceNode->getLeft();
+			replaceNode->getParent()->setLeft(NULL);
 			
-			// if replaceNode has right child
-			if (replaceNode->getRight()) {
+			// if replaceNode has right child and not rightNode
+			if (replaceNode->getRight() && (replaceNode != right)) {
 				replaceNode->getParent()->setLeft(replaceNode->getRight());
 				replaceNode->getRight()->setParent(replaceNode->getParent());
 			}
 
 			// if delNode is not root Node
 			if (parentNode) {
-
-				if (parentNode->getLeft() == destNode)
+				// set parentNode and replaceNode
+				if (parentNode->getLeft() == destNode) 
 					parentNode->setLeft(replaceNode);
-				else
+				else 
 					parentNode->setRight(replaceNode);
-
 				replaceNode->setParent(parentNode);
 
-				if (replaceNode != left) {
-					replaceNode->setLeft(left);
-					left->setParent(replaceNode);
-				}
+				replaceNode->setLeft(left);
+				left->setParent(replaceNode);
+
 				if (replaceNode != right) {
 					replaceNode->setRight(right);
 					right->setParent(replaceNode);

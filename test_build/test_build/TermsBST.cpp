@@ -5,6 +5,7 @@
 TermsBST::TermsBST(TermsBSTNode* root) {
 	this->root = root;
 	this->cnt = 0;
+	this->size = 0;
 }
 
 TermsBST::~TermsBST() {
@@ -18,7 +19,7 @@ TermsBSTNode* TermsBST::getRoot() {
 // insert
 void TermsBST::insert(TermsBSTNode* newTBNode) {
 	TermsBSTNode* curTBNode = this->getRoot();
-	
+
 	while (1) {
 		// newNode < curNode
 		if (curTBNode->getKey() > newTBNode->getKey()) {
@@ -84,39 +85,62 @@ bool TermsBST::_delete(string name) {
 		// get replaceNode
 		while (replaceNode->getLeft())
 			replaceNode = replaceNode->getLeft();
+		replaceNode->getParent()->setLeft(NULL);
 
-		// replaceNode has right child
-		if (replaceNode->getRight()) {
+		// replaceNode has right child and not rightNode
+		if (replaceNode->getRight() && (replaceNode != right)) {
 			replaceNode->getParent()->setLeft(replaceNode->getRight());
 			replaceNode->getRight()->setParent(replaceNode->getParent());
 		}
 
-		if (parentNode->getLeft() == destNode)
-			parentNode->setLeft(replaceNode);
-		else
-			parentNode->setRight(replaceNode);
+		// if delNode is not root Node
+		if (parentNode) {
+			// set parentNode and replaceNode
+			if (parentNode->getLeft() == destNode)
+				parentNode->setLeft(replaceNode);
+			else
+				parentNode->setRight(replaceNode);
+			replaceNode->setParent(parentNode);
 
-		replaceNode->setParent(parentNode);
-		if (replaceNode != left) {
 			replaceNode->setLeft(left);
 			left->setParent(replaceNode);
+			if (replaceNode != right) {
+				replaceNode->setRight(right);
+				right->setParent(replaceNode);
+			}
 		}
-		if (replaceNode != right) {
+		// if delNode is root Node
+		else {
+			if (replaceNode->getParent()->getLeft() == replaceNode)
+				replaceNode->getParent()->setLeft(NULL);
+
+			this->root = replaceNode;
+			replaceNode->setParent(NULL);
+			replaceNode->setLeft(left);
+			left->setParent(replaceNode);
 			replaceNode->setRight(right);
 			right->setParent(replaceNode);
 		}
-
-		delete destNode;
 	}
 	// destNode has one child
 	else {
 		TermsBSTNode* childNode = destNode->getLeft();
 		if (!childNode) childNode = destNode->getRight();
 
-		if (parentNode->getLeft() == destNode)
-			parentNode->setLeft(childNode);
-		else
-			parentNode->setRight(childNode);
+		// if destNode is not root Node
+		if (parentNode) {
+			if (parentNode->getLeft() == destNode)
+				parentNode->setLeft(childNode);
+			else
+				parentNode->setRight(childNode);
+
+			childNode->setParent(parentNode);
+		}
+		// if destNode is root Node
+		else {
+			this->root = childNode;
+			childNode->setParent(NULL);
+		}
 
 		delete destNode;
 	}
@@ -153,7 +177,6 @@ int TermsBST::date_delete(NameBST* nb, string termDate) {
 	this->cnt = 0;
 	postorder_delete(nb, this->root, termDate);
 
-	// return 0 to delete BST and ListNode if no Nodes
-	if (this->root == nullptr) return 0;
-	else return this->cnt ? this->cnt : 101;
+	
+	return this->cnt;
 }

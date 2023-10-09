@@ -225,6 +225,7 @@ void Manager::DELETE(TermsLIST* tl, NameBST* nb, string line) {
         if(!term) PrintErrorCode(600);
         else {
             tl->name_delete(data, term);
+            tl->decrease_size();
         }
     }
     PrintSuccess("DELETE");
