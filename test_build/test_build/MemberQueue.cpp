@@ -28,46 +28,47 @@ bool MemberQueue::full() {
 }
 
 // MemberQueue push method
-void MemberQueue::push(MemberQueueNode* newNode) {
-	// end program when Queue is already full
-	if (this->full()) exit(1);
+bool MemberQueue::push(MemberQueueNode* newNode) {
+	// return 1 to end program when Queue is already full
+	if (this->full()) return 1;
 
 	// push when Queue already have Node
 	if (first != NULL) {
 		this->last->setNext(newNode);
 		newNode->setPrev(this->last);
 		this->last = newNode;
-	} 
+	}
 	// push when Queue is empty
 	else {
 		this->first = newNode;
 		this->last = newNode;
 	}
-    // increase number of Nodes
+	// increase number of Nodes
 	this->size++;
+	return 0;
 }
 
 // MemberQueue pop method
 void MemberQueue::pop() {
-    // end program when Queue is already empty
-    if (this->empty()) exit(1);
-    // set delete Node
+	// end program when Queue is already empty
+	if (this->empty()) exit(1);
+	// set delete Node
 	MemberQueueNode* delMQNode = this->first;
 
-    // pop when Queue has more then 1 node
+	// pop when Queue has more then 1 node
 	if (this->size > 1) {
 		this->first = this->first->getNext();
 		delete delMQNode;
 		this->size--;
 	}
-    // pop when Queue has only 1 node
+	// pop when Queue has only 1 node
 	else {
 		this->first = NULL;
 		this->last = NULL;
 		delete delMQNode;
 		this->size--;
 	}
-	
+
 }
 
 // return first Node

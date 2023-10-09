@@ -1,7 +1,8 @@
 #include "Manager.h"
+using namespace std;
 
 Manager::Manager() {
-    
+
 }
 Manager::~Manager() {
 
@@ -25,21 +26,20 @@ void Manager::run(const char* command) {
     string line;
     while (1) {
         // get one line from command file and save to 'line'
-        getline(fcmd, line);
-
+        fcmd >> line;
         // check the command and run each process
         if (line == "LOAD")
             LOAD(q);
         else if (line.substr(0, line.find(' ')) == "ADD")
-            ADD(q, line);
+            ADD(q);
         else if (line == "QPOP")
             QPOP(tl, q, nb);
         else if (line.substr(0, line.find(' ')) == "SEARCH")
-            SEARCH(nb, line);
+            SEARCH(nb);
         else if (line.substr(0, line.find(' ')) == "PRINT")
-            PRINT(tl, nb, line);
+            PRINT(tl, nb);
         else if (line.substr(0, line.find(' ')) == "DELETE")
-            DELETE(tl, nb, line);
+            DELETE(tl, nb);
         else if (line == "EXIT") {
             PrintSuccess("EXIT");
             exit(0);
@@ -110,20 +110,29 @@ void Manager::LOAD(MemberQueue* q) {
 }
 
 // ADD
-void Manager::ADD(MemberQueue* q, string line) {
-    stringstream ss(line);
-    string temp, name, date;
+void Manager::ADD(MemberQueue* q) {
+    string name, date;
     int age;
     char term;
-    ss >> temp >> name >> age >> date >> term;
+    fcmd >> name >> age >> date >> term;
 
     if (!(term >= 'A' && term <= 'D') || age > 100) PrintErrorCode(200);
     else {
         MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
-        flog << "===== ADD =====\n";
-        flog << name << '/' << age << '/' << date << '/' << term << '\n';
-        flog << "===============\n\n";
-        q->push(newNode);
+        // return 1 if queue is already full
+        bool error = q->push(newNode);
+
+        if (error) {
+            fcmd.close();
+            flog << "Memeber Queue over\n";
+            flog.close();
+            exit(1);
+        }
+        else {
+            flog << "===== ADD =====\n";
+            flog << name << '/' << age << '/' << date << '/' << term << '\n';
+            flog << "===============\n\n";
+        }
     }
 }
 
@@ -143,13 +152,12 @@ void Manager::QPOP(TermsLIST* tl, MemberQueue* q, NameBST* nb) {
 }
 
 // SEARCH
-void Manager::SEARCH(NameBST* nb, string line) {
-    stringstream ss(line);
-    string temp, name;
-    ss >> temp >> name;
+void Manager::SEARCH(NameBST* nb) {
+    string name;
+    fcmd >> name;
 
     NameBSTNode* fn = nb->search(name);
-    
+
     // print error code when no name
     if (!fn) PrintErrorCode(400);
     else {
@@ -171,10 +179,9 @@ void Manager::inorderPrint(T* curNode) {
 }
 
 // PRINT
-void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
-    stringstream ss(line);
-    string temp, input;
-    ss >> temp >> input;
+void Manager::PRINT(TermsLIST* tl, NameBST* nb) {
+    string input;
+    fcmd >> input;
 
     // call print function with TermsBST when input is not "NAME"
     if (input != "NAME") {
@@ -194,7 +201,7 @@ void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
     // call print function with NameBST when input is "NAME"
     else {
         // print error code when NameBST is empty
-        if(!nb->getRoot()) PrintErrorCode(500);
+        if (!nb->getRoot()) PrintErrorCode(500);
         // else print inorder
         else {
             flog << "===== PRINT =====\n";
@@ -206,23 +213,22 @@ void Manager::PRINT(TermsLIST* tl, NameBST* nb, string line) {
 }
 
 // DELETE
-void Manager::DELETE(TermsLIST* tl, NameBST* nb, string line) {
+void Manager::DELETE(TermsLIST* tl, NameBST* nb) {
     // print error code if there is no data
     if (!nb->getRoot()) PrintErrorCode(600);
 
-    stringstream ss(line);
-    string temp, input, data;
-    ss >> temp >> input >> data;
+    string input, data;
+    fcmd >> input >> data;
 
     // deleting data is about date
     if (input == "DATE") {
         tl->date_delete(nb, data);
     }
     // deleting data is about name
-    else {        
+    else {
         char term = nb->_delete(data);
         // print error code when destinate name doesn't exist
-        if(!term) PrintErrorCode(600);
+        if (!term) PrintErrorCode(600);
         else {
             tl->name_delete(data, term);
             tl->decrease_size();

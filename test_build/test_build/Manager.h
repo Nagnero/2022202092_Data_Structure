@@ -29,13 +29,13 @@ public:
 	// LOAD
 	void LOAD(MemberQueue* q);
 	// ADD
-	void ADD(MemberQueue* q, string line);
+	void ADD(MemberQueue* q);
 	// QPOP
 	void QPOP(TermsLIST* tl, MemberQueue* q, NameBST* nb);
 	// SEARCH
-	void SEARCH(NameBST* nb, string line);
+	void SEARCH(NameBST* nb);
 	// PRINT
-	void PRINT(TermsLIST* tl, NameBST* nb, string line);
+	void PRINT(TermsLIST* tl, NameBST* nb);
 	// DELETE
-	void DELETE(TermsLIST* tl, NameBST* nb, string line);
+	void DELETE(TermsLIST* tl, NameBST* nb);
 };
