@@ -40,6 +40,10 @@ void Manager::run(const char* command) {
             PRINT(tl, nb, line);
         else if (line.substr(0, line.find(' ')) == "DELETE")
             DELETE(tl, nb, line);
+        else if (line == "EXIT") {
+            PrintSuccess("EXIT");
+            exit(0);
+        }
         else
             exit(1);
     }
@@ -212,7 +216,7 @@ void Manager::DELETE(TermsLIST* tl, NameBST* nb, string line) {
 
     // deleting data is about date
     if (input == "DATE") {
-        tl->date_delete(data);
+        tl->date_delete(nb, data);
     }
     // deleting data is about name
     else {        
@@ -222,6 +226,6 @@ void Manager::DELETE(TermsLIST* tl, NameBST* nb, string line) {
         else {
             tl->name_delete(data, term);
         }
-
     }
+    PrintSuccess("DELETE");
 }

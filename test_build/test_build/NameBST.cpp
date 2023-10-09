@@ -84,6 +84,11 @@ char NameBST::_delete(string name) {
 		if (destNode->getLeft() == NULL && destNode->getRight() == NULL) {
 			// no parentNode
 			if (!parentNode) this->root = NULL;
+
+			if (parentNode->getLeft() == destNode)
+				parentNode->setLeft(NULL);
+			else
+				parentNode->setRight(NULL);
 		}		
 		// destNode has two child
 		else if (destNode->getLeft() && destNode->getRight()) {
@@ -94,26 +99,43 @@ char NameBST::_delete(string name) {
 			while (replaceNode->getLeft()) 
 				replaceNode = replaceNode->getLeft();
 			
-			// replaceNode has right child
+			// if replaceNode has right child
 			if (replaceNode->getRight()) {
 				replaceNode->getParent()->setLeft(replaceNode->getRight());
 				replaceNode->getRight()->setParent(replaceNode->getParent());
 			}
 
-			if (parentNode->getLeft() == destNode)
-				parentNode->setLeft(replaceNode);
-			else 
-				parentNode->setRight(replaceNode);
+			// if delNode is not root Node
+			if (parentNode) {
 
-			replaceNode->setParent(parentNode);
-			if (replaceNode != left) {
+				if (parentNode->getLeft() == destNode)
+					parentNode->setLeft(replaceNode);
+				else
+					parentNode->setRight(replaceNode);
 
+				replaceNode->setParent(parentNode);
+
+				if (replaceNode != left) {
+					replaceNode->setLeft(left);
+					left->setParent(replaceNode);
+				}
+				if (replaceNode != right) {
+					replaceNode->setRight(right);
+					right->setParent(replaceNode);
+				}
+			}
+			// if delNode is root Node
+			else {
+				if (replaceNode->getParent()->getLeft() == replaceNode)
+					replaceNode->getParent()->setLeft(NULL);
+
+				this->root = replaceNode;
+				replaceNode->setParent(NULL);
 				replaceNode->setLeft(left);
 				left->setParent(replaceNode);
-			}
-			if (replaceNode != right) {
 				replaceNode->setRight(right);
 				right->setParent(replaceNode);
+
 			}
 		}
 		// destNode has one child
@@ -121,10 +143,20 @@ char NameBST::_delete(string name) {
 			NameBSTNode* childNode = destNode->getLeft();
 			if (!childNode) childNode = destNode->getRight();
 
-			if (parentNode->getLeft() == destNode)
-				parentNode->setLeft(childNode);
-			else
-				parentNode->setRight(childNode);
+			// if delNode is not root Node
+			if (parentNode) {
+				if (parentNode->getLeft() == destNode)
+					parentNode->setLeft(childNode);
+				else
+					parentNode->setRight(childNode);
+
+				childNode->setParent(parentNode);
+			}
+			// if delNode is root Node
+			else {
+				this->root = childNode;
+				childNode->setParent(NULL);
+			}
 		}
 
 		delete destNode;

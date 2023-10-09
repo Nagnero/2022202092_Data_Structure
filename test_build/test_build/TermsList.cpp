@@ -117,12 +117,12 @@ void TermsLIST::name_delete(string name, char term) {
 	this->size--;		
 }
 
-void TermsLIST::date_delete(string termDate) {
+void TermsLIST::date_delete(NameBST* nb, string termDate) {
 	TermsListNode* curTLNode = this->getHead();
 
 	while (curTLNode) {
 		TermsBST* curBST = curTLNode->getRoot();
-		int check_empty = curBST->date_delete(termDate);
+		int check_empty = curBST->date_delete(nb, termDate);
 		TermsListNode* delNode = curTLNode;
 		curTLNode = curTLNode->getNext();
 

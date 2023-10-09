@@ -125,19 +125,18 @@ bool TermsBST::_delete(string name) {
 }
 
 // delete by termDate
-TermsBSTNode* TermsBST::postorder_delete(TermsBSTNode* curNode, string termDate) {
+TermsBSTNode* TermsBST::postorder_delete(NameBST* nb, TermsBSTNode* curNode, string termDate) {
 	// return nullptr if curNode is empty
 	if (!curNode) return nullptr;
 
-	TermsBSTNode* left = postorder_delete(curNode->getLeft(), termDate);
-	TermsBSTNode* right = postorder_delete(curNode->getRight(), termDate);
+	TermsBSTNode* left = postorder_delete(nb, curNode->getLeft(), termDate);
+	TermsBSTNode* right = postorder_delete(nb, curNode->getRight(), termDate);
 
 	if (curNode->getTermDate() < termDate) {
 		if (curNode == this->root)
 			this->root = right;
 
-		string target = curNode->getName();
-
+		nb->_delete(curNode->getName());
 
 		delete curNode;
 		this->cnt++;
@@ -150,9 +149,9 @@ TermsBSTNode* TermsBST::postorder_delete(TermsBSTNode* curNode, string termDate)
 	return curNode;
 }
 
-int TermsBST::date_delete(string termDate) {
+int TermsBST::date_delete(NameBST* nb, string termDate) {
 	this->cnt = 0;
-	postorder_delete(this->root, termDate);
+	postorder_delete(nb, this->root, termDate);
 
 	// return 0 to delete BST and ListNode if no Nodes
 	if (this->root == nullptr) return 0;
