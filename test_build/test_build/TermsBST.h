@@ -5,6 +5,7 @@
 class TermsBST {
 private:
 	TermsBSTNode* root;
+	int cnt;
 
 public:
 	TermsBST(TermsBSTNode* root);
@@ -18,4 +19,6 @@ public:
 	TermsBSTNode* search(string name);
 	// delete
 	bool _delete(string name);
+	TermsBSTNode* postorder_delete(TermsBSTNode* curNode, string termDate);
+	int date_delete(string termDate);
 };

@@ -212,7 +212,7 @@ void Manager::DELETE(TermsLIST* tl, NameBST* nb, string line) {
 
     // deleting data is about date
     if (input == "DATE") {
-
+        tl->date_delete(data);
     }
     // deleting data is about name
     else {        

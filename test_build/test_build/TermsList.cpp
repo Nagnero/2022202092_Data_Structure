@@ -114,6 +114,29 @@ void TermsLIST::name_delete(string name, char term) {
 		prevNode->setNext(NULL);
 		delete curTLNode;
 	}
-	this->size--;
-		
+	this->size--;		
+}
+
+void TermsLIST::date_delete(string termDate) {
+	TermsListNode* curTLNode = this->getHead();
+
+	while (curTLNode) {
+		TermsBST* curBST = curTLNode->getRoot();
+		int check_empty = curBST->date_delete(termDate);
+		TermsListNode* delNode = curTLNode;
+		curTLNode = curTLNode->getNext();
+
+		if (!check_empty) {
+			delete curBST;
+			TermsListNode* prevNode = this->getHead();
+			while (!(prevNode->getNext() == delNode))
+				prevNode = prevNode->getNext();
+			prevNode->setNext(delNode->getNext());
+			delete delNode;
+		}
+
+		if (check_empty != 101)
+			for (int i = 0; i < check_empty; i++) curTLNode->decreaseMem_cnt();
+
+	}
 }

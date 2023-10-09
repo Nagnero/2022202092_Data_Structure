@@ -107,6 +107,7 @@ char NameBST::_delete(string name) {
 
 			replaceNode->setParent(parentNode);
 			if (replaceNode != left) {
+
 				replaceNode->setLeft(left);
 				left->setParent(replaceNode);
 			}

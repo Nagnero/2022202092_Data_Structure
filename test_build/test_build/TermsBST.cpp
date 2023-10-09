@@ -1,7 +1,10 @@
+#include <queue>
 #include "TermsBST.h"
+#include "NameBST.h"
 
 TermsBST::TermsBST(TermsBSTNode* root) {
 	this->root = root;
+	this->cnt = 0;
 }
 
 TermsBST::~TermsBST() {
@@ -59,7 +62,7 @@ TermsBSTNode* TermsBST::search(string name) {
 	}
 }
 
-// delete; return 1, when empty
+// delete by name; return 1, when empty
 bool TermsBST::_delete(string name) {
 	TermsBSTNode* destNode = search(name);
 
@@ -119,4 +122,39 @@ bool TermsBST::_delete(string name) {
 	}
 
 	return 0;
+}
+
+// delete by termDate
+TermsBSTNode* TermsBST::postorder_delete(TermsBSTNode* curNode, string termDate) {
+	// return nullptr if curNode is empty
+	if (!curNode) return nullptr;
+
+	TermsBSTNode* left = postorder_delete(curNode->getLeft(), termDate);
+	TermsBSTNode* right = postorder_delete(curNode->getRight(), termDate);
+
+	if (curNode->getTermDate() < termDate) {
+		if (curNode == this->root)
+			this->root = right;
+
+		string target = curNode->getName();
+
+
+		delete curNode;
+		this->cnt++;
+		return nullptr;
+	}
+
+	curNode->setLeft(left);
+	curNode->setRight(right);
+
+	return curNode;
+}
+
+int TermsBST::date_delete(string termDate) {
+	this->cnt = 0;
+	postorder_delete(this->root, termDate);
+
+	// return 0 to delete BST and ListNode if no Nodes
+	if (this->root == nullptr) return 0;
+	else return this->cnt ? this->cnt : 101;
 }

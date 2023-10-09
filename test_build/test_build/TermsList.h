@@ -21,4 +21,5 @@ public:
 	TermsBST* PRINT(char c);
 	// delete
 	void name_delete(string name, char term);
+	void date_delete(string termDate);
 };
