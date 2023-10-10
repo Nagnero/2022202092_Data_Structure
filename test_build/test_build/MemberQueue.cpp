@@ -8,7 +8,7 @@ MemberQueue::MemberQueue() {
 }
 
 MemberQueue::~MemberQueue() {
-
+	
 }
 
 // return 1 when Queue is empty, or return 0

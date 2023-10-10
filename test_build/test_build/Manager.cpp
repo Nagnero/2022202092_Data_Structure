@@ -34,7 +34,7 @@ void Manager::run(const char* command) {
             ADD(q);
         else if (line == "QPOP")
             QPOP(tl, q, nb);
-        else if (line.substr(0, line.find(' ')) == "SEARCH")
+        else if (line == "SEARCH")
             SEARCH(nb);
         else if (line.substr(0, line.find(' ')) == "PRINT")
             PRINT(tl, nb);
@@ -90,12 +90,13 @@ void Manager::LOAD(MemberQueue* q) {
             flog << name << '/' << age << '/' << date << '/' << term << '\n';
             MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
             q->push(newNode);
+            string prev_data = data;
 
             // next data input
             while (1) {
                 getline(fin, data);
                 // when there's no data, break repeat
-                if (data == "")
+                if (data == "" || prev_data == data)
                     break;
                 // store data which is seperated with white space
                 stringstream ss(data);
@@ -103,6 +104,7 @@ void Manager::LOAD(MemberQueue* q) {
                 flog << name << '/' << age << '/' << date << '/' << term << '\n';
                 MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
                 q->push(newNode);
+                prev_data = data;
             }
             flog << "===============\n\n";
         }
@@ -223,16 +225,24 @@ void Manager::DELETE(TermsLIST* tl, NameBST* nb) {
     // deleting data is about date
     if (input == "DATE") {
         tl->date_delete(nb, data);
+        PrintSuccess("DELETE");
     }
     // deleting data is about name
     else {
+        string date;
+        NameBSTNode* tempNameNode = nb->search(data);
+        if (tempNameNode)
+            date = tempNameNode->getTermDate();
+
         char term = nb->_delete(data);
         // print error code when destinate name doesn't exist
-        if (!term) PrintErrorCode(600);
+        if (!term) {
+            PrintErrorCode(600);
+        }
         else {
-            tl->name_delete(data, term);
+            tl->name_delete(data, date, term);
             tl->decrease_size();
+            PrintSuccess("DELETE");
         }
     }
-    PrintSuccess("DELETE");
 }

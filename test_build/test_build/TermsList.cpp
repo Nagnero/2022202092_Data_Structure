@@ -92,7 +92,7 @@ TermsBST* TermsLIST::PRINT(char c) {
 }
 
 // delete
-void TermsLIST::name_delete(string name, char term) {
+void TermsLIST::name_delete(string name, string date, char term) {
 	TermsListNode* curTLNode = this->getHead();
 	TermsBST* curBST = NULL;
 
@@ -108,7 +108,7 @@ void TermsLIST::name_delete(string name, char term) {
 	curTLNode->decreaseMem_cnt();
 
 	// return 1 when empty
-	int check_empty = curBST->_delete(name);
+	int check_empty = curBST->_delete(date);
 	// delete TermsList if TermsBST is empty
 	if (check_empty) {
 		TermsListNode* prevNode = this->getHead();

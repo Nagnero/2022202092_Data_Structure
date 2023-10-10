@@ -44,8 +44,10 @@ void Manager::run(const char* command) {
             PrintSuccess("EXIT");
             exit(0);
         }
-        else
+        else {
+            PrintErrorCode(1000);
             exit(1);
+        }
     }
 
     // close input file stream and output file stream
@@ -76,7 +78,7 @@ void Manager::LOAD(MemberQueue* q) {
     // or MemeberQueue is empty
     if (!fin.is_open() || !q->empty()) PrintErrorCode(100);
     else {
-        string data = "", name, date;
+        string prev_data = "", data = "", name, date;
         int age;
         char term;
         // check if data file is opened but, there is no data
@@ -90,12 +92,13 @@ void Manager::LOAD(MemberQueue* q) {
             flog << name << '/' << age << '/' << date << '/' << term << '\n';
             MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
             q->push(newNode);
+            prev_data = data;
 
             // next data input
             while (1) {
                 getline(fin, data);
                 // when there's no data, break repeat
-                if (data == "")
+                if (data == "" || data == prev_data)
                     break;
                 // store data which is seperated with white space
                 stringstream ss(data);
@@ -103,10 +106,12 @@ void Manager::LOAD(MemberQueue* q) {
                 flog << name << '/' << age << '/' << date << '/' << term << '\n';
                 MemberQueueNode* newNode = new MemberQueueNode(name, age, date, term);
                 q->push(newNode);
+                prev_data = data;
             }
             flog << "===============\n\n";
         }
     }
+    fin.close();
 }
 
 // ADD

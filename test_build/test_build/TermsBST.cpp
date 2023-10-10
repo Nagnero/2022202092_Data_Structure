@@ -46,14 +46,14 @@ void TermsBST::insert(TermsBSTNode* newTBNode) {
 	}
 }
 
-TermsBSTNode* TermsBST::search(string name) {
+TermsBSTNode* TermsBST::search(string date) {
 	TermsBSTNode* curNode = getRoot();
 
 	while (1) {
 		// return NULL when Searching Node is missing
 		if (!curNode) return curNode;
 
-		int res = name.compare(curNode->getName());
+		int res = date.compare(curNode->getTermDate());
 		// return curNode when it has same name
 		if (res == 0) return curNode;
 		// move left when finding name is smaller then curNode name
@@ -64,8 +64,8 @@ TermsBSTNode* TermsBST::search(string name) {
 }
 
 // delete by name; return 1, when empty
-bool TermsBST::_delete(string name) {
-	TermsBSTNode* destNode = search(name);
+bool TermsBST::_delete(string date) {
+	TermsBSTNode* destNode = search(date);
 
 	TermsBSTNode* parentNode = destNode->getParent();
 	// destNode is leafNode

@@ -20,7 +20,7 @@ public:
 	// print
 	TermsBST* PRINT(char c);
 	// delete
-	void name_delete(string name, char term);
+	void name_delete(string name, string date, char term);
 	void date_delete(NameBST* nb, string termDate);
 	void decrease_size() { this->size--; }
 };
