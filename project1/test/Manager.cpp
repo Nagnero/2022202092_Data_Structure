@@ -42,17 +42,21 @@ void Manager::run(const char* command) {
             DELETE(tl, nb);
         else if (line == "EXIT") {
             PrintSuccess("EXIT");
+            // close input file stream and output file stream
+            fcmd.close();
+            flog.close();
             exit(0);
         }
         else {
             PrintErrorCode(1000);
+            // close input file stream and output file stream
+            fcmd.close();
+            flog.close();
             exit(1);
         }
     }
 
-    // close input file stream and output file stream
-    fcmd.close();
-    flog.close();
+    
     return;
 }
 
