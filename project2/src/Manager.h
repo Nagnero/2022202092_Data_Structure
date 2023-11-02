@@ -1,28 +1,27 @@
 #pragma once
+#include <iostream>
+#include <fstream>
 #include "SelectionTree.h"
 #include "BpTree.h"
 
-class Manager
-{
+class Manager {
 private:
+    ifstream fcmd;
+	ofstream flog;
 	char* cmd;
 	BpTree* bptree;
 	SelectionTree* stree;
-	BpTree* bptree;
+
 public:
-	Manager(int bpOrder)	//constructor
-	{
-		/* You must fill here */
+	Manager(int bpOrder) {
+        this->cmd = NULL;
+		this->bptree = new BpTree(&flog, bpOrder);
+        this->stree = new SelectionTree(&flog);
 	}
 
-
-	~Manager()//destructor
-	{
+	~Manager() {
 		/* You must fill here */
 	}
-
-	ifstream fin;
-	ofstream flog;
 	
 
 	void run(const char* command);
@@ -38,7 +37,7 @@ public:
 	bool DELETE();
 
 	void printErrorCode(int n);
-	void printSuccessCode();
+    void printSuccessCode(const char* cmd);
 
 };
 

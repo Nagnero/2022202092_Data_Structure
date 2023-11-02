@@ -3,12 +3,12 @@
 
 #include "BpTreeNode.h"
 
-class BpTreeDataNode : public BpTreeNode
-{
+class BpTreeDataNode : public BpTreeNode {
 private:
 	map <string, LoanBookData*> mapData;
 	BpTreeNode* pNext;
 	BpTreeNode* pPrev;
+    
 public:
 	BpTreeDataNode() {
 		pNext = NULL;

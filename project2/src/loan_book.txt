@@ -1,0 +1,9 @@
+to kill a monchingbird	400	Harper Lee	1960	0
+educated	300	Tara Westover	2018	0
+the power of now    600 Echhart Tolle   1997    0
+brave new world	200	Aldous Huxley	1932	0
+the catcher in the rye	500	J.D. Salinger	1951	0
+the great gatsby	600	F. Scott Fitzgerald	1925	0
+moby dick	300	Herman Melville	1851	0
+pride and prejudice	100	Jane Austen	1813	0
+war and peace	200	Leo Tolstoy	1869	0

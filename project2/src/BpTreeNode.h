@@ -1,11 +1,12 @@
 #pragma once
+#include <map>
 #include "LoanBookData.h"
 
 class BpTreeNode
 {
 private:
 	BpTreeNode* pParent;
-	BpTreeNode* pMostLeftChild;
+	BpTreeNode* pMostLeftChild; // only indexNode has this
 
 public:
 	BpTreeNode() {

@@ -10,8 +10,9 @@
 class BpTree {
 private:
 	BpTreeNode* root;
-	int			order;		// m children
+	int order; // m children
 	ofstream* fout;
+
 public:
 	BpTree(ofstream *fout, int order = 3) {
 		root = NULL;
@@ -30,7 +31,6 @@ public:
 
 	bool searchBook(string name);
 	bool searchRange(string start, string end);
-
 };
 
 #endif
