@@ -198,9 +198,9 @@ BpTreeNode* BpTree::searchDataNode(string name) {
 
 
 bool BpTree::searchBook(string name) {
-
+return true;
 }
 
 bool BpTree::searchRange(string start, string end) {
-	
+	return true;
 }

@@ -20,10 +20,11 @@ void Manager::run(const char* command)
         else if (line.substr(0, line.find(' ')) == "ADD")
             ADD();
         else if (line.substr(0, line.find(' ')) == "SEARCH_BP") {
-
+            cout << "a";
         }
-        else if (line == "PRINT_BP")
+        else if (line == "PRINT_BP"){
             PRINT_BP();
+        }
         else if (line.substr(0, line.find(' ')) == "PRINT_ST")
             PRINT_ST();
         else if (line == "DELETE")
@@ -90,27 +91,55 @@ bool Manager::ADD() {
 
 bool Manager::SEARCH_BP_BOOK(string book) 
 {
-	
+	return true;
 }
 
 bool Manager::SEARCH_BP_RANGE(string s, string e) 
 {
-	
+	return true;
 }
 
-bool Manager::PRINT_BP() 
-{
-	
+bool Manager::PRINT_BP() {
+    // check stored data in bptree
+	if (this->bptree->getRoot()) {
+        BpTreeNode* curNode = this->bptree->getRoot();
+        while(curNode->getMostLeftChild())
+            curNode = curNode->getMostLeftChild();
+        
+        flog << "=======PRINT_BP=======" << endl;
+        while(curNode) {
+            map<string, LoanBookData*>* curMap = curNode->getDataMap();
+            LoanBookData* curObj = curMap->begin()->second;
+            flog << curObj->getName() << '/' << curObj->getCode() << '/' << 
+                curObj->getAuthor() << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            cout << curObj->getName() << endl;
+            if(curObj != curMap->rbegin()->second) {
+                curObj = curMap->rbegin()->second;
+                flog << curObj->getName() << '/' << curObj->getCode() << '/' << 
+                    curObj->getAuthor() << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                cout << curObj->getName() << endl;
+            }
+
+            // move to next data node
+            curNode = curNode->getNext();
+        }
+        flog << "=======================" << endl << endl;
+    }
+    else { // if bptree is empty
+        printErrorCode(400);
+    }
+
+    return true;
 }
 
 bool Manager::PRINT_ST() 
 {
-
+    return true;
 }
 
 bool Manager::DELETE() 
 {
-
+    return true;
 }
 
 void Manager::printErrorCode(int n) {				//ERROR CODE PRINT
