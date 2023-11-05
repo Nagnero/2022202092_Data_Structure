@@ -29,7 +29,7 @@ void Manager::run(const char* command)
         else if (line == "DELETE")
             DELETE();
         else if (line == "EXIT") {
-            cout << "0\n";
+            cout << "exit\n";
             printSuccessCode("EXIT");
             exit(0);
         }
@@ -50,10 +50,9 @@ bool Manager::LOAD() {
     if (!fin.is_open() || this->bptree->getRoot()) printErrorCode(100);
     else { // continue loading data
         while (1) {
-            if (fin.eof()) break; // break if no more loan book data
-
+            if (fin.eof()) break; // break if file is end
             getline(fin, data);
-            cout << data << endl;
+            if (data == "") break; // break if no more loan book data
 
             int index = data.find('\t'); // string parsing index
             name = data.substr(0, index); // get name
@@ -76,9 +75,10 @@ bool Manager::LOAD() {
             // insert new data into B+-tree
             bptree->Insert(newData);
 
-            flog << name << endl << s_code << endl;
-            flog << author << endl << s_year << endl << s_loan_count<< endl;
+            //flog << name << endl << s_code << endl;
+            //flog << author << endl << s_year << endl << s_loan_count<< endl;
         }
+        cout << this->bptree->getRoot()->getIndexMap()->begin()->first << endl;
     }
 	return true;
 }
