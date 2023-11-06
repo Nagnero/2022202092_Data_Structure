@@ -225,7 +225,8 @@ bool BpTree::searchRange(string start, string end) {
     string first, second = "";
     first = curMap->begin()->first;
     if (first != curMap->rbegin()->first)
-        second = curMap->rbegin()->first;
+        second = curMap->rbegin()->first.substr(0, 1);
+    first = curMap->begin()->first.substr(0, 1);
     
     if (second == "") {
         if (first >= start) {
@@ -238,6 +239,7 @@ bool BpTree::searchRange(string start, string end) {
         if (first < start && second > end) return false; // no data in range
         else if (first < start && second < end) {
             LoanBookData* curObj = curMap->rbegin()->second;
+            *fout << "=========SEARCH_BP========="<< endl;
             printData(curObj);
         }
         else if (first >= start) {
@@ -250,13 +252,14 @@ bool BpTree::searchRange(string start, string end) {
     }
     curNode = curNode->getNext(); // move to next Node
 
-    while (1) {
+    while (curNode) {
         curMap = curNode->getDataMap();
         first = curMap->begin()->first;
         if (first != curMap->rbegin()->first)
-            second = curMap->rbegin()->first;
+            second = curMap->rbegin()->first.substr(0, 1);
+        first = curMap->begin()->first.substr(0, 1);
 
-        // escape rpeat syntax
+        // print data and escape rpeat syntax 
         if (second != "") {
             if (second <= end) { // print first, second data
                 LoanBookData* curObj = curMap->begin()->second;
@@ -281,6 +284,8 @@ bool BpTree::searchRange(string start, string end) {
             else break;
         }
         curNode = curNode->getNext();
+        first = "";
+        second = "";
     }
     
     *fout << "=======================" << endl << endl;

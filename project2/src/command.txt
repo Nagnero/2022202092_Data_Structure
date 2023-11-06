@@ -1,6 +1,5 @@
 LOAD
 ADD	book	200	risa	1990
-ADD	f	500	seo	2000
-ADD	f	500	seo	2000
+SEARCH_BP	a	z
 PRINT_BP
 EXIT
