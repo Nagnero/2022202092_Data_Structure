@@ -41,7 +41,7 @@ bool BpTree::Insert(LoanBookData* newData) {
             }
             // move to Loan book heap =========================================
             if (curobj->getLoanCount() == limit) {
-
+                cout << "MOVE\n";
             }
         }
     }
@@ -206,7 +206,7 @@ bool BpTree::searchBook(string name) {
     if (curMap->find(name) != curMap->end()) {
         LoanBookData* curObj = curMap->find(name)->second;
         
-        *fout << "=======SEARCH_BP=======" << endl;
+        *fout << "=========SEARCH_BP=========" << endl;
         printData(curObj);
         *fout << "=======================" << endl << endl;
 
@@ -230,7 +230,7 @@ bool BpTree::searchRange(string start, string end) {
     if (second == "") {
         if (first >= start) {
             LoanBookData* curObj = curMap->begin()->second;
-            *fout << "=======SEARCH_BP=======" << endl;
+            *fout << "=========SEARCH_BP=========" << endl;
             printData(curObj);
         }
     }
@@ -242,7 +242,7 @@ bool BpTree::searchRange(string start, string end) {
         }
         else if (first >= start) {
             LoanBookData* curObj = curMap->begin()->second;
-            *fout << "=======SEARCH_BP=======" << endl;
+            *fout << "=========SEARCH_BP========="<< endl;
             printData(curObj);
             curObj = curMap->rbegin()->second;
             printData(curObj);

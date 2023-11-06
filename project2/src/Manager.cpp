@@ -18,7 +18,7 @@ void Manager::run(const char* command)
         if (line == "LOAD") 
             LOAD();
         else if (line.substr(0, line.find('\t')) == "ADD")
-            ADD();
+            ADD(line);
         else if (line.substr(0, line.find('\t')) == "SEARCH_BP") {
             int index = line.find('\t'); // string parsing index
             if (index == -1) { // no data
@@ -96,8 +96,55 @@ bool Manager::LOAD() {
 	return true;
 }
 
-bool Manager::ADD() {
-    
+bool Manager::ADD(string line) {
+    // find tabs and save to array; check missing data
+    int index[4] = { -1, };
+	index[0] = line.find('\t');
+	if (index[0] == -1) {
+        printErrorCode(200);
+        return true;
+    }
+	index[1] = line.find('\t', index[0] + 1);
+    if (index[1] == -1 || index[0] + 1 == index[1]) {
+        printErrorCode(200);
+        return true;
+    }
+	index[2] = line.find('\t', index[1] + 1);
+    if (index[2] == -1 || index[1] + 1 == index[2]) {
+        printErrorCode(200);
+        return true;
+    }
+	index[3] = line.find('\t', index[2] + 1);
+    if (index[3] == -1 || index[2] + 1 == index[3]) {
+        printErrorCode(200);
+        return true;
+    }
+    // check if last input string is tab
+    if (line.length() - 1 == index[3]) {
+        printErrorCode(200);
+        return true;
+    }
+    // parse with preset index
+    string name, author;
+    int code, year;
+    name = line.substr(index[0] + 1, index[1] - index[0] - 1);
+    code = stoi(line.substr(index[1] + 1, index[2] - index[1] - 1));
+    author = line.substr(index[2] + 1, index[3] - index[2] - 1);
+    year = stoi(line.substr(index[3] + 1));
+
+    // make new object with data
+    LoanBookData* newData = new LoanBookData;
+    newData->setBookData(name, code, author, year);
+    // insert new data into B+-tree
+    bptree->Insert(newData);
+    flog << "=========ADD=========" << endl;
+    flog << name << '/';
+    if (code == 0) flog << "000" << '/';
+    else flog << code << '/';
+    flog << author << '/' << year << endl;
+    flog << "=======================" << endl << endl;
+
+
 	return true;
 }
 
@@ -132,7 +179,7 @@ bool Manager::PRINT_BP() {
         while(curNode->getMostLeftChild())
             curNode = curNode->getMostLeftChild();
         
-        flog << "=======PRINT_BP=======" << endl;
+        flog << "=========PRINT_BP=========" << endl;
         while(curNode) {
             map<string, LoanBookData*>* curMap = curNode->getDataMap();
             LoanBookData* curObj = curMap->begin()->second;

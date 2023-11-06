@@ -26,7 +26,7 @@ public:
 
 	void run(const char* command);
 	bool LOAD();
-	bool ADD();
+	bool ADD(string line);
 
 	bool SEARCH_BP_BOOK(string book);
 	bool SEARCH_BP_RANGE(string start, string end);
