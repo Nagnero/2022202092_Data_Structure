@@ -13,36 +13,28 @@ void Manager::run(const char* command)
     string line;
 	while (1) {
 		getline(fcmd, line); // get one command line
-        cout << line << endl;
+        //cout << line << endl;
         // check the command and run each process
         if (line == "LOAD") 
             LOAD();
-        else if (line.substr(0, line.find(' ')) == "ADD")
+        else if (line.substr(0, line.find('\t')) == "ADD")
             ADD();
-        else if (line.substr(0, line.find(' ')) == "SEARCH_BP") {
-            int index = line.rfind(' ');
-            
-            // target is not entered
-            if (index == -1)
+        else if (line.substr(0, line.find('\t')) == "SEARCH_BP") {
+            int index = line.find('\t'); // string parsing index
+            if (index == -1) { // no data
                 printErrorCode(300);
+                continue;
+            }
+            line = line.substr(index + 1);
+            index = line.find('\t');
+            string first = line.substr(0, index); // get first data
+            index = line.find('\t');
+            if (index == -1) { // book name input
+                SEARCH_BP_BOOK(first);
+            }
             else {
-                // search by book name
-                if (index == line.find(' ')) {
-                    string bookname = line.substr(index + 1);
-                    if (bookname == "")
-                        printErrorCode(300);
-                    
-                    SEARCH_BP_BOOK(bookname);
-                }
-                else if (index - 2 == line.find(' ')){
-                    string start, end;
-                    start = line.substr(line.find(' ') + 1, 1);
-                    end = line.substr(index + 1, 1);
-
-                    SEARCH_BP_RANGE(start, end);
-                }
-                else
-                    printErrorCode(300);
+                string second = line.substr(index + 1); // get second data
+                SEARCH_BP_RANGE(first, second);
             }
         }
         else if (line == "PRINT_BP"){
@@ -110,13 +102,9 @@ bool Manager::ADD() {
 }
 
 bool Manager::SEARCH_BP_BOOK(string book) {
-    bool check;
+    bool check = false;
     // check B+ tree empty
-    if (!this->bptree->getRoot()) {
-        printErrorCode(300);
-        return true;
-    }
-    else
+    if (this->bptree->getRoot()) 
         check = this->bptree->searchBook(book);
 
     if (!check)
@@ -125,8 +113,15 @@ bool Manager::SEARCH_BP_BOOK(string book) {
 	return true;
 }
 
-bool Manager::SEARCH_BP_RANGE(string s, string e) 
-{
+bool Manager::SEARCH_BP_RANGE(string s, string e) {
+    bool check = false;
+    // check B+ tree empty
+    if (this->bptree->getRoot()) 
+        check = this->bptree->searchRange(s, e);
+
+    if (!check)
+        printErrorCode(300);
+
 	return true;
 }
 

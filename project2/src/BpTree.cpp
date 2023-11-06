@@ -200,8 +200,6 @@ BpTreeNode* BpTree::searchDataNode(string name) {
 
 
 bool BpTree::searchBook(string name) {
-    BpTreeNode* temp = searchDataNode(name);
-
     map<string, LoanBookData*>* curMap = searchDataNode(name)->getDataMap();
 
     // B+ tree has target data
@@ -221,5 +219,81 @@ bool BpTree::searchBook(string name) {
 }
 
 bool BpTree::searchRange(string start, string end) {
+    BpTreeNode* curNode = searchDataNode(start);
+    map<string, LoanBookData*>* curMap = curNode->getDataMap();
+    
+    // save first and second string to cur data map string
+    string first, second = "";
+    first = curMap->begin()->first;
+    if (first != curMap->rbegin()->first)
+        second = curMap->rbegin()->first;
+    
+    if (second == "") {
+        if (first >= start) {
+            LoanBookData* curObj = curMap->begin()->second;
+            *fout << "=======SEARCH_BP=======" << endl;
+            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+        }
+    }
+    else {
+        if (first < start && second > end) return false; // no data in range
+        else if (first < start && second < end) {
+            LoanBookData* curObj = curMap->rbegin()->second;
+            *fout << "=======SEARCH_BP=======" << endl;
+            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+        }
+        else if (first >= start) {
+            LoanBookData* curObj = curMap->begin()->second;
+            *fout << "=======SEARCH_BP=======" << endl;
+            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            curObj = curMap->rbegin()->second;
+            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+        }
+    }
+    curNode = curNode->getNext(); // move to next Node
+
+    while (1) {
+        curMap = curNode->getDataMap();
+        first = curMap->begin()->first;
+        if (first != curMap->rbegin()->first)
+            second = curMap->rbegin()->first;
+
+        // escape rpeat syntax
+        if (second != "") {
+            if (second <= end) { // print first, second data
+                LoanBookData* curObj = curMap->begin()->second;
+                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                curObj = curMap->rbegin()->second;
+                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            }
+            else if (first <= end) { // print first data and end
+                LoanBookData* curObj = curMap->begin()->second;
+                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                break;
+            }
+            else if (first > end) { // don't print any data
+                break;
+            }
+        }
+        else {
+            if (first <= end) { // print first data
+                LoanBookData* curObj = curMap->begin()->second;
+                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            }
+            else break;
+        }
+        curNode = curNode->getNext();
+    }
+    
+    *fout << "=======================" << endl << endl;
+
 	return true;
 }
