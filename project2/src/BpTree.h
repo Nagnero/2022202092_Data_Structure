@@ -31,6 +31,7 @@ public:
 
 	bool searchBook(string name);
 	bool searchRange(string start, string end);
+    void printData(LoanBookData* curObj);
 };
 
 #endif

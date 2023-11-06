@@ -207,8 +207,7 @@ bool BpTree::searchBook(string name) {
         LoanBookData* curObj = curMap->find(name)->second;
         
         *fout << "=======SEARCH_BP=======" << endl;
-        *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-            << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+        printData(curObj);
         *fout << "=======================" << endl << endl;
 
         return true;
@@ -232,26 +231,21 @@ bool BpTree::searchRange(string start, string end) {
         if (first >= start) {
             LoanBookData* curObj = curMap->begin()->second;
             *fout << "=======SEARCH_BP=======" << endl;
-            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            printData(curObj);
         }
     }
     else {
         if (first < start && second > end) return false; // no data in range
         else if (first < start && second < end) {
             LoanBookData* curObj = curMap->rbegin()->second;
-            *fout << "=======SEARCH_BP=======" << endl;
-            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            printData(curObj);
         }
         else if (first >= start) {
             LoanBookData* curObj = curMap->begin()->second;
             *fout << "=======SEARCH_BP=======" << endl;
-            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            printData(curObj);
             curObj = curMap->rbegin()->second;
-            *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            printData(curObj);
         }
     }
     curNode = curNode->getNext(); // move to next Node
@@ -266,16 +260,13 @@ bool BpTree::searchRange(string start, string end) {
         if (second != "") {
             if (second <= end) { // print first, second data
                 LoanBookData* curObj = curMap->begin()->second;
-                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                printData(curObj);
                 curObj = curMap->rbegin()->second;
-                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                printData(curObj);
             }
             else if (first <= end) { // print first data and end
                 LoanBookData* curObj = curMap->begin()->second;
-                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                printData(curObj);
                 break;
             }
             else if (first > end) { // don't print any data
@@ -285,8 +276,7 @@ bool BpTree::searchRange(string start, string end) {
         else {
             if (first <= end) { // print first data
                 LoanBookData* curObj = curMap->begin()->second;
-                *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
-                    << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                printData(curObj);
             }
             else break;
         }
@@ -296,4 +286,12 @@ bool BpTree::searchRange(string start, string end) {
     *fout << "=======================" << endl << endl;
 
 	return true;
+}
+
+void BpTree::printData(LoanBookData* curObj) {
+    *fout << curObj->getName() << '/';
+    if (curObj->getCode() == 0) *fout << "000" << '/';
+    else *fout << curObj->getCode() << '/';
+    *fout << curObj->getAuthor() << '/' << curObj->getYear() << '/' 
+        << curObj->getLoanCount() << endl;
 }

@@ -39,5 +39,7 @@ public:
 	void printErrorCode(int n);
     void printSuccessCode(const char* cmd);
 
+    void printData(LoanBookData* curObj);
+
 };
 

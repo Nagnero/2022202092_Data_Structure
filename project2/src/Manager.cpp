@@ -136,12 +136,10 @@ bool Manager::PRINT_BP() {
         while(curNode) {
             map<string, LoanBookData*>* curMap = curNode->getDataMap();
             LoanBookData* curObj = curMap->begin()->second;
-            flog << curObj->getName() << '/' << curObj->getCode() << '/' << 
-                curObj->getAuthor() << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+            printData(curObj);
             if(curObj != curMap->rbegin()->second) {
                 curObj = curMap->rbegin()->second;
-                flog << curObj->getName() << '/' << curObj->getCode() << '/' << 
-                    curObj->getAuthor() << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+                printData(curObj);
             }
 
             // move to next data node
@@ -178,3 +176,10 @@ void Manager::printSuccessCode(const char* cmd) {//SUCCESS CODE PRINT
 	flog << "=======================" << endl << endl;
 }
 
+void Manager::printData(LoanBookData* curObj) {
+    flog << curObj->getName() << '/';
+    if (curObj->getCode() == 0) flog << "000" << '/';
+    else flog << curObj->getCode() << '/';
+    flog << curObj->getAuthor() << '/' << curObj->getYear() << '/' 
+        << curObj->getLoanCount() << endl;
+}
