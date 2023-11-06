@@ -12,15 +12,38 @@ void Manager::run(const char* command)
 
     string line;
 	while (1) {
-		fcmd >> line; // get one command line
-
+		getline(fcmd, line); // get one command line
+        cout << line << endl;
         // check the command and run each process
         if (line == "LOAD") 
             LOAD();
         else if (line.substr(0, line.find(' ')) == "ADD")
             ADD();
         else if (line.substr(0, line.find(' ')) == "SEARCH_BP") {
-            cout << "a";
+            int index = line.rfind(' ');
+            
+            // target is not entered
+            if (index == -1)
+                printErrorCode(300);
+            else {
+                // search by book name
+                if (index == line.find(' ')) {
+                    string bookname = line.substr(index + 1);
+                    if (bookname == "")
+                        printErrorCode(300);
+                    
+                    SEARCH_BP_BOOK(bookname);
+                }
+                else if (index - 2 == line.find(' ')){
+                    string start, end;
+                    start = line.substr(line.find(' ') + 1, 1);
+                    end = line.substr(index + 1, 1);
+
+                    SEARCH_BP_RANGE(start, end);
+                }
+                else
+                    printErrorCode(300);
+            }
         }
         else if (line == "PRINT_BP"){
             PRINT_BP();
@@ -75,11 +98,8 @@ bool Manager::LOAD() {
             newData->setBookData(name, code, author, year, loan_count);
             // insert new data into B+-tree
             bptree->Insert(newData);
-
-            //flog << name << endl << s_code << endl;
-            //flog << author << endl << s_year << endl << s_loan_count<< endl;
         }
-        cout << this->bptree->getRoot()->getIndexMap()->begin()->first << endl;
+        printSuccessCode("LOAD");
     }
 	return true;
 }
@@ -89,8 +109,19 @@ bool Manager::ADD() {
 	return true;
 }
 
-bool Manager::SEARCH_BP_BOOK(string book) 
-{
+bool Manager::SEARCH_BP_BOOK(string book) {
+    bool check;
+    // check B+ tree empty
+    if (!this->bptree->getRoot()) {
+        printErrorCode(300);
+        return true;
+    }
+    else
+        check = this->bptree->searchBook(book);
+
+    if (!check)
+        printErrorCode(300);
+
 	return true;
 }
 
@@ -112,12 +143,10 @@ bool Manager::PRINT_BP() {
             LoanBookData* curObj = curMap->begin()->second;
             flog << curObj->getName() << '/' << curObj->getCode() << '/' << 
                 curObj->getAuthor() << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
-            cout << curObj->getName() << endl;
             if(curObj != curMap->rbegin()->second) {
                 curObj = curMap->rbegin()->second;
                 flog << curObj->getName() << '/' << curObj->getCode() << '/' << 
                     curObj->getAuthor() << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
-                cout << curObj->getName() << endl;
             }
 
             // move to next data node
@@ -149,7 +178,7 @@ void Manager::printErrorCode(int n) {				//ERROR CODE PRINT
 }
 
 void Manager::printSuccessCode(const char* cmd) {//SUCCESS CODE PRINT 
-    flog << "=======" << cmd << "=======" << endl;
+    flog << "=========" << cmd << "=========" << endl;
 	flog << "Success" << endl;
 	flog << "=======================" << endl << endl;
 }

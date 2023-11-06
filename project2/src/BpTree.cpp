@@ -200,7 +200,24 @@ BpTreeNode* BpTree::searchDataNode(string name) {
 
 
 bool BpTree::searchBook(string name) {
-return true;
+    BpTreeNode* temp = searchDataNode(name);
+
+    map<string, LoanBookData*>* curMap = searchDataNode(name)->getDataMap();
+
+    // B+ tree has target data
+    if (curMap->find(name) != curMap->end()) {
+        LoanBookData* curObj = curMap->find(name)->second;
+        
+        *fout << "=======SEARCH_BP=======" << endl;
+        *fout << curObj->getName() << '/' << curObj->getCode() << '/' << curObj->getAuthor()
+            << '/' << curObj->getYear() << '/' << curObj->getLoanCount() << endl;
+        *fout << "=======================" << endl << endl;
+
+        return true;
+    }
+    else { // B+ tree donsen't have target data
+        return false;
+    }
 }
 
 bool BpTree::searchRange(string start, string end) {
