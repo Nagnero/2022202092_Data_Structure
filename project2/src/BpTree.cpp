@@ -137,8 +137,10 @@ void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
     parentIndexNode->insertIndexMap(delName, pIndexNode->getIndexMap()->rbegin()->second);
     pIndexNode->deleteMap(delName);
 
+    
     // link parent node and pIndexNode
-    parentIndexNode->setMostLeftChild(pIndexNode);
+    if (!parentIndexNode->getMostLeftChild())
+        parentIndexNode->setMostLeftChild(pIndexNode);
     pIndexNode->setParent(parentIndexNode);
     // link parent node and nextIndexNode
     map <string, BpTreeNode*>* tempMap = parentIndexNode->getIndexMap();
