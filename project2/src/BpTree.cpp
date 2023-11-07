@@ -26,6 +26,8 @@ bool BpTree::Insert(LoanBookData* newData) {
         else { // increase loan_book number
             LoanBookData* curobj = curNode->getDataMap()->find(name)->second;
             curobj->updateCount();
+            // delete loan book data
+            delete newData;
 
             // check possible loan book
             int limit = 0;

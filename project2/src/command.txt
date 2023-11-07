@@ -1,5 +1,4 @@
 LOAD		
-PRINT_ST	000
 SEARCH_BP	a	z
 ADD	book	200	risa	1990
 ADD	book	200	risa	1990
@@ -19,4 +18,5 @@ ADD	zz	200	risa	1990
 ADD	aa	200	risa	1990
 ADD	aa	200	risa	1990
 ADD	aa	200	risa	1990
+PRINT_ST	200
 EXIT
