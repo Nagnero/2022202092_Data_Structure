@@ -44,7 +44,7 @@ bool BpTree::Insert(LoanBookData* newData) {
             }
 
             if (curobj->getLoanCount() == limit) {
-                bool changed = this->stree->Insert(curobj);
+                this->stree->Insert(curobj);
                 // delete(curNode, curobj);
             }
         }

@@ -25,6 +25,7 @@ private:
     // create loan book heap and connect to leaf node
     void setLoanBookHeap(SelectionTreeNode* curNode, int index, int code) {
         // make new Heap and connect to leaf node
+        run[index] = curNode;
         LoanBookHeap* newHeap = new LoanBookHeap(code);
         run[index]->setHeap(newHeap);
     }
@@ -43,8 +44,6 @@ private:
 public:
     SelectionTree(ofstream* fout) {
         this->fout = fout;
-        for (int i = 0; i < 8 ; i++)
-            run[i] = new SelectionTreeNode;
 
         SelectionTreeNode* newNode = new SelectionTreeNode;
         root = newNode;
@@ -79,5 +78,4 @@ public:
     bool Insert(LoanBookData* newData);
     bool Delete();
     bool printBookData(int bookCode);
-    void reArrange();
 };
