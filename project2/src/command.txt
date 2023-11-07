@@ -1,5 +1,22 @@
 LOAD
 ADD	book	200	risa	1990
+ADD	book	200	risa	1990
+ADD	book	200	risa	1990
+ADD	a	200	risa	1990
+ADD	a	200	risa	1990
+ADD	a	200	risa	1990
+ADD	b	200	risa	1990
+ADD	b	200	risa	1990
+ADD	b	200	risa	1990
+ADD	c	200	risa	1990
+ADD	c	200	risa	1990
+ADD	c	200	risa	1990
+ADD	zz	200	risa	1990
+ADD	zz	200	risa	1990
+ADD	zz	200	risa	1990
+ADD	aa	200	risa	1990
+ADD	aa	200	risa	1990
+ADD	aa	200	risa	1990
 SEARCH_BP	a	z
 PRINT_BP
 EXIT

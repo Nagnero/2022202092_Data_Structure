@@ -9,7 +9,7 @@ class SelectionTree {
 private:
     SelectionTreeNode* root;
     ofstream* fout;
-    LoanBookHeap* leafHeap[8];
+    SelectionTreeNode* run[8];
 
     // make two child node and connect to parent node
     void createChild(SelectionTreeNode* curNode) {
@@ -24,8 +24,9 @@ private:
 
     // create loan book heap and connect to leaf node
     void setLoanBookHeap(SelectionTreeNode* curNode, int index, int code) {
-        leafHeap[index]->setCode(code);
-        curNode->setHeap(leafHeap[index]);
+        // make new Heap and connect to leaf node
+        LoanBookHeap* newHeap = new LoanBookHeap(code);
+        run[index]->setHeap(newHeap);
     }
 
     // recursively delete tree func.
@@ -43,7 +44,7 @@ public:
     SelectionTree(ofstream* fout) {
         this->fout = fout;
         for (int i = 0; i < 8 ; i++)
-            leafHeap[i] = new LoanBookHeap;
+            run[i] = new SelectionTreeNode;
 
         SelectionTreeNode* newNode = new SelectionTreeNode;
         root = newNode;
