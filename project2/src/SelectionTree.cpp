@@ -1,3 +1,5 @@
+#include <queue>
+#include <stack>
 #include "SelectionTree.h"
 
 bool SelectionTree::Insert(LoanBookData* newData) {
@@ -32,18 +34,35 @@ bool SelectionTree::Insert(LoanBookData* newData) {
 }
 
 bool SelectionTree::Delete() {
+    SelectionTreeNode* curNode = this->root;
+
+    // exit condition: curNode don't have child node
+    while(curNode->getLeftChild()) {
+        SelectionTreeNode* right = curNode->getRightChild();
+        SelectionTreeNode* left = curNode->getLeftChild();
+        
+        if (curNode->getBookData() == left->getBookData()) {
+            curNode->setBookData(NULL);
+            curNode = left;
+        }
+        else {
+            curNode->setBookData(NULL);
+            curNode = right;
+        }
+    }
+    LoanBookHeap* run = curNode->getHeap();
+    LoanBookHeapNode* delHeapNode = run->getRoot();
+
     return 0;
 }
 
 bool SelectionTree::printBookData(int bookCode) {
-    LoanBookHeapNode* curNode = this->run[bookCode/100]->getHeap()->getRoot();
+    LoanBookHeap* curHeap = this->run[bookCode/100]->getHeap();
 
     // check run has data
     // if same code has data
-    if (curNode) {
-        *fout << "=========PRINT_ST=========" << endl;
+    if (curHeap->getRoot()) {
         
-
         return true;
     }
     else { // if target code don't have data print error

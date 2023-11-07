@@ -265,8 +265,12 @@ bool Manager::PRINT_ST(string line) {
     return true;
 }
 
-bool Manager::DELETE() 
-{
+bool Manager::DELETE() {
+    if (this->stree->getRoot())
+        this->stree->Delete();
+    else
+        printErrorCode(600);
+        
     return true;
 }
 
