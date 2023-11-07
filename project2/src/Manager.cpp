@@ -1,3 +1,5 @@
+#include <string>
+#include <algorithm>
 #include "Manager.h"
 using namespace std;
 
@@ -13,10 +15,28 @@ void Manager::run(const char* command)
     string line;
 	while (1) {
 		getline(fcmd, line); // get one command line
-        //cout << line << endl;
         // check the command and run each process
-        if (line == "LOAD") 
-            LOAD();
+        if (line.substr(0, line.find('\t')) == "LOAD") {
+            // if no tab is input
+            if (line.find('\t') == string::npos) {
+                // check correct method of input
+                if (line.length() == 4)
+                    LOAD();
+                else
+                    printErrorCode(100);
+            }
+            else { // if there is tab
+                // remove white space
+                line.erase(remove_if(line.begin(), line.end(), 
+                        [](unsigned char x) { return std::isspace(x); }), line.end());
+                
+                // check correct method of input
+                if (line.length() == 4)
+                    LOAD();
+                else
+                    printErrorCode(100);
+            }
+        }
         else if (line.substr(0, line.find('\t')) == "ADD")
             ADD(line);
         else if (line.substr(0, line.find('\t')) == "SEARCH_BP") {
@@ -37,11 +57,29 @@ void Manager::run(const char* command)
                 SEARCH_BP_RANGE(first, second);
             }
         }
-        else if (line == "PRINT_BP"){
-            PRINT_BP();
+        else if (line.substr(0, line.find('\t')) == "PRINT_BP"){
+            // if no tab is input
+            if (line.find('\t') == string::npos) {
+                // check correct method of input
+                if (line.length() == 8)
+                    PRINT_BP();
+                else
+                    printErrorCode(400);
+            }
+            else { // if there is tab
+                // remove white space
+                line.erase(remove_if(line.begin(), line.end(), 
+                        [](unsigned char x) { return std::isspace(x); }), line.end());
+                
+                // check correct method of input
+                if (line.length() == 8)
+                    PRINT_BP();
+                else
+                    printErrorCode(400);
+            }
         }
-        else if (line.substr(0, line.find(' ')) == "PRINT_ST")
-            PRINT_ST();
+        else if (line.substr(0, line.find('\t')) == "PRINT_ST")
+            PRINT_ST(line);
         else if (line == "DELETE")
             DELETE();
         else if (line == "EXIT") {
@@ -53,8 +91,6 @@ void Manager::run(const char* command)
         }
         else {
             printErrorCode(700);
-            fcmd.close();
-            flog.close();
         }
 	}
 	fcmd.close();
@@ -208,8 +244,24 @@ bool Manager::PRINT_BP() {
     return true;
 }
 
-bool Manager::PRINT_ST() 
-{
+bool Manager::PRINT_ST(string line) {
+    int code = stoi(line.substr(line.find('\t') + 1));
+    bool check = true;
+    // check invalid code
+    switch(code) {
+        case 0: case 100: case 200: case 300: case 400:
+        case 500: case 600: case 700: 
+            check = this->stree->printBookData(code);
+            break;
+        default:
+            printErrorCode(500);
+    }
+
+    // check if stree print is successfull
+    // check is false when fail
+    if (!check)
+        printErrorCode(500);
+    
     return true;
 }
 

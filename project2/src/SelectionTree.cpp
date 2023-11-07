@@ -36,6 +36,18 @@ bool SelectionTree::Delete() {
 }
 
 bool SelectionTree::printBookData(int bookCode) {
-    return 0;
+    LoanBookHeapNode* curNode = this->run[bookCode/100]->getHeap()->getRoot();
+
+    // check run has data
+    // if same code has data
+    if (curNode) {
+        *fout << "=========PRINT_ST=========" << endl;
+        
+
+        return true;
+    }
+    else { // if target code don't have data print error
+        return false;
+    }
 }
 
