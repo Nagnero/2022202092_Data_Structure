@@ -47,7 +47,14 @@ void Manager::run(const char* command)
         else if (line == "EXIT") {
             cout << "exit\n";
             printSuccessCode("EXIT");
+            fcmd.close();
+            flog.close();
             exit(0);
+        }
+        else {
+            printErrorCode(700);
+            fcmd.close();
+            flog.close();
         }
 	}
 	fcmd.close();

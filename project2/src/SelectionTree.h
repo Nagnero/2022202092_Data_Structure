@@ -78,4 +78,5 @@ public:
     bool Insert(LoanBookData* newData);
     bool Delete();
     bool printBookData(int bookCode);
+    void reArrange();
 };
