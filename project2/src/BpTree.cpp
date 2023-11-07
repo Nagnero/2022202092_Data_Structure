@@ -11,6 +11,9 @@ bool BpTree::Insert(LoanBookData* newData) {
 
         // insert as new Node
         if (curDataMap->find(name) == curDataMap->end()) {
+            // check book in inserted by add or load, add has loan count of -1
+            if(newData->getLoanCount() == -1)
+                newData->setCount(1);
             // add data into current data node
             curNode->insertDataMap(name, newData);
 
@@ -41,7 +44,8 @@ bool BpTree::Insert(LoanBookData* newData) {
             }
             // move to Loan book heap =========================================
             if (curobj->getLoanCount() == limit) {
-                cout << "MOVE\n";
+                this->stree->Insert(curobj);
+                // delete(curNode, curobj);
             }
         }
     }

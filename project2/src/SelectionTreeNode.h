@@ -20,7 +20,7 @@ public:
         this->hRoot = NULL;
     }
     ~SelectionTreeNode() {
-
+        
     }
 
     void setBookData(LoanBookData* data) { this->pData = data; }
@@ -44,5 +44,5 @@ public:
     SelectionTreeNode* getLeftChild() { return pLeft; }
     SelectionTreeNode* getRightChild() { return pRight; }
     SelectionTreeNode* getParent() { return pParent; }
-    //LoanBookHeap* getHeap() { return hNode; }
+    LoanBookHeap* getHeap() { return hRoot; }
 };

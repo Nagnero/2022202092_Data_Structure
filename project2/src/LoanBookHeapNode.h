@@ -16,6 +16,12 @@ public:
         this->pRight = NULL;
         this->pParent = NULL;
     }
+    LoanBookHeapNode(LoanBookData* data) {
+        this->pData = data;
+        this->pLeft = NULL;
+        this->pRight = NULL;
+        this->pParent = NULL;
+    }
     ~LoanBookHeapNode() {
 
     }

@@ -4,6 +4,7 @@
 #include "BpTreeDataNode.h"
 #include "BpTreeIndexNode.h"
 #include "LoanBookData.h"
+#include "SelectionTree.h"
 #include <fstream>
 #include <iostream>
 
@@ -12,6 +13,7 @@ private:
 	BpTreeNode* root;
 	int order; // m children
 	ofstream* fout;
+    SelectionTree* stree;
 
 public:
 	BpTree(ofstream *fout, int order = 3) {
@@ -20,7 +22,10 @@ public:
 		this->fout = fout;
 	}
 	~BpTree();
-	/* essential */
+
+    void setSelectionTree(SelectionTree* stree) { this->stree = stree; }
+	// void deleteData(BpTreeNode* curNode, LoanBookData* curObj);
+    /* essential */
 	bool		Insert(LoanBookData* newData);
 	bool		excessDataNode(BpTreeNode* pDataNode);
 	bool		excessIndexNode(BpTreeNode* pIndexNode);

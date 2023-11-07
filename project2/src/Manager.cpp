@@ -134,7 +134,7 @@ bool Manager::ADD(string line) {
 
     // make new object with data
     LoanBookData* newData = new LoanBookData;
-    newData->setBookData(name, code, author, year);
+    newData->setBookData(name, code, author, year, -1);
     // insert new data into B+-tree
     bptree->Insert(newData);
     flog << "=========ADD=========" << endl;

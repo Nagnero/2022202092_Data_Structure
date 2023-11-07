@@ -15,9 +15,10 @@ private:
 public:
 	Manager(int bpOrder) {
         this->cmd = NULL;
-		this->bptree = new BpTree(&flog, bpOrder);
         this->stree = new SelectionTree(&flog);
-	}
+		this->bptree = new BpTree(&flog, bpOrder);
+        this->bptree->setSelectionTree(this->stree);
+    }
 
 	~Manager() {
 		/* You must fill here */

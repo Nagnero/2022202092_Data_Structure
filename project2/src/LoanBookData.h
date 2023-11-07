@@ -35,6 +35,7 @@ public:
     void setCode(int code) { this->code = code; }
     void setAuthor(string author) { this->author = author; }
     void setYear(int year) { this->year = year; }
+    void setCount(int count) { this->loan_count = count; }
     void updateCount() { this->loan_count += 1; }
 
     string getName() { return name; }
