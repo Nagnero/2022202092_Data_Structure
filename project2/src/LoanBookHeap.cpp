@@ -19,7 +19,7 @@ void LoanBookHeap::heapifyUp(LoanBookHeapNode* pN) {
 
 void LoanBookHeap::heapifyDown(LoanBookHeapNode* pN) {
     // exit recursive func. if no more child nodes
-    if (!pN->getRightChild() && pN->getLeftChild())
+    if (!pN->getRightChild() && !pN->getLeftChild())
         return;
 
     // if curNode only has left child

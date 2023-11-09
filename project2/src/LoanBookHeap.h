@@ -34,6 +34,8 @@ public:
     void setRoot(LoanBookHeapNode* pN) { this->root = pN; }
     void setCode(int code) { this->code = code; }
     void setCount(int count) { this->count = count; }
+    int getCode() { return this->code; }
+    int getCount() { return this->count; }
     void decreaseCount() { this->count--; }
     LoanBookHeapNode* getRoot() { return root; }
 
