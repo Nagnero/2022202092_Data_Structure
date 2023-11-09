@@ -121,7 +121,11 @@ bool SelectionTree::printBookData(int bookCode) {
     // check run has data
     // if same code has data
     if (curHeap->getRoot()) {
+        // copy heap to temp new heap
+        LoanBookHeap* tempHeap = new LoanBookHeap(curHeap);
         
+        
+
         return true;
     }
     else { // if target code don't have data print error

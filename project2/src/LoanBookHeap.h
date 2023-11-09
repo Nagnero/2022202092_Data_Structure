@@ -1,4 +1,5 @@
 #pragma once
+#include <queue>
 #include "LoanBookData.h"
 #include "LoanBookHeapNode.h"
 
@@ -20,6 +21,40 @@ private:
 public:
     LoanBookHeap() {
         this->root = NULL;
+    }
+    // constructor for copying heap
+    LoanBookHeap(LoanBookHeap* curHeap) {
+        this->code = 0;
+        this->count = 0;
+
+        // copy other nodes
+        LoanBookHeapNode* originalNode = curHeap->getRoot();
+        queue<LoanBookHeapNode*> q;
+        q.push(originalNode);
+
+        while(!q.empty()) {
+            LoanBookHeapNode* curHeapNode = q.front();
+            q.pop();
+
+            // copy data
+            LoanBookData* originalData = curHeapNode->getBookData();
+            string _name = originalData->getName();
+            int _code = originalData->getCode();
+            string _author = originalData->getAuthor();
+            int _year = originalData->getYear();
+            int _loan_count = originalData->getLoanCount();
+            LoanBookData* copyData = new LoanBookData;
+            copyData->setBookData(_name, _code, _author, _year, _loan_count);
+
+            this->Insert(copyData);
+
+            if (curHeapNode->getLeftChild()) {
+                q.push(curHeapNode->getLeftChild());
+            }
+            if (curHeapNode->getRightChild()) {
+                q.push(curHeapNode->getRightChild());
+            }
+        }
     }
     LoanBookHeap(int code) {
         this->root = NULL;
