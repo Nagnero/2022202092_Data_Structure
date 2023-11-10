@@ -16,15 +16,25 @@ bool SelectionTree::Insert(LoanBookData* newData) {
         SelectionTreeNode* parent = run[codeDivBy100]->getParent();
 
         for (int i = 0; i < 3; i++) {
+            // find for sibling node
+            SelectionTreeNode* sibling;
+            if (parent->getLeftChild() == curNode) sibling = parent->getRightChild();
+            else sibling = parent->getLeftChild();
+            
+            //check sibling NULL
+            if (sibling->getBookData()) // sibling has data
+                if (sibling->getBookData()->getName() < curNode->getBookData()->getName()) 
+                    curNode = sibling;
+
             // check parent is NULL
-            if (parent->getBookData()) {
+            if (parent->getBookData()) { // parent is not NULL
                 // compare data of curNode and parent Node
                 if (curNode->getBookData()->getName() < parent->getBookData()->getName())
                     parent->setBookData(curNode->getBookData());
             }
-            else { // if parent is null
+            else  // if parent is null
                 parent->setBookData(curNode->getBookData());
-            }
+            
             curNode = parent;
             parent = curNode->getParent();
         }
@@ -79,6 +89,9 @@ bool SelectionTree::Delete() {
 
     // move last node data to root node
     delete rootHeapNode->getBookData();
+    if (runHeap->getCount() == 0) {
+        delete rootHeapNode;
+    }
     rootHeapNode->setBookData(lastHeapNode->getBookData());
     // delete lastHeapNode and disconnet from heap
     LoanBookHeapNode* tempNode = lastHeapNode->getParent();
@@ -89,9 +102,10 @@ bool SelectionTree::Delete() {
             tempNode->setRightChild(NULL);
         }
     }
-    delete lastHeapNode;
-
+    if (lastHeapNode != rootHeapNode) delete lastHeapNode;
     runHeap->heapifyDown(rootHeapNode);
+    
+
     // rearrange selection tree
     int codeDivBy100 = runHeap->getCode()/100;
     SelectionTreeNode* curStreeNode = run[codeDivBy100];
@@ -99,17 +113,38 @@ bool SelectionTree::Delete() {
     SelectionTreeNode* parent = run[codeDivBy100]->getParent();
 
     for (int i = 0; i < 3; i++) {
-        // check parent is NULL
-        if (parent->getBookData()) {
-            // compare data of curNode and parent Node
-            if (curNode->getBookData()->getName() < parent->getBookData()->getName())
-                parent->setBookData(curNode->getBookData());
+        // find for sibling node
+        SelectionTreeNode* sibling;
+        if (parent->getLeftChild() == curStreeNode) sibling = parent->getRightChild();
+        else sibling = parent->getLeftChild();
+
+        // curNode and sibling has no data
+        if(!curStreeNode->getBookData() && !sibling->getBookData()) {
+            curStreeNode = parent;
+            parent = curStreeNode->getParent();
+            continue;
         }
-        else { // if parent is null
-            parent->setBookData(curNode->getBookData());
+        else if (!curStreeNode->getBookData()) { // curNode has no data
+            parent->setBookData(sibling->getBookData());
+            curStreeNode = parent;
+            parent = curStreeNode->getParent();
+            continue;
         }
-        curNode = parent;
-        parent = curNode->getParent();
+        else if (!sibling->getBookData()) { // sibiling has no data
+            parent->setBookData(curStreeNode->getBookData());
+            curStreeNode = parent;
+            parent = curStreeNode->getParent();
+            continue;
+        }
+        else { // both node has data
+            if (curStreeNode->getBookData()->getName() > sibling->getBookData()->getName())
+                parent->setBookData(sibling->getBookData());
+            else
+                parent->setBookData(curStreeNode->getBookData());
+            curStreeNode = parent;
+            parent = curStreeNode->getParent();
+            continue;
+        }
     }
 
     return 0;
