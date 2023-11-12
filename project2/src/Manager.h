@@ -21,8 +21,8 @@ public:
     }
 
 	~Manager() {
-		/* You must fill here */
-	}
+        
+    }
 	
 
 	void run(const char* command);

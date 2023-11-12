@@ -103,6 +103,9 @@ bool SelectionTree::Delete() {
     }
     else { // delete node is the last node
         runHeap->setRoot(NULL);
+        curNode->setHeap(NULL);
+        delete curNode->getBookData();
+        curNode->setBookData(NULL);
         delete lastHeapNode;
         rootHeapNode = NULL;
     }
@@ -207,7 +210,7 @@ bool SelectionTree::printBookData(int bookCode) {
 
     // check run has data
     // if same code has data
-    if (curHeap->getRoot()) {
+    if (curHeap) {
         // copy heap to temp new heap
         LoanBookHeap* tempHeap = new LoanBookHeap(curHeap);
 

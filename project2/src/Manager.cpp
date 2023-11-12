@@ -87,6 +87,8 @@ void Manager::run(const char* command)
             printSuccessCode("EXIT");
             fcmd.close();
             flog.close();
+            delete this->bptree;
+            delete this->stree;
             exit(0);
         }
         else {

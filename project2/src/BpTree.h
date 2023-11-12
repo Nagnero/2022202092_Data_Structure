@@ -1,6 +1,7 @@
 #ifndef _BpTree_H_
 #define _BpTree_H_
 
+#include <queue>
 #include "BpTreeDataNode.h"
 #include "BpTreeIndexNode.h"
 #include "LoanBookData.h"
@@ -21,7 +22,37 @@ public:
 		this->order = order;
 		this->fout = fout;
 	}
-	~BpTree();
+	~BpTree() {
+        BpTreeNode* dataNode = root;
+        while(dataNode->getMostLeftChild()) 
+            dataNode = dataNode->getMostLeftChild();
+        BpTreeNode* curNode = root;
+
+        // delete all index nodes
+        queue<BpTreeNode*> q;
+        while (1) {
+            if (!curNode->getMostLeftChild()) break;
+
+            q.push(curNode->getMostLeftChild());
+            q.push(curNode->getIndexMap()->begin()->second);
+            if (curNode->getIndexMap()->size() == 2) 
+                q.push(curNode->getIndexMap()->rbegin()->second);
+            
+            delete curNode;
+            curNode = q.front();
+            q.pop();
+        }
+
+        // delete all data nodes
+        BpTreeNode* delNode;
+        while(dataNode->getNext()) {
+            delNode = dataNode;
+            dataNode = dataNode->getNext();
+
+            delete delNode;
+        }
+        delete dataNode;
+    }
 
     void setSelectionTree(SelectionTree* stree) { this->stree = stree; }
     /* essential */
