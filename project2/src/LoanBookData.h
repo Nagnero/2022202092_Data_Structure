@@ -31,6 +31,14 @@ public:
         this->loan_count = loan_count;
     }
 
+    void copyBookData(LoanBookData* data) {
+        this->name = data->getName();
+        this->code = data->getCode();
+        this->author = data->getAuthor();
+        this->year = data->getYear();
+        this->loan_count = data->getLoanCount();
+    }
+    
     void setName(string name) { this->name = name; }
     void setCode(int code) { this->code = code; }
     void setAuthor(string author) { this->author = author; }

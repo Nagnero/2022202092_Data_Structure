@@ -177,7 +177,7 @@ bool Manager::ADD(string line) {
 
     // make new object with data
     LoanBookData* newData = new LoanBookData;
-    newData->setBookData(name, code, author, year, -1);
+    newData->setBookData(name, code, author, year, 0);
     // insert new data into B+-tree
     bptree->Insert(newData);
     flog << "=========ADD=========" << endl;
@@ -266,7 +266,7 @@ bool Manager::PRINT_ST(string line) {
 }
 
 bool Manager::DELETE() {
-    if (this->stree->getRoot()) {
+    if (this->stree->getRoot()->getBookData()) {
         this->stree->Delete();
         printSuccessCode("DELETE");
     }

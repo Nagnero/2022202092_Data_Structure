@@ -88,29 +88,34 @@ bool SelectionTree::Delete() {
     }
 
     // move last node data to root node
-    delete rootHeapNode->getBookData();
-    if (runHeap->getCount() == 0) {
-        delete rootHeapNode;
+    // check last node
+    if (lastHeapNode != rootHeapNode) { // delete node is not the last node
+        // copy last node data to root node
+        rootHeapNode->getBookData()->copyBookData(lastHeapNode->getBookData());
+        // get last node parent to disconnect
+        LoanBookHeapNode* lastHeapNodeParent = lastHeapNode->getParent();
+        if (lastHeapNodeParent->getLeftChild() == lastHeapNode)
+            lastHeapNodeParent->setLeftChild(NULL);
+        else 
+            lastHeapNodeParent->setRightChild(NULL);
+        // delete last node
+        delete lastHeapNode;    
     }
-    rootHeapNode->setBookData(lastHeapNode->getBookData());
-    // delete lastHeapNode and disconnet from heap
-    LoanBookHeapNode* tempNode = lastHeapNode->getParent();
-    if (tempNode) {
-        if (tempNode->getLeftChild() == lastHeapNode)
-            tempNode->setLeftChild(NULL);
-        else {
-            tempNode->setRightChild(NULL);
-        }
+    else { // delete node is the last node
+        runHeap->setRoot(NULL);
+        delete lastHeapNode;
+        rootHeapNode = NULL;
     }
-    if (lastHeapNode != rootHeapNode) delete lastHeapNode;
-    runHeap->heapifyDown(rootHeapNode);
-    
+
+    // heapify down the heap
+    if (rootHeapNode) runHeap->heapifyDown(rootHeapNode);    
 
     // rearrange selection tree
     int codeDivBy100 = runHeap->getCode()/100;
     SelectionTreeNode* curStreeNode = run[codeDivBy100];
-    curStreeNode->setBookData(curStreeNode->getHeap()->getRoot()->getBookData());
-    SelectionTreeNode* parent = run[codeDivBy100]->getParent();
+    if (runHeap->getRoot())
+        curStreeNode->setBookData(runHeap->getRoot()->getBookData());
+    SelectionTreeNode* parent = curStreeNode->getParent();
 
     for (int i = 0; i < 3; i++) {
         // find for sibling node
@@ -237,4 +242,3 @@ bool SelectionTree::printBookData(int bookCode) {
         return false;
     }
 }
-

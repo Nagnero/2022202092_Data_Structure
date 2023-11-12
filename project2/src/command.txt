@@ -3,22 +3,29 @@ SEARCH_BP	a	z
 ADD	book	200	risa	1990
 ADD	book	200	risa	1990
 ADD	book	200	risa	1990
+ADD	book	200	risa	1990
+ADD	a	200	risa	1990
 ADD	a	200	risa	1990
 ADD	a	200	risa	1990
 ADD	a	200	risa	1990
 ADD	b	200	risa	1990
 ADD	b	200	risa	1990
 ADD	b	200	risa	1990
+ADD	b	200	risa	1990
 ADD	c	200	risa	1990
 ADD	c	200	risa	1990
 ADD	c	200	risa	1990
+ADD	c	200	risa	1990
+ADD	zz	200	risa	1990
 ADD	zz	200	risa	1990
 ADD	zz	200	risa	1990
 ADD	zz	200	risa	1990
 ADD	bb	700	risa	1990
 ADD	bb	700	risa	1990
+ADD	bb	700	risa	1990
 ADD	kk	700	risa	1990
 ADD	kk	700	risa	1990
+ADD	kk	700	risa	1990
 PRINT_ST	200
 PRINT_ST	700
 DELETE
@@ -33,6 +40,7 @@ PRINT_ST	700
 DELETE
 PRINT_ST	200
 PRINT_ST	700
+ADD	aaa	600	risa	1990
 ADD	aaa	600	risa	1990
 ADD	aaa	600	risa	1990
 PRINT_ST	200
