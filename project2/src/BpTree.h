@@ -24,7 +24,6 @@ public:
 	~BpTree();
 
     void setSelectionTree(SelectionTree* stree) { this->stree = stree; }
-	// void deleteData(BpTreeNode* curNode, LoanBookData* curObj);
     /* essential */
 	bool		Insert(LoanBookData* newData);
 	bool		excessDataNode(BpTreeNode* pDataNode);
@@ -37,6 +36,7 @@ public:
 	bool searchBook(string name);
 	bool searchRange(string start, string end);
     void printData(LoanBookData* curObj);
+    void deleteNode(BpTreeNode* curDataNode, string name);
 };
 
 #endif

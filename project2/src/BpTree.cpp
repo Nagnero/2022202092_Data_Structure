@@ -46,8 +46,8 @@ bool BpTree::Insert(LoanBookData* newData) {
             }
 
             if (curobj->getLoanCount() == limit) {
-                this->stree->Insert(curobj);
-                // delete(curNode, curobj);
+                this->stree->Insert(curobj); // insert data to stree
+                deleteNode(curNode, name);
             }
         }
     }
@@ -305,4 +305,41 @@ void BpTree::printData(LoanBookData* curObj) {
     else *fout << curObj->getCode() << '/';
     *fout << curObj->getAuthor() << '/' << curObj->getYear() << '/' 
         << curObj->getLoanCount() << endl;
+}
+
+void BpTree::deleteNode(BpTreeNode* curDataNode, string name) {
+    map<string, LoanBookData*>* curDataMap = curDataNode->getDataMap();
+
+    // deleting node has two data
+    if (curDataMap->size() == 2) {
+        // deleting second key
+        if (curDataMap->rbegin()->first == name) {
+            // just erase data
+            delete curDataMap->rbegin()->second;
+            curDataMap->erase(name);
+        }
+        else { // deleting first key
+            // deleting node is first data node
+            if (curDataNode->getPrev() == NULL) { // just delete
+                delete curDataMap->begin()->second;
+                curDataMap->erase(name);
+            }
+            else { // deleting node is not first data node
+                // find index node that has same name
+                BpTreeNode* pIndexNode = curDataNode->getParent();
+                map<string, BpTreeNode*>* curIndexMap = pIndexNode->getIndexMap();
+                while (curIndexMap->find(name) == curIndexMap->end()) {
+                    pIndexNode = pIndexNode->getParent();
+                    curIndexMap = pIndexNode->getIndexMap();
+                }
+            }
+        }
+    }
+    else { // deleting node has one data
+        // deleting node is first data node
+        if (curDataNode->getPrev() == NULL) { // just delete
+        
+        }
+    }
+
 }
