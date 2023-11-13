@@ -20,7 +20,7 @@ public:
         this->hRoot = NULL;
     }
     ~SelectionTreeNode() {
-        
+        //if (hRoot) delete hRoot;
     }
 
     void setBookData(LoanBookData* data) { this->pData = data; }

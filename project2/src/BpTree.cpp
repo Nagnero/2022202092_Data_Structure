@@ -12,7 +12,7 @@ bool BpTree::Insert(LoanBookData* newData) {
         // insert as new Node
         if (curDataMap->find(name) == curDataMap->end()) {
             // check book in inserted by add or load, add has loan count of -1
-            if(newData->getLoanCount() == -1)
+            if (newData->getLoanCount() == -1)
                 newData->setCount(1);
             // add data into current data node
             curNode->insertDataMap(name, newData);
@@ -47,7 +47,7 @@ bool BpTree::Insert(LoanBookData* newData) {
 
             if (curobj->getLoanCount() == limit) {
                 this->stree->Insert(curobj); // insert data to stree
-                // curDataMap->erase(name);
+                curDataMap->erase(name);
             }
         }
     }
@@ -143,7 +143,7 @@ void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
     parentIndexNode->insertIndexMap(delName, pIndexNode->getIndexMap()->rbegin()->second);
     pIndexNode->deleteMap(delName);
 
-    
+
     // link parent node and pIndexNode
     if (!parentIndexNode->getMostLeftChild())
         parentIndexNode->setMostLeftChild(pIndexNode);
@@ -155,7 +155,7 @@ void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
     nextIndexNode->setParent(parentIndexNode);
     thirdChildNode->setParent(nextIndexNode);
     lastChildNode->setParent(nextIndexNode);
-    
+
 
     if (this->root == pIndexNode)
         this->root = parentIndexNode;
@@ -211,7 +211,7 @@ bool BpTree::searchBook(string name) {
     // B+ tree has target data
     if (curMap->find(name) != curMap->end()) {
         LoanBookData* curObj = curMap->find(name)->second;
-        
+
         *fout << "=========SEARCH_BP=========" << endl;
         printData(curObj);
         *fout << "=======================" << endl << endl;
@@ -226,14 +226,21 @@ bool BpTree::searchBook(string name) {
 bool BpTree::searchRange(string start, string end) {
     BpTreeNode* curNode = searchDataNode(start);
     map<string, LoanBookData*>* curMap = curNode->getDataMap();
-    
     // save first and second string to cur data map string
     string first, second = "";
+
+    // check map data size
+    while (curMap->size() == 0) {
+        if (curNode->getNext())
+            curNode = curNode->getNext();
+        if (!curNode) return false;
+        curMap = curNode->getDataMap();
+    }
     first = curMap->begin()->first;
     if (first != curMap->rbegin()->first)
         second = curMap->rbegin()->first.substr(0, 1);
     first = curMap->begin()->first.substr(0, 1);
-    
+
     if (second == "") {
         *fout << "=========SEARCH_BP=========" << endl;
         if (first >= start) {
@@ -245,21 +252,27 @@ bool BpTree::searchRange(string start, string end) {
         if (first < start && second < start) return false; // no data in range
         else if (first < start && second < end) {
             LoanBookData* curObj = curMap->rbegin()->second;
-            *fout << "=========SEARCH_BP========="<< endl;
+            *fout << "=========SEARCH_BP=========" << endl;
             printData(curObj);
         }
         else if (first >= start) {
             LoanBookData* curObj = curMap->begin()->second;
-            *fout << "=========SEARCH_BP========="<< endl;
+            *fout << "=========SEARCH_BP=========" << endl;
             printData(curObj);
             curObj = curMap->rbegin()->second;
             printData(curObj);
         }
     }
     curNode = curNode->getNext(); // move to next Node
+    curMap = curNode->getDataMap();
 
     while (curNode) {
-        curMap = curNode->getDataMap();
+        while (curMap->size() == 0) {
+            if (curNode->getNext())
+                curNode = curNode->getNext();
+            if (!curNode) break;
+            curMap = curNode->getDataMap();
+        }
         first = curMap->begin()->first;
         if (first != curMap->rbegin()->first)
             second = curMap->rbegin()->first.substr(0, 1);
@@ -290,20 +303,22 @@ bool BpTree::searchRange(string start, string end) {
             else break;
         }
         curNode = curNode->getNext();
+        if (!curNode) break;
+        curMap = curNode->getDataMap();
         first = "";
         second = "";
     }
-    
+
     *fout << "=======================" << endl << endl;
 
-	return true;
+    return true;
 }
 
 void BpTree::printData(LoanBookData* curObj) {
     *fout << curObj->getName() << '/';
     if (curObj->getCode() == 0) *fout << "000" << '/';
     else *fout << curObj->getCode() << '/';
-    *fout << curObj->getAuthor() << '/' << curObj->getYear() << '/' 
+    *fout << curObj->getAuthor() << '/' << curObj->getYear() << '/'
         << curObj->getLoanCount() << endl;
 }
 
@@ -338,7 +353,7 @@ void BpTree::deleteNode(BpTreeNode* curDataNode, string name) {
     else { // deleting node has one data
         // deleting node is first data node
         if (curDataNode->getPrev() == NULL) { // just delete
-        
+
         }
     }
 

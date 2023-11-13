@@ -227,6 +227,11 @@ bool Manager::PRINT_BP() {
         flog << "=========PRINT_BP=========" << endl;
         while(curNode) {
             map<string, LoanBookData*>* curMap = curNode->getDataMap();
+            if (curMap->size() == 0) {
+                // move to next data node
+                curNode = curNode->getNext();
+                continue;
+            }
             LoanBookData* curObj = curMap->begin()->second;
             printData(curObj);
             if(curObj != curMap->rbegin()->second) {
