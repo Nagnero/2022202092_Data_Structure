@@ -47,7 +47,7 @@ bool BpTree::Insert(LoanBookData* newData) {
 
             if (curobj->getLoanCount() == limit) {
                 this->stree->Insert(curobj); // insert data to stree
-                curDataMap->erase(name);
+                // curDataMap->erase(name);
             }
         }
     }
@@ -235,14 +235,14 @@ bool BpTree::searchRange(string start, string end) {
     first = curMap->begin()->first.substr(0, 1);
     
     if (second == "") {
+        *fout << "=========SEARCH_BP=========" << endl;
         if (first >= start) {
             LoanBookData* curObj = curMap->begin()->second;
-            *fout << "=========SEARCH_BP=========" << endl;
             printData(curObj);
         }
     }
     else {
-        if (first < start && second > end) return false; // no data in range
+        if (first < start && second < start) return false; // no data in range
         else if (first < start && second < end) {
             LoanBookData* curObj = curMap->rbegin()->second;
             *fout << "=========SEARCH_BP========="<< endl;

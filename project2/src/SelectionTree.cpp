@@ -207,6 +207,9 @@ void deleteForPrint(LoanBookHeap* curHeap) {
 
 bool SelectionTree::printBookData(int bookCode) {
     LoanBookHeap* curHeap = this->run[bookCode/100]->getHeap();
+    // check curHeap NULL
+    if (!curHeap) return false; // return false if curHeap is NULL
+    if (!curHeap->getRoot()) return false;
 
     // check run has data
     // if same code has data
