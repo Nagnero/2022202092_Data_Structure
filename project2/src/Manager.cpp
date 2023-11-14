@@ -6,15 +6,20 @@ using namespace std;
 void Manager::run(const char* command) 
 {
 	fcmd.open(command);
-    flog.open("log.txt", ios::app);
 	if(!fcmd) {
 		flog << "File Open Error" << endl;
+        fcmd.close();
+        delete this->bptree;
+        delete this->stree;
 		return;
 	}
+    flog.open("log.txt", ios::app);
 
     string line;
 	while (1) {
 		getline(fcmd, line); // get one command line
+        // check fcmd is empty
+        if (line == "") break;
         // check the command and run each process
         if (line.substr(0, line.find('\t')) == "LOAD") {
             // if no tab is input
@@ -83,7 +88,6 @@ void Manager::run(const char* command)
         else if (line == "DELETE")
             DELETE();
         else if (line == "EXIT") {
-            cout << "exit\n";
             printSuccessCode("EXIT");
             fcmd.close();
             flog.close();
@@ -93,10 +97,14 @@ void Manager::run(const char* command)
         }
         else {
             printErrorCode(700);
+            // remove line
+            line = "";
         }
 	}
 	fcmd.close();
     flog.close();
+    delete this->bptree;
+    delete this->stree;
 	return;
 }
 
