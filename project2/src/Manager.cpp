@@ -6,7 +6,7 @@ using namespace std;
 void Manager::run(const char* command) 
 {
 	fcmd.open(command);
-    flog.open("log.txt");
+    flog.open("log.txt", ios::app);
 	if(!fcmd) {
 		flog << "File Open Error" << endl;
 		return;
