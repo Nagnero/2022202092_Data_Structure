@@ -9,6 +9,8 @@ void Manager::run(const char* command)
     flog.open("log.txt", ios::app);
 	if(!fcmd) {
 		flog << "File Open Error" << endl;
+        delete this->bptree;
+        delete this->stree;
 		return;
 	}
 

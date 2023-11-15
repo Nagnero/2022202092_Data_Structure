@@ -1,24 +1,34 @@
-uuuuu	600	uuu	1999	0
-lllll	000	lll	1999	0
-kkkkk	100	kkk	1999	0
-mmmmm	600	mmm	1999	0
-vvvvv	700	vvv	1999	0
-jjjjj	100	jjj	1999	2
-ttttt	300	ttt	1999	3
-qqqqq	700	qqq	1999	0
-rrrrr	100	rrr	1999	2
-wwwww	300	www	1999	0
-hhhhh	500	hhh	1999	0
-fffff	700	fff	1999	1
-zzzzz	300	zzz	1999	3
-nnnnn	500	nnn	1999	0
-xxxxx	700	xxx	1999	0
-sssss	300	sss	1999	0
-ddddd	200	ddd	1999	0
-iiiii	700	iii	1999	0
-ggggg	500	ggg	1999	0
-aaaaa	100	aaa	1999	0
-bbbbb	100	bbb	1999	2
-yyyyy	000	yyy	1999	0
-eeeee	000	eee	1999	0
-ccccc	200	ccc	1999	0
+The Odyssey	600	Bram Stoker	1908	1
+Great Expectations	400	George Orwell	1915	1
+Brave New World	700	Aldous Huxley	1998	1
+1984	400	Vladimir Nabokov	1926	1
+Madame Bovary	500	Emily Bront?	1931	1
+To Kill a Mockingbird	700	Harper Lee	1913	1
+War and Peace	100	George Orwell	1912	1
+Madame Bovary	100	Victor Hugo	1947	1
+Don Quixote	200	Miguel de Cervantes	1971	1
+Jane Eyre	600	Anthony Burgess	1924	1
+Pride and Prejudice	700	Charlotte Bront?	1998	1
+Slaughterhouse-Five	100	J.R.R. Tolkien	2006	1
+Wuthering Heights	400	Bram Stoker	1997	1
+Heart of Darkness	600	Miguel de Cervantes	1936	1
+Emma	300	George Orwell	1977	1
+Heart of Darkness	200	Anthony Burgess	1976	1
+Dracula	300	Joseph Conrad	1950	1
+Brave New World	100	Joseph Conrad	1995	1
+Dracula	200	Charles Dickens	1915	1
+Little Women	300	Oscar Wilde	2005	1
+Slaughterhouse-Five	400	Emily Bront?	1931	1
+Lolita	500	George Orwell	1922	1
+Sense and Sensibility	500	Anthony Burgess	1959	1
+Emma	500	Gustave Flaubert	1945	1
+War and Peace	600	Miguel de Cervantes	1953	1
+The Picture of Dorian Gray	500	Harper Lee	1915	1
+The Picture of Dorian Gray	500	Charles Dickens	1940	1
+Don Quixote	100	George Orwell	1973	1
+The Adventures of Huckleberry Finn	700	J.R.R. Tolkien	2017	1
+Jane Eyre	700	Louisa May Alcott	1916	1
+The Great Gatsby	300	J.R.R. Tolkien	1931	1
+The Odyssey	600	Charles Dickens	1908	1
+Slaughterhouse-Five	100	Jane Austen	2000	1
+Frankenstein	600	Charlotte Bront?	2010	1
