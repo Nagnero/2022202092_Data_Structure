@@ -1,9 +1,9 @@
 LOAD
-ADD	aaaaa	100	aaa	1999
-ADD	aaaaa	100	aaa	1999
-ADD	aaaaa	100	aaa
-ADD	jjjjj	100	jjj	1999
-ADD	aaaaa	100	aaa	1999
+ADD	aaaaa	100	a	1999
+ADD	aaaaa	100	a	1999
+ADD	aaaaa	100	a	1999
+ADD	jjjjj	100	j	1999
+ADD	aaaaa	100	a	1999
 ADD	rrrrr	100	rrr	1999
 ADD	bbbbb	100	bbb	1999
 ADD	ttttt	300	ttt	1999
@@ -54,4 +54,4 @@ DELETE
 DELETE
 DELETE
 DELETE
-EXIT
+EXI
