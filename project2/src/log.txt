@@ -1,70 +1,32 @@
-=========LOAD=========
-Success
+=========ADD=========
+great expectations/400/George Orwell/1915
+=======================
+
+=======================
+ERROR 100
+=======================
+
+=======================
+ERROR 100
 =======================
 
 =========PRINT_BP=========
-brave New World/100/Joseph Conrad/1995/1
-don Quixote/200/Miguel de Cervantes/1971/1
-dracula/200/Charles Dickens/1915/1
-emma/300/George Orwell/1977/1
-frankenstein/600/Charlotte Bront?/2010/1
-great expectations/400/George Orwell/1915/1
-heart of Darkness/200/Anthony Burgess/1976/1
-jane Eyre/600/Anthony Burgess/1924/1
-little Women/300/Oscar Wilde/2005/1
-lolita/500/George Orwell/1922/1
-madame Bovary/100/Victor Hugo/1947/1
-moby Dick/000/Herman Melville/1851/1
-pride and Prejudice/700/Charlotte Bront?/1998/1
-sense and Sensibility/500/Anthony Burgess/1959/1
-slaughterhouse-Five/100/J.R.R. Tolkien/2006/1
-the Adventures of Huckleberry Finn/700/J.R.R. Tolkien/2017/1
-the Great Gatsby/300/J.R.R. Tolkien/1931/1
-the Picture of Dorian Gray/500/Charles Dickens/1940/1
-the odyssey/600/Bram Stoker/1908/1
-to kill a mockingbird/700/Harper Lee/1913/1
-war and Peace/600/Miguel de Cervantes/1953/1
-wuthering Heights/400/Bram Stoker/1997/1
+great expectations/400/George Orwell/1915/0
 =======================
 
 =========SEARCH_BP=========
-brave New World/100/Joseph Conrad/1995/1
+great expectations/400/George Orwell/1915/0
 =======================
 
 =========SEARCH_BP=========
-brave New World/100/Joseph Conrad/1995/1
-don Quixote/200/Miguel de Cervantes/1971/1
-dracula/200/Charles Dickens/1915/1
-emma/300/George Orwell/1977/1
+great expectations/400/George Orwell/1915/0
 =======================
 
 =========SEARCH_BP=========
-brave New World/100/Joseph Conrad/1995/1
-don Quixote/200/Miguel de Cervantes/1971/1
-dracula/200/Charles Dickens/1915/1
-emma/300/George Orwell/1977/1
-frankenstein/600/Charlotte Bront?/2010/1
-great expectations/400/George Orwell/1915/1
-heart of Darkness/200/Anthony Burgess/1976/1
-jane Eyre/600/Anthony Burgess/1924/1
-little Women/300/Oscar Wilde/2005/1
-lolita/500/George Orwell/1922/1
-madame Bovary/100/Victor Hugo/1947/1
-moby Dick/000/Herman Melville/1851/1
-pride and Prejudice/700/Charlotte Bront?/1998/1
-sense and Sensibility/500/Anthony Burgess/1959/1
-slaughterhouse-Five/100/J.R.R. Tolkien/2006/1
-the Adventures of Huckleberry Finn/700/J.R.R. Tolkien/2017/1
-the Great Gatsby/300/J.R.R. Tolkien/1931/1
-the Picture of Dorian Gray/500/Charles Dickens/1940/1
-the odyssey/600/Bram Stoker/1908/1
-to kill a mockingbird/700/Harper Lee/1913/1
-war and Peace/600/Miguel de Cervantes/1953/1
-wuthering Heights/400/Bram Stoker/1997/1
+great expectations/400/George Orwell/1915/0
 =======================
 
-=======================
-ERROR 300
+=========SEARCH_BP=========
 =======================
 
 =======================
@@ -92,10 +54,6 @@ great expectations/400/George Orwell/1915
 =======================
 
 =========ADD=========
-great expectations/400/George Orwell/1915
-=======================
-
-=========ADD=========
 madame Bovary/100/Victor Hugo/1947
 =======================
 
@@ -103,16 +61,16 @@ madame Bovary/100/Victor Hugo/1947
 madame Bovary/100/Victor Hugo/1947
 =======================
 
-=========PRINT_ST=========
-great expectations/400/George Orwell/1915/4
+=======================
+ERROR 500
 =======================
 
-=========PRINT_ST=========
-madame Bovary/100/Victor Hugo/1947/3
+=======================
+ERROR 500
 =======================
 
-=========DELETE=========
-Success
+=======================
+ERROR 600
 =======================
 
 =========ADD=========
@@ -163,65 +121,12 @@ frankenstein/600/Charlotte Bront?/2010
 to kill a mockingbird/700/Harper Lee/1913
 =======================
 
-=========PRINT_ST=========
-moby Dick/000/Herman Melville/1851/3
-=======================
-
-=========PRINT_ST=========
-brave New World/100/Joseph Conrad/1995/3
-madame Bovary/100/Victor Hugo/1947/3
-=======================
-
-=========PRINT_ST=========
-heart of Darkness/200/Anthony Burgess/1976/3
-=======================
-
-=========PRINT_ST=========
-little Women/300/Oscar Wilde/2005/4
-=======================
-
 =======================
 ERROR 500
 =======================
 
-=========PRINT_ST=========
-lolita/500/George Orwell/1922/2
 =======================
-
-=========PRINT_ST=========
-frankenstein/600/Charlotte Bront?/2010/2
-=======================
-
-=========PRINT_ST=========
-to kill a mockingbird/700/Harper Lee/1913/2
-=======================
-
-=========DELETE=========
-Success
-=======================
-
-=========DELETE=========
-Success
-=======================
-
-=========DELETE=========
-Success
-=======================
-
-=========DELETE=========
-Success
-=======================
-
-=========DELETE=========
-Success
-=======================
-
-=========DELETE=========
-Success
-=======================
-
-=========PRINT_ST=========
-moby Dick/000/Herman Melville/1851/3
+ERROR 500
 =======================
 
 =======================
@@ -248,8 +153,60 @@ ERROR 500
 ERROR 500
 =======================
 
-=========PRINT_ST=========
-to kill a mockingbird/700/Harper Lee/1913/2
+=======================
+ERROR 600
+=======================
+
+=======================
+ERROR 600
+=======================
+
+=======================
+ERROR 600
+=======================
+
+=======================
+ERROR 600
+=======================
+
+=======================
+ERROR 600
+=======================
+
+=======================
+ERROR 600
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
+=======================
+
+=======================
+ERROR 500
 =======================
 
 =========EXIT=========

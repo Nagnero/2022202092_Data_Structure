@@ -264,7 +264,7 @@ bool BpTree::searchRange(string start, string end) {
         }
     }
     curNode = curNode->getNext(); // move to next Node
-    curMap = curNode->getDataMap();
+    if (curNode) curMap = curNode->getDataMap();
 
     while (curNode) {
         while (curMap->size() == 0) {

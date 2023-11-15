@@ -6,7 +6,7 @@ using namespace std;
 void Manager::run(const char* command) 
 {
 	fcmd.open(command);
-    flog.open("log.txt", ios::app);
+    flog.open("log.txt");
 	if(!fcmd) {
 		flog << "File Open Error" << endl;
 		return;
@@ -83,7 +83,6 @@ void Manager::run(const char* command)
         else if (line == "DELETE")
             DELETE();
         else if (line == "EXIT") {
-            cout << "exit\n";
             printSuccessCode("EXIT");
             fcmd.close();
             flog.close();
@@ -104,6 +103,7 @@ bool Manager::LOAD() {
     ifstream fin;
     string data, name, s_code, author, s_year, s_loan_count;
     int code, year, loan_count;
+    bool check = false;
     fin.open("loan_book.txt");
 
     // error occur when data file doesn't exist
@@ -114,6 +114,7 @@ bool Manager::LOAD() {
             if (fin.eof()) break; // break if file is end
             getline(fin, data);
             if (data == "") break; // break if no more loan book data
+            check = true;
 
             int index = data.find('\t'); // string parsing index
             name = data.substr(0, index); // get name
