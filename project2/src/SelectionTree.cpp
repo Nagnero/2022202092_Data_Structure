@@ -1,5 +1,6 @@
 #include <queue>
 #include <stack>
+#include <map>
 #include "SelectionTree.h"
 
 bool SelectionTree::Insert(LoanBookData* newData) {
@@ -159,51 +160,15 @@ bool SelectionTree::Delete() {
 }
 
 
-void deleteForPrint(LoanBookHeap* curHeap) {
-    // set curHeap and heapNode
-    LoanBookHeap* runHeap = curHeap;
-    LoanBookHeapNode* rootHeapNode = runHeap->getRoot();
+void saveData(map<string, LoanBookData*>* m, LoanBookHeapNode* curNode) {
+    if (!curNode) return;
+    LoanBookData* outputData = curNode->getBookData();
 
-    // get last heap node
-    int count = runHeap->getCount();
-    runHeap->decreaseCount();
-    stack<int> s;
-    while(count != 0) {
-        s.push(count % 2);
-        count /= 2;
-    }
+    saveData(m, curNode->getLeftChild());
+    saveData(m, curNode->getRightChild());
 
-    // move to last node of heap (complete tree)
-    s.pop();
-    LoanBookHeapNode* lastHeapNode = rootHeapNode;
-    while (s.size() != 0) {
-        // if top of stack is 1, move to right
-        if (s.top() == 1) 
-            lastHeapNode = lastHeapNode->getRightChild();
-        else if (s.top() == 0) // 0, move to left
-            lastHeapNode = lastHeapNode->getLeftChild();
-        
-        s.pop();
-    }
-
-    // move last node data to root node
-    delete rootHeapNode->getBookData();
-    rootHeapNode->setBookData(lastHeapNode->getBookData());
-    // delete lastHeapNode and disconnet from heap
-    LoanBookHeapNode* tempNode = lastHeapNode->getParent();
-    if (tempNode) {
-        if (tempNode->getLeftChild() == lastHeapNode)
-            tempNode->setLeftChild(NULL);
-        else {
-            tempNode->setRightChild(NULL);
-        }
-    }
-    delete lastHeapNode;
-
-    runHeap->heapifyDown(rootHeapNode);
+    (*m)[outputData->getName()] = outputData;
 }
-
-
 
 bool SelectionTree::printBookData(int bookCode) {
     LoanBookHeap* curHeap = this->run[bookCode/100]->getHeap();
@@ -215,32 +180,23 @@ bool SelectionTree::printBookData(int bookCode) {
     // if same code has data
     if (curHeap) {
         // copy heap to temp new heap
-        LoanBookHeap* tempHeap = new LoanBookHeap(curHeap);
+        map<string, LoanBookData*> m;
+        LoanBookHeapNode* curNode = curHeap->getRoot();
+
+        // save data to map
+        saveData(&m, curNode);
 
         *fout << "=========PRINT_ST=========" << endl;
-         while(1) {
-            LoanBookData* outputData = tempHeap->getRoot()->getBookData();
-            string _name = outputData->getName();
-            int _code = outputData->getCode();
-            string _author = outputData->getAuthor();
-            int _year = outputData->getYear();
-            int _loan_count = outputData->getLoanCount();
-
+        while(m.size() != 0) {
             // print data
-            *fout << _name << '/';
-            if (_code == 0) *fout << "000" << '/';
-            else *fout << _code << '/';
-            *fout << _author << '/' << _year << '/' << _loan_count << endl;
-
-            if (tempHeap->getCount() != 1)
-                deleteForPrint(tempHeap);
-            else {
-                delete tempHeap;
-                break;
-            }
+            LoanBookData* curData = m.begin()->second;
+            *fout << curData->getName() << '/';
+            if (curData->getCode() == 0) *fout << "000" << '/';
+            else *fout << curData->getCode() << '/';
+            *fout << curData->getAuthor() << '/' << curData->getYear() << '/' << curData->getLoanCount() << endl;
+            m.erase(m.begin());
         }
         *fout << "=======================" << endl << endl;
-
 
         return true;
     }

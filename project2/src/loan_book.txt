@@ -1,34 +1,22 @@
-The Odyssey	600	Bram Stoker	1908	1
-Great Expectations	400	George Orwell	1915	1
-Brave New World	700	Aldous Huxley	1998	1
-1984	400	Vladimir Nabokov	1926	1
-Madame Bovary	500	Emily Bront?	1931	1
-To Kill a Mockingbird	700	Harper Lee	1913	1
-War and Peace	100	George Orwell	1912	1
-Madame Bovary	100	Victor Hugo	1947	1
-Don Quixote	200	Miguel de Cervantes	1971	1
-Jane Eyre	600	Anthony Burgess	1924	1
-Pride and Prejudice	700	Charlotte Bront?	1998	1
-Slaughterhouse-Five	100	J.R.R. Tolkien	2006	1
-Wuthering Heights	400	Bram Stoker	1997	1
-Heart of Darkness	600	Miguel de Cervantes	1936	1
-Emma	300	George Orwell	1977	1
-Heart of Darkness	200	Anthony Burgess	1976	1
-Dracula	300	Joseph Conrad	1950	1
-Brave New World	100	Joseph Conrad	1995	1
-Dracula	200	Charles Dickens	1915	1
-Little Women	300	Oscar Wilde	2005	1
-Slaughterhouse-Five	400	Emily Bront?	1931	1
-Lolita	500	George Orwell	1922	1
-Sense and Sensibility	500	Anthony Burgess	1959	1
-Emma	500	Gustave Flaubert	1945	1
-War and Peace	600	Miguel de Cervantes	1953	1
-The Picture of Dorian Gray	500	Harper Lee	1915	1
-The Picture of Dorian Gray	500	Charles Dickens	1940	1
-Don Quixote	100	George Orwell	1973	1
-The Adventures of Huckleberry Finn	700	J.R.R. Tolkien	2017	1
-Jane Eyre	700	Louisa May Alcott	1916	1
-The Great Gatsby	300	J.R.R. Tolkien	1931	1
-The Odyssey	600	Charles Dickens	1908	1
-Slaughterhouse-Five	100	Jane Austen	2000	1
-Frankenstein	600	Charlotte Bront?	2010	1
+the odyssey	600	Bram Stoker	1908	1
+great expectations	400	George Orwell	1915	1
+to kill a mockingbird	700	Harper Lee	1913	1
+madame Bovary	100	Victor Hugo	1947	1
+don Quixote	200	Miguel de Cervantes	1971	1
+jane Eyre	600	Anthony Burgess	1924	1
+pride and Prejudice	700	Charlotte Bront?	1998	1
+slaughterhouse-Five	100	J.R.R. Tolkien	2006	1
+wuthering Heights	400	Bram Stoker	1997	1
+emma	300	George Orwell	1977	1
+heart of Darkness	200	Anthony Burgess	1976	1
+brave New World	100	Joseph Conrad	1995	1
+dracula	200	Charles Dickens	1915	1
+little Women	300	Oscar Wilde	2005	1
+lolita	500	George Orwell	1922	1
+sense and Sensibility	500	Anthony Burgess	1959	1
+war and Peace	600	Miguel de Cervantes	1953	1
+the Picture of Dorian Gray	500	Charles Dickens	1940	1
+the Adventures of Huckleberry Finn	700	J.R.R. Tolkien	2017	1
+the Great Gatsby	300	J.R.R. Tolkien	1931	1
+frankenstein	600	Charlotte Bront?	2010	1
+moby Dick	000	Herman Melville	1851	1

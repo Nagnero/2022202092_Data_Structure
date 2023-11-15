@@ -1,41 +1,5 @@
 LOAD
-ADD	aaaaa	100	a	1999
-ADD	aaaaa	100	a	1999
-ADD	aaaaa	100	a	1999
-ADD	jjjjj	100	j	1999
-ADD	aaaaa	100	a	1999
-ADD	rrrrr	100	rrr	1999
-ADD	bbbbb	100	bbb	1999
-ADD	ttttt	300	ttt	1999
-ADD	zzzzz	300	zzz	1999
-ADD	fffff	700	fff	1999
 PRINT_BP
-SEARCH_BP	aaaaa
-SEARCH_BP	bbbbb
-SEARCH_BP	ccccc
-SEARCH_BP	ddddd
-SEARCH_BP	eeeee
-SEARCH_BP	fffff
-SEARCH_BP	ggggg
-SEARCH_BP	hhhhh
-SEARCH_BP	iiiii
-SEARCH_BP	jjjjj
-SEARCH_BP	kkkkk
-SEARCH_BP	lllll
-SEARCH_BP	mmmmm
-SEARCH_BP	nnnnn
-SEARCH_BP	ooooo
-SEARCH_BP	ppppp
-SEARCH_BP	qqqqq
-SEARCH_BP	rrrrr
-SEARCH_BP	sssss
-SEARCH_BP	ttttt
-SEARCH_BP	uuuuu
-SEARCH_BP	vvvvv
-SEARCH_BP	wwwww
-SEARCH_BP	xxxxx
-SEARCH_BP	yyyyy
-SEARCH_BP	zzzzz
 SEARCH_BP	a	c
 SEARCH_BP	b	e
 SEARCH_BP	a	y
@@ -44,14 +8,46 @@ PRINT_ST	200
 PRINT_ST	100
 PRINT_ST	700
 DELETE
-DELETE
-PRINT_ST	700
-DELETE
-PRINT_ST	700
+ADD	great expectations	400	George Orwell	1915
+ADD	great expectations	400	George Orwell	1915
+ADD	great expectations	400	George Orwell	1915
+ADD	madame Bovary	100	Victor Hugo	1947
+ADD	madame Bovary	100	Victor Hugo	1947
+PRINT_ST	400
 PRINT_ST	100
 DELETE
+ADD	moby Dick	000	Herman Melville	1851
+ADD	moby Dick	000	Herman Melville	1851
+ADD	brave New World	100	Joseph Conrad	1995
+ADD	brave New World	100	Joseph Conrad	1995
+ADD	heart of Darkness	200	Anthony Burgess	1976
+ADD	heart of Darkness	200	Anthony Burgess	1976
+ADD	little Women	300	Oscar Wilde	2005
+ADD	little Women	300	Oscar Wilde	2005
+ADD	little Women	300	Oscar Wilde	2005
+ADD	lolita	500	George Orwell	1922
+ADD	frankenstein	600	Charlotte Bront?	2010
+ADD	to kill a mockingbird	700	Harper Lee	1913
+PRINT_ST	000
+PRINT_ST	100
+PRINT_ST	200
+PRINT_ST	300
+PRINT_ST	400
+PRINT_ST	500
+PRINT_ST	600
+PRINT_ST	700
 DELETE
 DELETE
 DELETE
 DELETE
-EXI
+DELETE
+DELETE
+PRINT_ST	000
+PRINT_ST	100
+PRINT_ST	200
+PRINT_ST	300
+PRINT_ST	400
+PRINT_ST	500
+PRINT_ST	600
+PRINT_ST	700
+EXIT
