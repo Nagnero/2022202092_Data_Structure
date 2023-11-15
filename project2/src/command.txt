@@ -1,31 +1,29 @@
 LOAD
-LOAD
 PRINT_BP
-SEARCH_BP	a	c
+SEARCH_BP	a	c	d
+SEARCH_BP
 SEARCH_BP	b	e
 SEARCH_BP	a	y
 SEARCH_BP	o	p
-PRINT_ST	200
-PRINT_ST	100
-PRINT_ST	700
-DELETE
+SEARCH_BP	emma
+SEARCH_BP	emm
 ADD	great expectations	400	George Orwell	1915
 ADD	great expectations	400	George Orwell	1915
 ADD	great expectations	400	George Orwell	1915
-ADD	madame Bovary	100	Victor Hugo	1947
-ADD	madame Bovary	100	Victor Hugo	1947
+ADD	madame bovary	100	Victor Hugo	1947
+ADD	madame bovary	100	Victor Hugo	1947
 PRINT_ST	400
 PRINT_ST	100
 DELETE
-ADD	moby Dick	000	Herman Melville	1851
-ADD	moby Dick	000	Herman Melville	1851
-ADD	brave New World	100	Joseph Conrad	1995
-ADD	brave New World	100	Joseph Conrad	1995
-ADD	heart of Darkness	200	Anthony Burgess	1976
-ADD	heart of Darkness	200	Anthony Burgess	1976
-ADD	little Women	300	Oscar Wilde	2005
-ADD	little Women	300	Oscar Wilde	2005
-ADD	little Women	300	Oscar Wilde	2005
+ADD	moby dick	000	Herman Melville	1851
+ADD	moby dick	000	Herman Melville	1851
+ADD	brave new world	100	Joseph Conrad	1995
+ADD	brave new world	100	Joseph Conrad	1995
+ADD	heart of darkness	200	Anthony Burgess	1976
+ADD	heart of darkness	200	Anthony Burgess	1976
+ADD	little women	300	Oscar Wilde	2005
+ADD	little women	300	Oscar Wilde	2005
+ADD	little women	300	Oscar Wilde	2005
 ADD	lolita	500	George Orwell	1922
 ADD	frankenstein	600	Charlotte Bront?	2010
 ADD	to kill a mockingbird	700	Harper Lee	1913
@@ -37,6 +35,10 @@ PRINT_ST	400
 PRINT_ST	500
 PRINT_ST	600
 PRINT_ST	700
+PRINT_ST	70
+DELETE
+DELETE
+DELETE
 DELETE
 DELETE
 DELETE

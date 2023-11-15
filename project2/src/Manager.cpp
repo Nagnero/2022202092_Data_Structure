@@ -54,6 +54,10 @@ void Manager::run(const char* command)
             }
             else {
                 string second = line.substr(index + 1); // get second data
+                if (second.length() != 1) { // more than two data
+                    printErrorCode(300);
+                    continue;
+                }
                 SEARCH_BP_RANGE(first, second);
             }
         }
@@ -189,7 +193,6 @@ bool Manager::ADD(string line) {
     else flog << code << '/';
     flog << author << '/' << year << endl;
     flog << "=======================" << endl << endl;
-
 
 	return true;
 }
