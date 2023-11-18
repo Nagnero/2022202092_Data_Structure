@@ -3,7 +3,7 @@
 
 #include "GraphMethod.h"
 
-class Manager{	
+class Manager {	
 private:
 	Graph* graph;	
 	ofstream fout;	
