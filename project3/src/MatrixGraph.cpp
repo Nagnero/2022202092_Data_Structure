@@ -3,9 +3,10 @@
 #include <vector>
 #include <string>
 
-MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size)
-{
-
+MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size) {
+    this->m_Mat = new int*[size];
+    for (int i = 0; i < size; ++i)
+        this->m_Mat[i] = new int[size];
 }
 
 MatrixGraph::~MatrixGraph()
@@ -23,12 +24,22 @@ void MatrixGraph::getAdjacentEdgesDirect(int vertex, map<int, int>* m)
 	
 }
 
-void MatrixGraph::insertEdge(int from, int to, int weight)	
-{
-	
+void MatrixGraph::insertEdge(int from, int to, int weight) {
+	this->m_Mat[from][to] = weight;
+    cout << from + 1 << " " << to + 1 << " " << weight << endl;
 }
 
-bool MatrixGraph::printGraph(ofstream *fout)	
-{
-	
+bool MatrixGraph::printGraph(ofstream *fout) {
+	*fout << "========== PRINT ==========\n\t\t";
+    for (int i = 1; i < this->m_Size + 1; i ++)
+        *fout << "[" << i << "]" << "\t";
+    *fout << endl;
+    for(int i = 0; i < this->m_Size; i++) {
+        *fout << "[" << i + 1 << "]\t";
+        if (i + 1 < 10) *fout << "\t";
+        for (int j = 0; j < this->m_Size; j++) 
+            *fout << this->m_Mat[i][j] << "\t";
+        *fout << endl;
+    }
+    *fout << "==============================\n";
 }
