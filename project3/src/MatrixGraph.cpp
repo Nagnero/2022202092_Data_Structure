@@ -18,13 +18,11 @@ MatrixGraph::~MatrixGraph() {
     delete[] this->m_Mat; // delete all
 }
 
-void MatrixGraph::getAdjacentEdges(int vertex, map<int, int>* m)
-{	
-
+void MatrixGraph::getAdjacentEdges(int vertex, map<int, int>* m) {	
+    
 }
 
-void MatrixGraph::getAdjacentEdgesDirect(int vertex, map<int, int>* m)
-{
+void MatrixGraph::getAdjacentEdgesDirect(int vertex, map<int, int>* m) {
 	
 }
 
