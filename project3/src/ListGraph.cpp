@@ -7,9 +7,9 @@ ListGraph::ListGraph(bool type, int size) : Graph(type, size) {
     this->kw_graph = NULL;
 }
 
-ListGraph::~ListGraph()	
-{
-	
+ListGraph::~ListGraph()	{
+	delete[] m_List;
+    this->m_List = nullptr;
 }
 
 void ListGraph::getAdjacentEdges(int vertex, map<int, int>* m)	 //Definition of getAdjacentEdges(No Direction == Undirected)
@@ -36,5 +36,6 @@ bool ListGraph::printGraph(ofstream *fout) { //Definition of print Graph
         }
         *fout << endl;
     }
-    *fout << "==============================\n";
+    *fout << "==============================\n\n";
+    return true;
 }

@@ -1,1 +1,9 @@
 LOAD graph_M.txt
+PRINT
+LOAD graph_L.txt
+PRINT
+LOAD graph_M.txt
+PRINT
+LOAD graph_L.txt
+PRINT
+EXIT

@@ -5,13 +5,17 @@
 
 MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size) {
     this->m_Mat = new int*[size];
-    for (int i = 0; i < size; ++i)
+    for (int i = 0; i < size; ++i) {
         this->m_Mat[i] = new int[size];
+        memset(m_Mat[i], 0 , size);
+    }
 }
 
-MatrixGraph::~MatrixGraph()
-{
-
+MatrixGraph::~MatrixGraph() {
+    for (int i = 0; i < this->m_Size; ++i) 
+        delete[] this->m_Mat[i]; // delete each row
+    
+    delete[] this->m_Mat; // delete all
 }
 
 void MatrixGraph::getAdjacentEdges(int vertex, map<int, int>* m)
@@ -26,7 +30,6 @@ void MatrixGraph::getAdjacentEdgesDirect(int vertex, map<int, int>* m)
 
 void MatrixGraph::insertEdge(int from, int to, int weight) {
 	this->m_Mat[from][to] = weight;
-    cout << from + 1 << " " << to + 1 << " " << weight << endl;
 }
 
 bool MatrixGraph::printGraph(ofstream *fout) {
@@ -41,5 +44,6 @@ bool MatrixGraph::printGraph(ofstream *fout) {
             *fout << this->m_Mat[i][j] << "\t";
         *fout << endl;
     }
-    *fout << "==============================\n";
+    *fout << "==============================\n\n";
+    return true;
 }

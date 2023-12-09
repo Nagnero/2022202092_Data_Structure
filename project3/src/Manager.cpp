@@ -9,7 +9,7 @@
 Manager::Manager() {
 	graph = nullptr;	
 	fout.open("log.txt");
-	load = 0;	//Anything is not loaded
+	load = 0;	// Anything is not loaded
 }
 
 Manager::~Manager() {
@@ -33,6 +33,7 @@ void Manager::run(const char* command_txt) {
         // check end of command file
         if (fin.eof()) break;
         getline(fin, line);
+        if (line == "") break;
         
         if (line.substr(0, line.find(' ')) == "LOAD") {
             string filename = line.substr(line.find(' ') + 1);
@@ -46,8 +47,9 @@ void Manager::run(const char* command_txt) {
         else if (line == "PRINT") {
             PRINT();
         }
-
-        break;
+        else if (line == "EXIT") {
+            break;
+        }
     }
 	cout << "END\n";
 	fin.close();
@@ -57,6 +59,8 @@ void Manager::run(const char* command_txt) {
 bool Manager::LOAD(const char* filename) {
     // graph by List
 	if (strcmp(filename, "graph_L.txt") == 0) {
+        if (this->graph) delete this->graph;
+
         ifstream graphData;
         graphData.open(filename);
         // check if data is open
@@ -94,12 +98,18 @@ bool Manager::LOAD(const char* filename) {
             }
 
             if (tokens.size() == 2) {
-                this->graph->insertEdge(start + 1, stoi(tokens[0]), stoi(tokens[1]));
+                this->graph->insertEdge(start - 1, stoi(tokens[0]), stoi(tokens[1]));
             }         
         }
+
+        fout << "========LOAD=======" << endl;
+        fout << "Success" << endl;
+        fout << "====================" << endl << endl;
     }
     // graph by Map
     else if (strcmp(filename, "graph_M.txt") == 0) {
+        if (this->graph) delete this->graph;
+
         ifstream graphData;
         graphData.open(filename);
         // check if data is open
@@ -131,11 +141,13 @@ bool Manager::LOAD(const char* filename) {
             while (iss >> token) tokens.push_back(token);
 
             for (int i = 0; i < num; i++) {
-                if (stoi(tokens[i]) != 0) 
-                    this->graph->insertEdge(start, i, stoi(tokens[i]));
+                this->graph->insertEdge(start, i, stoi(tokens[i]));
             }
             start++;
         }
+        fout << "========LOAD=======" << endl;
+        fout << "Success" << endl;
+        fout << "====================" << endl << endl;
     }
     // filename is not valid
     else { 
@@ -144,43 +156,43 @@ bool Manager::LOAD(const char* filename) {
     }
 }
 
-bool Manager::PRINT()	
-{
-
+bool Manager::PRINT() {
+    this->graph->printGraph(&fout);
+    return true;
 }
 
 bool Manager::mBFS(char option, int vertex)	
 {
-	
+    return true;
 }
 
 bool Manager::mDFS(char option, int vertex)	
 {
-	
+    return true;
 }
 
 bool Manager::mDIJKSTRA(char option, int vertex)	
 {
-	
+    return true;
 }
 
 bool Manager::mKRUSKAL()
 {
-
+    return true;
 }
 
 bool Manager::mBELLMANFORD(char option, int s_vertex, int e_vertex) 
 {
-	
+    return true;
 }
 
 bool Manager::mFLOYD(char option)
 {
-	
+    return true;
 }
 
 bool Manager::mKwoonWoon(int vertex) {
-	
+    return true;
 }
 
 void Manager::printErrorCode(int n) {
@@ -188,5 +200,4 @@ void Manager::printErrorCode(int n) {
 	fout<<n<<endl;
 	fout<<"===================="<<endl << endl;
 }
-
 
