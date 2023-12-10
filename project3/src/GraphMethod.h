@@ -4,7 +4,7 @@
 #include "ListGraph.h"
 #include "MatrixGraph.h"
 
-bool BFS(Graph* graph, char option, int vertex);     
+bool BFS(Graph* graph, char option, int vertex, ofstream *fout);     
 bool DFS(Graph* graph, char option,  int vertex);     
 bool KWANGWOON(Graph* graph, int vertex);  
 bool Kruskal(Graph* graph);

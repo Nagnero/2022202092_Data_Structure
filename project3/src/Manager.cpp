@@ -57,7 +57,7 @@ void Manager::run(const char* command_txt) {
                 printErrorCode(300);
                 continue;
             }
-            string data;
+            string data = line.substr(line.find(' ') + 1);;
             istringstream iss(data);
             vector<string> tokens;
             // split data and save to vector
@@ -134,7 +134,7 @@ bool Manager::LOAD(const char* filename) {
             }
 
             if (tokens.size() == 2) {
-                this->graph->insertEdge(start - 1, stoi(tokens[0]), stoi(tokens[1]));
+                this->graph->insertEdge(start, stoi(tokens[0]), stoi(tokens[1]));
             }         
         }
 
@@ -166,17 +166,18 @@ bool Manager::LOAD(const char* filename) {
         string data;
         getline(graphData, data); // get rid of first data
         getline(graphData, data); // get number of data
-        int num = stoi(data), start = 0;
+        int num = stoi(data), start = 1;
         this->graph = new MatrixGraph(1, num);
 
         while (getline(graphData, data)) {
             istringstream iss(data);
             vector<string> tokens;
+            tokens.push_back("a");
             // split data and save to vector
             string token;
             while (iss >> token) tokens.push_back(token);
 
-            for (int i = 0; i < num; i++) {
+            for (int i = 1; i <= num; i++) {
                 this->graph->insertEdge(start, i, stoi(tokens[i]));
             }
             start++;
@@ -198,7 +199,13 @@ bool Manager::PRINT() {
 }
 
 bool Manager::mBFS(char option, int vertex)	{
-    BFS(this->graph, option, vertex);
+    // if vertex doesn't exist in graph
+    if (this->graph->getSize() < vertex) {
+        printErrorCode(300);
+        return false;
+    }
+
+    BFS(this->graph, option, vertex, &fout);
     return true;
 }
 

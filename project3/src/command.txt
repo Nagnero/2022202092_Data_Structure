@@ -1,9 +1,9 @@
 LOAD graph_M.txt
 PRINT
+BFS N 1
+BFS Y 1
 LOAD graph_L.txt
 PRINT
-LOAD graph_M.txt
-PRINT
-LOAD graph_L.txt
-PRINT
+BFS N 1
+BFS Y 1
 EXIT
