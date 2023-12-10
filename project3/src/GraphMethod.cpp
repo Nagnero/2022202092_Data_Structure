@@ -11,9 +11,6 @@
 using namespace std;
 
 bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
-    // set queue
-    queue<int> q;
-    q.push(vertex);
     // set boolean array to check visit
     bool* visited = new bool[graph->getSize()];
     for (int i = 0; i < graph->getSize(); i++)
@@ -38,6 +35,10 @@ bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
             graph->getAdjacentEdges(i, tempMap);
     }
 
+    // set queue
+    queue<int> q;
+    q.push(vertex);
+
     // search as BFS
     while (!q.empty()) {
         vertex = q.front();
@@ -59,8 +60,54 @@ bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
     return true;
 }
 
-bool DFS(Graph* graph, char option, int vertex)
-{
+bool DFS(Graph* graph, char option, int vertex, ofstream *fout) {
+    // set boolean array to check visit
+    bool* visited = new bool[graph->getSize()];
+    for (int i = 0; i < graph->getSize(); i++)
+        visited[i] = false;
+    visited[vertex] = true;
+
+    *fout << "========DFS========\n";
+    if (option == 'Y') *fout << "Directed Graph DFS result\n";
+    else *fout << "Undirected Graph DFS result\n";
+    *fout << "startvertex: " << vertex << endl << vertex;
+
+    map<int, int>* tempMap = new map<int, int>[graph->getSize() + 1];
+    // with direction
+    if (option == 'Y')  {
+        // copy directed map to tempMap
+        for (int i = 1; i < graph->getSize(); i++) 
+            graph->getAdjacentEdgesDirect(i, tempMap);
+    }
+    // without direction
+    else {
+        for (int i = 1; i <= graph->getSize(); i++) 
+            graph->getAdjacentEdges(i, tempMap);
+    }
+
+    // use stack to DFS
+    stack<int> s;
+    s.push(vertex);
+
+    while(!s.empty()) {
+        vertex = s.top();
+        s.pop();
+
+        for (auto iter = tempMap[vertex].begin(); iter != tempMap[vertex].end(); iter++) {
+            int next = iter->first;
+            // if next vertex is not visted
+            if (!visited[next]) {
+                visited[next] = true;
+                s.push(next);
+                *fout << " -> " << next;
+                break;
+            }
+        }
+    }
+    *fout << "\n====================\n\n";
+
+    delete[] tempMap;
+    delete[] visited;
     return true;
 }
 

@@ -83,12 +83,45 @@ void Manager::run(const char* command_txt) {
 
             mBFS(tokens[0][0], stoi(tokens[1]));
         }
+        else if (line.substr(0, line.find(' ')) == "DFS") {
+            // if no graph, error
+            if (!this->graph) {
+                printErrorCode(400);
+                continue;
+            }
+            string data = line.substr(line.find(' ') + 1);;
+            istringstream iss(data);
+            vector<string> tokens;
+            // split data and save to vector
+            string token;
+            while (iss >> token) tokens.push_back(token);
+
+            // if input data is not 2, print error code
+            if (tokens.size() != 2) {
+                printErrorCode(300);
+                continue;
+            }
+
+            // if direction is not entered, print error
+            if (!(tokens[0] == "Y" || tokens[0] == "N")) {
+                printErrorCode(300);
+                continue;
+            }
+            // if start vertex is bigger than size
+            if (stoi(tokens[1]) > this->graph->getSize()) {
+                printErrorCode(300);
+                continue;
+            }
+
+            mDFS(tokens[0][0], stoi(tokens[1]));
+        }
         else if (line == "EXIT") {
             break;
         }
     }
 	cout << "END\n";
 	fin.close();
+    fout.close();
 	return;
 }
 
@@ -209,8 +242,14 @@ bool Manager::mBFS(char option, int vertex)	{
     return true;
 }
 
-bool Manager::mDFS(char option, int vertex)	
-{
+bool Manager::mDFS(char option, int vertex)	{
+    // if vertex doesn't exist in graph
+    if (this->graph->getSize() < vertex) {
+        printErrorCode(400);
+        return false;
+    }
+
+    DFS(this->graph, option, vertex, &fout);
     return true;
 }
 
