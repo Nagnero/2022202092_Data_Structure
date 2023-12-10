@@ -2,4 +2,5 @@ LOAD graph_L.txt
 PRINT
 DFS N 1
 DFS Y 1
+KRUSKAL
 EXIT

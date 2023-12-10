@@ -115,6 +115,9 @@ void Manager::run(const char* command_txt) {
 
             mDFS(tokens[0][0], stoi(tokens[1]));
         }
+        else if (line.substr(0, line.find(' ')) == "KRUSKAL") {
+            mKRUSKAL();
+        }
         else if (line == "EXIT") {
             break;
         }
@@ -258,8 +261,8 @@ bool Manager::mDIJKSTRA(char option, int vertex)
     return true;
 }
 
-bool Manager::mKRUSKAL()
-{
+bool Manager::mKRUSKAL() {
+    Kruskal(this->graph, &fout);
     return true;
 }
 
