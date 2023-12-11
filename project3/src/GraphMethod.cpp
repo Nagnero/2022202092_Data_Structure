@@ -9,6 +9,7 @@
 #include <utility>
 
 #define INF 99999999
+#define MIN(a,b) a<b ? a:b
 
 using namespace std;
 
@@ -374,8 +375,62 @@ bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex)
     return true;
 }
 
-bool FLOYD(Graph* graph, char option) {
+bool FLOYD(Graph* graph, char option, ofstream* fout) {
+    int size = graph->getSize();
+    map<int, int>* tempMap = new map<int, int>[size + 1];
+    // with direction
+    if (option == 'Y') {
+        // copy directed map to tempMap
+        for (int i = 1; i < size; i++)
+            graph->getAdjacentEdgesDirect(i, tempMap);
+    }
+    // without direction
+    else {
+        for (int i = 1; i <= size; i++)
+            graph->getAdjacentEdges(i, tempMap);
+    }
+
+    int** arr = new int*[size + 1];
+    for (int i = 1; i <= size; i++) 
+        arr[i] = new int[size + 1];
     
+    for (int i = 1; i <= size; i++)
+        for (int j = 1; j <= size; j++) { 
+            if (i == j) arr[i][j] = 0;
+            else arr[i][j] = INF;
+        }
+
+    for (int i = 1; i <= size; i++)
+        for (auto iter = tempMap[i].begin(); iter != tempMap[i].end(); iter++) {
+            // i: from, iter.first: to, iter.second: weight
+            arr[i][iter->first] = iter->second;
+        }
+    
+    for (int l = 1; l <= size; l++)
+        for (int i = 1; i <= size; i++) 
+            for (int j = 1; j <= size; j++)
+                for (int k = 1; k <= size; k++) {
+                    if (arr[i][k] != INF && arr[k][j] != INF) 
+                        arr[i][j] = min(arr[i][j], arr[i][k] + arr[k][j]);
+                }
+    
+    *fout << "========FLOYD========" << endl;
+    if (option == 'Y') *fout << "Directed Graph FLOYD result\n\t\t";
+    else *fout << "Undirected Graph FLOYD result\n\t\t";
+    for (int i = 1; i <= size ; i++)
+        *fout << "[" << i << "]" << "\t";
+    *fout << endl;
+    for (int i = 1; i <= size; ++i) {
+        *fout << "[" << i << "]\t";
+        if (i <= 9) *fout << "\t";
+        for (int j = 1; j <= size; j++) {
+            if (arr[i][j] == INF) *fout << "x\t";
+            else *fout << arr[i][j] << "\t";
+        }
+        *fout << endl;
+    }
+    *fout << "====================\n\n";
+
     return true;
 }
 

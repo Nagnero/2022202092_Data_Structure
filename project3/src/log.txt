@@ -55,3 +55,18 @@ startvertex: 1
 [10]	x
 ====================
 
+========FLOYD========
+Directed Graph FLOYD result
+		[1]	[2]	[3]	[4]	[5]	[6]	[7]	[8]	[9]	[10]	
+[1]		0	6	2	9	5	10	11	x	x	x	
+[2]		x	0	x	5	18	x	8	x	x	x	
+[3]		x	7	0	7	3	8	9	x	x	x	
+[4]		x	x	x	0	13	x	3	x	x	x	
+[5]		x	x	x	4	0	x	7	x	x	x	
+[6]		x	x	x	15	11	0	1	x	x	x	
+[7]		x	x	x	14	10	x	0	x	x	x	
+[8]		x	x	x	3	16	x	6	0	x	x	
+[9]		x	x	x	x	x	x	x	x	0	9	
+[10]	x	x	x	x	x	x	x	x	x	0	
+====================
+

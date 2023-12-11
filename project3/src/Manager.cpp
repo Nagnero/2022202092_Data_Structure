@@ -156,6 +156,34 @@ void Manager::run(const char* command_txt) {
 
             mDIJKSTRA(tokens[0][0], stoi(tokens[1]));
         }
+        else if (line.substr(0, line.find(' ')) == "FLOYD") {
+            // if no graph, error
+            if (!this->graph) {
+                printErrorCode(900);
+                continue;
+            }
+
+            string data = line.substr(line.find(' ') + 1);;
+            istringstream iss(data);
+            vector<string> tokens;
+            // split data and save to vector
+            string token;
+            while (iss >> token) tokens.push_back(token);
+
+            // if input data is not 2, print error code
+            if (tokens.size() != 1) {
+                printErrorCode(900);
+                continue;
+            }
+
+            // if direction is not entered, print error
+            if (!(tokens[0] == "Y" || tokens[0] == "N")) {
+                printErrorCode(900);
+                continue;
+            }
+
+            mFLOYD(tokens[0][0]);
+        }
         else if (line == "EXIT") {
             break;
         }
@@ -309,8 +337,8 @@ bool Manager::mBELLMANFORD(char option, int s_vertex, int e_vertex)
     return true;
 }
 
-bool Manager::mFLOYD(char option)
-{
+bool Manager::mFLOYD(char option) {
+    if (!FLOYD(this->graph, option, &fout)) printErrorCode(900);
     return true;
 }
 
