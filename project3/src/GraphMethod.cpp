@@ -8,6 +8,8 @@
 #include <list>
 #include <utility>
 
+#define INF 99999999
+
 using namespace std;
 
 bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
@@ -241,6 +243,11 @@ bool Kruskal(Graph* graph, ofstream *fout) {
         }
     }
 
+    if (r_mst.size() != size - 1) {
+        delete[] tempMap;
+        return false;
+    }
+
     *fout << "========Kruskal========" << endl;
     for (int i = 0; i <= r_mst.size(); i++) {
         *fout << "[" << i + 1 << "]\t";
@@ -262,7 +269,93 @@ bool Kruskal(Graph* graph, ofstream *fout) {
     return true;
 }
 
-bool Dijkstra(Graph* graph, char option, int vertex) {
+bool Dijkstra(Graph* graph, char option, int vertex, ofstream *fout) {
+    int size = graph->getSize();
+    map<int, int>* tempMap = new map<int, int>[size + 1];
+    // with direction
+    if (option == 'Y')  {
+        // copy directed map to tempMap
+        for (int i = 1; i < size; i++) 
+            graph->getAdjacentEdgesDirect(i, tempMap);
+    }
+    // without direction
+    else {
+        for (int i = 1; i <= size; i++) 
+            graph->getAdjacentEdges(i, tempMap);
+    }
+
+    // check unvaild weight
+    for (int i = 1; i <= size; i++) 
+        for (auto iter = tempMap[vertex].begin(); iter != tempMap[vertex].end(); iter++)
+            if (iter->second < 0) {
+                delete tempMap;
+                return false;
+            }
+    
+    // initialize vector that saves distance
+    vector<int> dist(size, INF);
+    vector<int>* path = new vector<int>(size, -1);
+    // pq.first = distance, pq.second = node
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+
+    // set starting node distance as 0
+    dist[vertex] = 0;
+    pq.push({0, vertex});
+
+    while (!pq.empty()) {
+        int curNode = pq.top().second;
+        pq.pop();
+
+        for (auto iter = tempMap[curNode].begin(); iter != tempMap[curNode].end(); iter++) {
+            int nextDist = iter->second;
+            int nextNode = iter->first;
+            // if prev distance is bigger, change shortest distance
+            if (nextDist + dist[curNode] < dist[nextNode]) {
+                dist[nextNode] = nextDist + dist[curNode];
+                (*path)[nextNode] = curNode;
+                pq.push({dist[nextNode], nextNode});
+            }
+        }
+    }
+
+    for (int i = 1; i <= size; ++i) {
+        if (i == vertex) continue;
+        cout << "[" << i << "]\t";
+        if (dist[i] == INF) {
+            cout << "x\n";
+            continue;
+        }
+        if (path[i].empty()) {
+            cout << i << endl;
+            continue;
+        }
+        stack<int> s;
+        for (int node : path[i]) {
+            s.push(node);
+        }
+        cout << vertex << " -> ";
+        while (!s.empty()) {
+            cout << s.top() << " -> ";
+            s.pop();
+        }
+        cout << i << " (Distance: " << dist[i] << ")\n";
+    }
+
+    // for(int i = 1; i <= dist.size(); i++) {
+    //     cout << "[" << i << "]\t";
+    //     if(dist[i] == INF) {
+    //         cout << "x\n";
+    //         continue;
+    //     }
+    //     stack<int> s;
+    //     for (int node : path[i])
+    //         s.push(node);
+    //     for (int i = 0; i < s.size(); i++) {
+    //         cout << s.top() << "->";
+    //         s.pop();
+    //     }
+    //     cout << endl;
+    // }
 
     return true;
 }

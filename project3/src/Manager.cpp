@@ -98,25 +98,63 @@ void Manager::run(const char* command_txt) {
 
             // if input data is not 2, print error code
             if (tokens.size() != 2) {
-                printErrorCode(300);
+                printErrorCode(400);
                 continue;
             }
 
             // if direction is not entered, print error
             if (!(tokens[0] == "Y" || tokens[0] == "N")) {
-                printErrorCode(300);
+                printErrorCode(400);
                 continue;
             }
             // if start vertex is bigger than size
             if (stoi(tokens[1]) > this->graph->getSize()) {
-                printErrorCode(300);
+                printErrorCode(400);
                 continue;
             }
 
             mDFS(tokens[0][0], stoi(tokens[1]));
         }
         else if (line.substr(0, line.find(' ')) == "KRUSKAL") {
+            // if no graph, error
+            if (!this->graph) {
+                printErrorCode(600);
+                continue;
+            }
             mKRUSKAL();
+        }
+        else if (line.substr(0, line.find(' ')) == "DIJKSTRA") {
+            // if no graph, error
+            if (!this->graph) {
+                printErrorCode(700);
+                continue;
+            }
+
+            string data = line.substr(line.find(' ') + 1);;
+            istringstream iss(data);
+            vector<string> tokens;
+            // split data and save to vector
+            string token;
+            while (iss >> token) tokens.push_back(token);
+
+            // if input data is not 2, print error code
+            if (tokens.size() != 2) {
+                printErrorCode(700);
+                continue;
+            }
+
+            // if direction is not entered, print error
+            if (!(tokens[0] == "Y" || tokens[0] == "N")) {
+                printErrorCode(700);
+                continue;
+            }
+            // if start vertex is bigger than size
+            if (stoi(tokens[1]) > this->graph->getSize()) {
+                printErrorCode(700);
+                continue;
+            }
+
+            mDIJKSTRA(tokens[0][0], stoi(tokens[1]));
         }
         else if (line == "EXIT") {
             break;
@@ -256,13 +294,13 @@ bool Manager::mDFS(char option, int vertex)	{
     return true;
 }
 
-bool Manager::mDIJKSTRA(char option, int vertex)	
-{
+bool Manager::mDIJKSTRA(char option, int vertex) {
+    if (!Dijkstra(this->graph, option, vertex, &fout)) printErrorCode(600);
     return true;
 }
 
 bool Manager::mKRUSKAL() {
-    Kruskal(this->graph, &fout);
+    if (!Kruskal(this->graph, &fout)) printErrorCode(700);
     return true;
 }
 
