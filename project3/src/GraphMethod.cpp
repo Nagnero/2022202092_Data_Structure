@@ -303,10 +303,10 @@ bool Dijkstra(Graph* graph, char option, int vertex, ofstream* fout) {
     int dist[100001]; // shortest path array
     int prev[100001];
     for (int i = 0; i < 100001; i++) { dist[i] = INF; visited[i] = false; prev[i] = -1; }
-    dist[vertex]=0;
-    visited[vertex]= true;
+    dist[vertex] = 0;
+    visited[vertex] = true;
     prev[vertex] = 0;
-    
+
     // shortest path table initialize
     for (auto iter = tempMap[vertex].begin(); iter != tempMap[vertex].end(); iter++) {
         int adjindex = iter->first;
@@ -314,7 +314,7 @@ bool Dijkstra(Graph* graph, char option, int vertex, ofstream* fout) {
         dist[adjindex] = weight;
         prev[adjindex] = vertex;
     }
-    
+
     // Dijkstra's Algorithm
     for (int i = 1; i < size; i++) {
         int now = 0, minDist = INF;
@@ -367,6 +367,7 @@ bool Dijkstra(Graph* graph, char option, int vertex, ofstream* fout) {
     }
     *fout << "====================\n\n";
 
+    delete[] tempMap;
     return true;
 }
 
@@ -389,8 +390,8 @@ bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex, ofstream
     int dist[100001]; // shortest path array
     int prev[100001];
     for (int i = 0; i < 100001; i++) { dist[i] = INF; visited[i] = false; prev[i] = -1; }
-    dist[s_vertex]=0;
-    visited[s_vertex]= true;
+    dist[s_vertex] = 0;
+    visited[s_vertex] = true;
     prev[s_vertex] = 0;
 
     // shortest path table initialize
@@ -427,6 +428,7 @@ bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex, ofstream
 
             if (dist[from] != INF && dist[from] + weight < dist[to]) {
                 // minus cycle exist
+                delete[] tempMap;
                 return false;
             }
         }
@@ -458,6 +460,7 @@ bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex, ofstream
     }
     *fout << "====================\n\n";
 
+    delete[] tempMap;
     return true;
 }
 
@@ -476,12 +479,12 @@ bool FLOYD(Graph* graph, char option, ofstream* fout) {
             graph->getAdjacentEdges(i, tempMap);
     }
 
-    int** arr = new int*[size + 1];
-    for (int i = 1; i <= size; i++) 
-        arr[i] = new int[size + 1];
-    
+    int** arr = new int* [size + 1];
     for (int i = 1; i <= size; i++)
-        for (int j = 1; j <= size; j++) { 
+        arr[i] = new int[size + 1];
+
+    for (int i = 1; i <= size; i++)
+        for (int j = 1; j <= size; j++) {
             if (i == j) arr[i][j] = 0;
             else arr[i][j] = INF;
         }
@@ -493,16 +496,23 @@ bool FLOYD(Graph* graph, char option, ofstream* fout) {
         }
 
     for (int k = 1; k <= size; k++) {
-        for (int i = 1; i <= size; i++) 
+        for (int i = 1; i <= size; i++)
             for (int j = 1; j <= size; j++)
-                if (arr[i][k] != INF && arr[k][j] != INF) 
+                if (arr[i][k] != INF && arr[k][j] != INF)
                     arr[i][j] = min(arr[i][j], arr[i][k] + arr[k][j]);
-            }
-    
+    }
+
+    for (int i = 1; i <= size; i++) {
+        if (arr[i][i] < 0) {
+            delete[] tempMap;
+            return false;
+        }
+    }
+
     *fout << "========FLOYD========" << endl;
     if (option == 'Y') *fout << "Directed Graph FLOYD result\n\t\t";
     else *fout << "Undirected Graph FLOYD result\n\t\t";
-    for (int i = 1; i <= size ; i++)
+    for (int i = 1; i <= size; i++)
         *fout << "[" << i << "]" << "\t";
     *fout << endl;
     for (int i = 1; i <= size; ++i) {
@@ -516,9 +526,115 @@ bool FLOYD(Graph* graph, char option, ofstream* fout) {
     }
     *fout << "====================\n\n";
 
+    delete[] tempMap;
+    for (int i = 1; i <= size; ++i) delete[] arr[i];
+    delete[] arr;
     return true;
 }
 
-bool KWANGWOON(Graph* graph, int vertex) {
+int init(vector<int> kw_graph, int* seg, int node, int start, int end) {
+    if (start == end) return seg[node] = 1;
+    int mid = (start + end) / 2;
+    return seg[node] = init(kw_graph, seg, node * 2, start, mid) + init(kw_graph, seg, node * 2 + 1, mid + 1, end);
+}
+
+void update(int node, int start, int end, int target, int diff_val, int* seg) {
+    if (target < start || target > end) return;
+
+    seg[node] += diff_val;
+
+    if (start != end) {
+        int mid = (start + end) / 2;
+        update(node * 2, start, mid, target, diff_val, seg);
+        update(node * 2 + 1, mid + 1, end, target, diff_val, seg);
+    }
+}
+
+int Sum(int Node, int Start, int End, int Left, int Right, vector<int>& seg) {
+    if (Left > End || Right < Start) return 0;
+    if (Left <= Start && End <= Right) return seg[Node];
+
+    int Mid = (Start + End) / 2;
+    int Left_Result = Sum(Node * 2, Start, Mid, Left, Right, seg);
+    int Right_Result = Sum(Node * 2 + 1, Mid + 1, End, Left, Right, seg);
+    return Left_Result + Right_Result;
+}
+
+bool KWANGWOON(Graph* graph, int vertex, ofstream* fout) {
+    int size = graph->getSize();
+    map<int, int>* tempMap = new map<int, int>[size + 1];
+    // with direction
+    for (int i = 1; i <= size; i++)
+        graph->getAdjacentEdges(i, tempMap);
+
+    vector<int>* kw_graph = new vector<int>[size + 1];
+    int** seg = new int*[size + 1];
+    bool* visited = new bool[size + 1];
+
+    for (int i = 1; i <= size; i++) {
+        visited[i] = false;
+        for (auto iter = tempMap[i].begin(); iter != tempMap[i].end(); iter++) {
+            // i: from, iter.first: to, iter.second: weight
+            kw_graph[i].push_back(iter->first);
+        }
+        seg[i] = new int[kw_graph[i].size() * 4]; // allocate x4 space for worst case
+        memset(seg[i], 0, sizeof(int) * 4 * kw_graph[i].size());
+        init(kw_graph[i], seg[i], 1, 0, kw_graph[i].size() - 1); // initialize segment tree
+    }
+
+    int curNode = 1;
+    queue<int> path;
+
+    while (seg[curNode][1]) { // check segment treee root; if root is 0 break
+        path.push(curNode);
+        visited[curNode] = true;
+
+        for (int i = 1; i <= size; i++) {
+            // visited check
+            if (visited[i]) continue;
+            auto iter = find(kw_graph[i].begin(), kw_graph[i].end(), curNode);
+            // cannot find same node
+            if (iter == kw_graph[i].end()) continue;
+            update(1, 0, kw_graph[i].size() - 1, iter - kw_graph[i].begin(), -1, seg[i]);
+        }
+
+        // if even node is connected
+        if (seg[curNode][1] % 2 == 0) {
+            int temp;
+            for (int j = 0; ; j++) {
+                temp = kw_graph[curNode][j];
+                if (visited[temp] == false) break;
+            }
+            curNode = temp;
+        }
+        // if odd node is connected
+        else {
+            int temp;
+            for (int j = kw_graph[curNode].size() - 1; ; j--) {
+                temp = kw_graph[curNode][j];
+                if (visited[temp] == false) break;
+            }
+            curNode = temp;
+        }
+
+    }
+    path.push(curNode);
+
+    *fout << "========KWANGWOON========\n";
+    *fout << "startvertex: " << vertex << endl << vertex;
+    path.pop();
+    while (!path.empty()) {
+        *fout << "->" << path.front();
+        path.pop();
+    }
+    *fout << "\n====================\n\n";
+
+
+    delete[] tempMap;
+    for (int i = 1; i <= size; ++i)
+        delete[] seg[i];
+    delete[] seg;
+    delete[] visited;
+    delete[] kw_graph;
     return true;
 }

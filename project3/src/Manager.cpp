@@ -13,7 +13,7 @@ Manager::Manager() {
 }
 
 Manager::~Manager() {
-	if(load)	//if graph is loaded, delete graph
+	if(graph)	//if graph is loaded, delete graph
 		delete graph;	
 	if(fout.is_open())	//if fout is opened, close file
 		fout.close();	//close log.txt File
@@ -114,6 +114,14 @@ void Manager::run(const char* command_txt) {
             }
 
             mDFS(tokens[0][0], stoi(tokens[1]));
+        }
+        else if (line.substr(0, line.find(' ')) == "KWANGWOON") {
+            // if no graph, error
+            if (!this->graph || this->graph->getType() != 0) {
+                printErrorCode(500);
+                continue;
+            }
+            mKwoonWoon(1);
         }
         else if (line.substr(0, line.find(' ')) == "KRUSKAL") {
             // if no graph, error
@@ -376,6 +384,7 @@ bool Manager::mFLOYD(char option) {
 }
 
 bool Manager::mKwoonWoon(int vertex) {
+    KWANGWOON(this->graph, vertex, &fout);
     return true;
 }
 
