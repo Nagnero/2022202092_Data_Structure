@@ -370,8 +370,94 @@ bool Dijkstra(Graph* graph, char option, int vertex, ofstream* fout) {
     return true;
 }
 
-bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex)
-{
+bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex, ofstream* fout) {
+    int size = graph->getSize();
+    map<int, int>* tempMap = new map<int, int>[size + 1];
+    // with direction
+    if (option == 'Y') {
+        // copy directed map to tempMap
+        for (int i = 1; i < size; i++)
+            graph->getAdjacentEdgesDirect(i, tempMap);
+    }
+    // without direction
+    else {
+        for (int i = 1; i <= size; i++)
+            graph->getAdjacentEdges(i, tempMap);
+    }
+
+    bool visited[100001]; // check visted array
+    int dist[100001]; // shortest path array
+    int prev[100001];
+    for (int i = 0; i < 100001; i++) { dist[i] = INF; visited[i] = false; prev[i] = -1; }
+    dist[s_vertex]=0;
+    visited[s_vertex]= true;
+    prev[s_vertex] = 0;
+
+    // shortest path table initialize
+    for (auto iter = tempMap[s_vertex].begin(); iter != tempMap[s_vertex].end(); iter++) {
+        int adjindex = iter->first;
+        int weight = iter->second;
+        dist[adjindex] = weight;
+        prev[adjindex] = s_vertex;
+    }
+
+    // bellmanford algorithm
+    for (int i = 1; i < size; ++i) {
+        for (int j = 1; j <= size; ++j) {
+            for (auto iter = tempMap[j].begin(); iter != tempMap[j].end(); ++iter) {
+                int from = j;
+                int to = iter->first;
+                int weight = iter->second;
+
+                if (dist[from] != INF && dist[from] + weight < dist[to]) {
+                    dist[to] = dist[from] + weight;
+                    prev[to] = from;
+                    visited[to] = true;
+                }
+            }
+        }
+    }
+
+    // check minus cycle
+    for (int j = 1; j <= size; ++j) {
+        for (auto iter = tempMap[j].begin(); iter != tempMap[j].end(); ++iter) {
+            int from = j;
+            int to = iter->first;
+            int weight = iter->second;
+
+            if (dist[from] != INF && dist[from] + weight < dist[to]) {
+                // minus cycle exist
+                return false;
+            }
+        }
+    }
+
+    *fout << "========Bellman-Ford========" << endl;
+    if (option == 'Y') *fout << "Directed Graph Bellman-Ford result\n";
+    else *fout << "Undirected Graph Bellman-Ford result\n";
+    // logic that prints from vertex to target
+    if (dist[e_vertex] > INF - 100) {
+        *fout << "x\n";
+    }
+    else {
+        int index = prev[e_vertex];
+        stack<int> s;
+        s.push(e_vertex);
+        while (prev[index] != 0) {
+            s.push(prev[index]);
+            index = prev[index];
+        }
+        // print stack data
+        if (s.top() == s_vertex) s.pop();
+        *fout << s_vertex;
+        while (!s.empty()) {
+            *fout << "->" << s.top();
+            s.pop();
+        }
+        *fout << "\ncost: " << dist[e_vertex] << endl;
+    }
+    *fout << "====================\n\n";
+
     return true;
 }
 
@@ -405,14 +491,13 @@ bool FLOYD(Graph* graph, char option, ofstream* fout) {
             // i: from, iter.first: to, iter.second: weight
             arr[i][iter->first] = iter->second;
         }
-    
-    for (int l = 1; l <= size; l++)
+
+    for (int k = 1; k <= size; k++) {
         for (int i = 1; i <= size; i++) 
             for (int j = 1; j <= size; j++)
-                for (int k = 1; k <= size; k++) {
-                    if (arr[i][k] != INF && arr[k][j] != INF) 
-                        arr[i][j] = min(arr[i][j], arr[i][k] + arr[k][j]);
-                }
+                if (arr[i][k] != INF && arr[k][j] != INF) 
+                    arr[i][j] = min(arr[i][j], arr[i][k] + arr[k][j]);
+            }
     
     *fout << "========FLOYD========" << endl;
     if (option == 'Y') *fout << "Directed Graph FLOYD result\n\t\t";

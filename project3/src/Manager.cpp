@@ -156,6 +156,39 @@ void Manager::run(const char* command_txt) {
 
             mDIJKSTRA(tokens[0][0], stoi(tokens[1]));
         }
+        else if (line.substr(0, line.find(' ')) == "BELLMANFORD") {
+            // if no graph, error
+            if (!this->graph) {
+                printErrorCode(800);
+                continue;
+            }
+
+            string data = line.substr(line.find(' ') + 1);;
+            istringstream iss(data);
+            vector<string> tokens;
+            // split data and save to vector
+            string token;
+            while (iss >> token) tokens.push_back(token);
+
+            // if input data is not 3, print error code
+            if (tokens.size() != 3) {
+                printErrorCode(800);
+                continue;
+            }
+
+            // if direction is not entered, print error
+            if (!(tokens[0] == "Y" || tokens[0] == "N")) {
+                printErrorCode(800);
+                continue;
+            }
+            // if start and end vertex is bigger than size
+            if (stoi(tokens[1]) > this->graph->getSize() || stoi(tokens[2]) > this->graph->getSize()) {
+                printErrorCode(800);
+                continue;
+            }
+
+            mBELLMANFORD(tokens[0][0], stoi(tokens[1]), stoi(tokens[2]));
+        }
         else if (line.substr(0, line.find(' ')) == "FLOYD") {
             // if no graph, error
             if (!this->graph) {
@@ -322,18 +355,18 @@ bool Manager::mDFS(char option, int vertex)	{
     return true;
 }
 
-bool Manager::mDIJKSTRA(char option, int vertex) {
-    if (!Dijkstra(this->graph, option, vertex, &fout)) printErrorCode(700);
-    return true;
-}
-
 bool Manager::mKRUSKAL() {
     if (!Kruskal(this->graph, &fout)) printErrorCode(600);
     return true;
 }
 
-bool Manager::mBELLMANFORD(char option, int s_vertex, int e_vertex) 
-{
+bool Manager::mDIJKSTRA(char option, int vertex) {
+    if (!Dijkstra(this->graph, option, vertex, &fout)) printErrorCode(700);
+    return true;
+}
+
+bool Manager::mBELLMANFORD(char option, int s_vertex, int e_vertex) {
+    if (!Bellmanford(this->graph, option, s_vertex, e_vertex, &fout)) printErrorCode(800);
     return true;
 }
 

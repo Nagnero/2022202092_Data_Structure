@@ -9,7 +9,7 @@ bool DFS(Graph* graph, char option,  int vertex, ofstream *fout);
 bool KWANGWOON(Graph* graph, int vertex);  
 bool Kruskal(Graph* graph, ofstream *fout);
 bool Dijkstra(Graph* graph, char option, int vertex, ofstream *fout); 
-bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex);
+bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex, ofstream* fout);
 bool FLOYD(Graph* graph, char option, ofstream* fout);   //FLoyd
 
 #endif
