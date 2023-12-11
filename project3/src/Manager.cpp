@@ -295,12 +295,12 @@ bool Manager::mDFS(char option, int vertex)	{
 }
 
 bool Manager::mDIJKSTRA(char option, int vertex) {
-    if (!Dijkstra(this->graph, option, vertex, &fout)) printErrorCode(600);
+    if (!Dijkstra(this->graph, option, vertex, &fout)) printErrorCode(700);
     return true;
 }
 
 bool Manager::mKRUSKAL() {
-    if (!Kruskal(this->graph, &fout)) printErrorCode(700);
+    if (!Kruskal(this->graph, &fout)) printErrorCode(600);
     return true;
 }
 

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
+bool BFS(Graph* graph, char option, int vertex, ofstream* fout) {
     // set boolean array to check visit
     bool* visited = new bool[graph->getSize()];
     for (int i = 0; i < graph->getSize(); i++)
@@ -26,14 +26,14 @@ bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
 
     map<int, int>* tempMap = new map<int, int>[graph->getSize() + 1];
     // with direction
-    if (option == 'Y')  {
+    if (option == 'Y') {
         // copy directed map to tempMap
-        for (int i = 1; i < graph->getSize(); i++) 
+        for (int i = 1; i < graph->getSize(); i++)
             graph->getAdjacentEdgesDirect(i, tempMap);
     }
     // without direction
     else {
-        for (int i = 1; i <= graph->getSize(); i++) 
+        for (int i = 1; i <= graph->getSize(); i++)
             graph->getAdjacentEdges(i, tempMap);
     }
 
@@ -45,7 +45,7 @@ bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
     while (!q.empty()) {
         vertex = q.front();
         q.pop();
-        
+
         for (auto iter = tempMap[vertex].begin(); iter != tempMap[vertex].end(); iter++) {
             int next = iter->first;
             // if next vertex is not visted
@@ -62,7 +62,7 @@ bool BFS(Graph* graph, char option, int vertex, ofstream *fout) {
     return true;
 }
 
-bool DFS(Graph* graph, char option, int vertex, ofstream *fout) {
+bool DFS(Graph* graph, char option, int vertex, ofstream* fout) {
     // set boolean array to check visit
     bool* visited = new bool[graph->getSize()];
     for (int i = 0; i < graph->getSize(); i++)
@@ -76,14 +76,14 @@ bool DFS(Graph* graph, char option, int vertex, ofstream *fout) {
 
     map<int, int>* tempMap = new map<int, int>[graph->getSize() + 1];
     // with direction
-    if (option == 'Y')  {
+    if (option == 'Y') {
         // copy directed map to tempMap
-        for (int i = 1; i < graph->getSize(); i++) 
+        for (int i = 1; i < graph->getSize(); i++)
             graph->getAdjacentEdgesDirect(i, tempMap);
     }
     // without direction
     else {
-        for (int i = 1; i <= graph->getSize(); i++) 
+        for (int i = 1; i <= graph->getSize(); i++)
             graph->getAdjacentEdges(i, tempMap);
     }
 
@@ -91,7 +91,7 @@ bool DFS(Graph* graph, char option, int vertex, ofstream *fout) {
     stack<int> s;
     s.push(vertex);
 
-    while(!s.empty()) {
+    while (!s.empty()) {
         vertex = s.top();
         s.pop();
 
@@ -115,26 +115,26 @@ bool DFS(Graph* graph, char option, int vertex, ofstream *fout) {
 
 void insertionSort(vector<pair<int, pair<int, int>>>* arr, int low, int high) {
     int j;
-    pair<int, pair<int, int>> tempPair; 
-    
+    pair<int, pair<int, int>> tempPair;
+
     // outer loop
-    for (int i = low + 1; i <= high; i++) { 
+    for (int i = low + 1; i <= high; i++) {
         tempPair = arr->at(i);
         // inner loop
-        for (j = i - 1; j >= low; j--){
-            if(arr->at(j).first > tempPair.first) // swap pair
-                arr->at(j + 1) = arr->at(j); 
+        for (j = i - 1; j >= low; j--) {
+            if (arr->at(j).first > tempPair.first) // swap pair
+                arr->at(j + 1) = arr->at(j);
             else
                 break;
         }
-        arr->at(j+1) = tempPair;
+        arr->at(j + 1) = tempPair;
     }
 }
 
 int partition(vector<pair<int, pair<int, int>>>* arr, int left, int right) {
     int pivot = arr->at(left).first;
     int temp, low = left, high = right + 1;
-    pair<int, pair<int, int>> tempPair; 
+    pair<int, pair<int, int>> tempPair;
 
     do {
         do low++; while (low <= right && arr->at(low).first < pivot);
@@ -142,7 +142,7 @@ int partition(vector<pair<int, pair<int, int>>>* arr, int left, int right) {
 
         // swap two data
         if (low <= high) {
-            tempPair=arr->at(low);
+            tempPair = arr->at(low);
             arr->at(low) = arr->at(high);
             arr->at(high) = tempPair;
         }
@@ -199,7 +199,8 @@ public:
         if (root_u != root_v) {
             if (rank[root_u] > rank[root_v]) {
                 parent[root_v] = root_u;
-            } else {
+            }
+            else {
                 parent[root_u] = root_v;
                 if (rank[root_u] == rank[root_v]) {
                     rank[root_v]++;
@@ -209,16 +210,16 @@ public:
     }
 };
 
-bool Kruskal(Graph* graph, ofstream *fout) {
+bool Kruskal(Graph* graph, ofstream* fout) {
     int size = graph->getSize();
     map<int, int>* tempMap = new map<int, int>[size + 1];
     // vector.first == weight, vector.second.first == from, vector.second.second == to
     vector<pair<int, pair<int, int>>> edges;
     // copy undirected graph to temp Map
-    for (int i = 1; i <= size; i++) 
+    for (int i = 1; i <= size; i++)
         graph->getAdjacentEdges(i, tempMap);
     for (int i = 1; i <= size; i++)
-        for (auto iter = tempMap[i].begin(); iter != tempMap[i].end(); iter++) 
+        for (auto iter = tempMap[i].begin(); iter != tempMap[i].end(); iter++)
             edges.push_back({ iter->second, {i, iter->first} });
 
     quickSort(&edges, 0, edges.size() - 1);
@@ -238,7 +239,7 @@ bool Kruskal(Graph* graph, ofstream *fout) {
 
         // if Edge doesn't create a cycle, add it to the MST
         if (set_u != set_v) {
-            r_mst.push_back({weight, {u, v}});
+            r_mst.push_back({ weight, {u, v} });
             ds.merge(set_u, set_v);
         }
     }
@@ -269,104 +270,112 @@ bool Kruskal(Graph* graph, ofstream *fout) {
     return true;
 }
 
-bool Dijkstra(Graph* graph, char option, int vertex, ofstream *fout) {
+bool Dijkstra(Graph* graph, char option, int vertex, ofstream* fout) {
     int size = graph->getSize();
     map<int, int>* tempMap = new map<int, int>[size + 1];
     // with direction
-    if (option == 'Y')  {
+    if (option == 'Y') {
         // copy directed map to tempMap
-        for (int i = 1; i < size; i++) 
+        for (int i = 1; i < size; i++)
             graph->getAdjacentEdgesDirect(i, tempMap);
     }
     // without direction
     else {
-        for (int i = 1; i <= size; i++) 
+        for (int i = 1; i <= size; i++)
             graph->getAdjacentEdges(i, tempMap);
     }
 
-    // check unvaild weight
-    for (int i = 1; i <= size; i++) 
-        for (auto iter = tempMap[vertex].begin(); iter != tempMap[vertex].end(); iter++)
+    bool check = true;
+    // check unvaild weight (minus)
+    for (int i = 1; i <= size; i++)
+        for (auto iter = tempMap[i].begin(); iter != tempMap[i].end(); iter++)
             if (iter->second < 0) {
-                delete tempMap;
-                return false;
+                check = false;
+                break;
             }
+    if (!check) {
+        delete[] tempMap;
+        return false;
+    }
+
+    bool visited[100001]; // check visted array
+    int dist[100001]; // shortest path array
+    int prev[100001];
+    for (int i = 0; i < 100001; i++) { dist[i] = INF; visited[i] = false; prev[i] = -1; }
+    dist[vertex]=0;
+    visited[vertex]= true;
+    prev[vertex] = 0;
     
-    // initialize vector that saves distance
-    vector<int> dist(size, INF);
-    vector<int>* path = new vector<int>(size, -1);
-    // pq.first = distance, pq.second = node
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    // shortest path table initialize
+    for (auto iter = tempMap[vertex].begin(); iter != tempMap[vertex].end(); iter++) {
+        int adjindex = iter->first;
+        int weight = iter->second;
+        dist[adjindex] = weight;
+        prev[adjindex] = vertex;
+    }
+    
+    // Dijkstra's Algorithm
+    for (int i = 1; i < size; i++) {
+        int now = 0, minDist = INF;
+        for (int j = 1; j <= size; j++) {
+            if (dist[j] < minDist && !visited[j]) {
+                minDist = dist[j];
+                now = j;
+            }
+        }
+        visited[now] = true;
 
-    // set starting node distance as 0
-    dist[vertex] = 0;
-    pq.push({0, vertex});
-
-    while (!pq.empty()) {
-        int curNode = pq.top().second;
-        pq.pop();
-
-        for (auto iter = tempMap[curNode].begin(); iter != tempMap[curNode].end(); iter++) {
-            int nextDist = iter->second;
-            int nextNode = iter->first;
-            // if prev distance is bigger, change shortest distance
-            if (nextDist + dist[curNode] < dist[nextNode]) {
-                dist[nextNode] = nextDist + dist[curNode];
-                (*path)[nextNode] = curNode;
-                pq.push({dist[nextNode], nextNode});
+        for (auto iter = tempMap[now].begin(); iter != tempMap[now].end(); iter++) {
+            int cost = dist[now] + iter->second;
+            if (cost < dist[iter->first]) {
+                dist[iter->first] = cost;
+                prev[iter->first] = now;
             }
         }
     }
 
+    *fout << "========Dijkstra========" << endl;
+    if (option == 'Y') *fout << "Directed Graph Dijkstra result\n";
+    else *fout << "Undirected Graph Dijkstra result\n";
+    *fout << "startvertex: " << vertex << endl;
     for (int i = 1; i <= size; ++i) {
         if (i == vertex) continue;
-        cout << "[" << i << "]\t";
+        *fout << "[" << i << "]\t";
+        if (i <= 9) *fout << "\t";
         if (dist[i] == INF) {
-            cout << "x\n";
+            *fout << "x\n";
             continue;
         }
-        if (path[i].empty()) {
-            cout << i << endl;
-            continue;
-        }
+
+        // logic that prints from vertex to target
+        int index = prev[i];
         stack<int> s;
-        for (int node : path[i]) {
-            s.push(node);
+        s.push(i);
+        while (prev[index] != 0) {
+            s.push(prev[index]);
+            index = prev[index];
         }
-        cout << vertex << " -> ";
+        // print stack data
+        if (s.top() == vertex) s.pop();
+        *fout << vertex;
         while (!s.empty()) {
-            cout << s.top() << " -> ";
+            *fout << "->" << s.top();
             s.pop();
         }
-        cout << i << " (Distance: " << dist[i] << ")\n";
+        *fout << " (" << dist[i] << ")\n";
     }
-
-    // for(int i = 1; i <= dist.size(); i++) {
-    //     cout << "[" << i << "]\t";
-    //     if(dist[i] == INF) {
-    //         cout << "x\n";
-    //         continue;
-    //     }
-    //     stack<int> s;
-    //     for (int node : path[i])
-    //         s.push(node);
-    //     for (int i = 0; i < s.size(); i++) {
-    //         cout << s.top() << "->";
-    //         s.pop();
-    //     }
-    //     cout << endl;
-    // }
+    *fout << "====================\n\n";
 
     return true;
 }
 
-bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex) 
+bool Bellmanford(Graph* graph, char option, int s_vertex, int e_vertex)
 {
     return true;
 }
 
-bool FLOYD(Graph* graph, char option)
-{
+bool FLOYD(Graph* graph, char option) {
+    
     return true;
 }
 
