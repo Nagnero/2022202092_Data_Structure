@@ -12,7 +12,7 @@ MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size) {
 }
 
 MatrixGraph::~MatrixGraph() {
-    for (int i = 0; i < this->m_Size; ++i) 
+    for (int i = 0; i <= this->m_Size; ++i) 
         delete[] this->m_Mat[i]; // delete each row
     
     delete[] this->m_Mat; // delete all
