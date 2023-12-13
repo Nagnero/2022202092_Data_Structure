@@ -13,8 +13,10 @@ Manager::Manager() {
 }
 
 Manager::~Manager() {
-	if(graph)	//if graph is loaded, delete graph
-		delete graph;	
+	if(graph) {	//if graph is loaded, delete graph
+		delete graph;
+        graph = nullptr;
+    }
 	if(fout.is_open())	//if fout is opened, close file
 		fout.close();	//close log.txt File
 }

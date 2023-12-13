@@ -254,12 +254,15 @@ bool Kruskal(Graph* graph, ofstream* fout) {
     for (int i = 0; i <= r_mst.size(); i++) {
         *fout << "[" << i + 1 << "]\t";
         if (i < 9) *fout << "\t";
+        map<int, int> printMap;
         for (auto edge : r_mst) {
             if (edge.second.first == i + 1)
-                *fout << edge.second.second << "(" << edge.first << ")";
+                printMap.insert({edge.second.second, edge.first});
             if (edge.second.second == i + 1)
-                *fout << edge.second.first << "(" << edge.first << ")";
+                printMap.insert({edge.second.second, edge.first});
         }
+        for (auto iter = printMap.begin(); iter != printMap.end(); iter++)
+            *fout << iter->first << "(" << iter->second << ")";
         *fout << endl;
     }
     int total = 0;
